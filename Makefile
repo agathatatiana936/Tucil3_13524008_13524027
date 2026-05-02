@@ -7,28 +7,29 @@ INCDIR   := include
 BUILDDIR := build
 TARGET   := $(BUILDDIR)/solver
 
-SRCS := $(wildcard $(SRCDIR)/*.cpp)
+SRCS := $(shell find $(SRCDIR) -name '*.cpp')
 OBJS := $(patsubst $(SRCDIR)/%.cpp,$(BUILDDIR)/%.o,$(SRCS))
 
-.PHONY: all clean
+.PHONY: all run clean deps
 
 all: $(TARGET)
 
+run: all
+	./$(TARGET)
+
 $(TARGET): $(OBJS)
-	@mkdir -p $(BUILDDIR)
+	@mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) $^ -o $@ $(LDFLAGS)
 
-$(BUILDDIR)/%.o: $(SRCDIR)/%.cpp | $(BUILDDIR)
+$(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
+	@mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-$(BUILDDIR):
-	@mkdir -p $(BUILDDIR)
-
 clean:
-	@rm -rf $(BUILDDIR)
-
+	@rm -rf $(BUILDDIR)/*
 
 deps: $(SRCS)
+	@mkdir -p $(BUILDDIR)
 	$(CXX) $(CXXFLAGS) -MM $^ | sed 's|^\([a-zA-Z0-9_]*\.o:\)|$(BUILDDIR)/\1|' > $(BUILDDIR)/deps.mk
 
 -include $(BUILDDIR)/deps.mk
