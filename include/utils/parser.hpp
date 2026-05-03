@@ -30,4 +30,6 @@ class parser{
         std::string getGrid(int row, int col) const;
         int getPoint(int row, int col) const;
         void printBoards() const;
+        int getRows() const;
+        int getCols() const;
 };

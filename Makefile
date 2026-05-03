@@ -10,11 +10,11 @@ TARGET   := $(BUILDDIR)/solver
 SRCS := $(shell find $(SRCDIR) -name '*.cpp')
 OBJS := $(patsubst $(SRCDIR)/%.cpp,$(BUILDDIR)/%.o,$(SRCS))
 
-.PHONY: all run clean deps
+.PHONY: build run clean deps
 
-all: $(TARGET)
+build: $(TARGET)
 
-run: all
+run: build
 	./$(TARGET)
 
 $(TARGET): $(OBJS)

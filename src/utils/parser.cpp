@@ -55,14 +55,24 @@ void parser::parseFile(const std::string& filename) {
 
 
 void parser::printBoards() const {
-    for (const auto& b : boards) {
-        std::cout << "Papan: " << b.getGrid() << ", Point: " << b.getPoint() << std::endl;
+    std::cout << getRows() << " " << getCols() << std::endl;
+    for (int i = 0; i < getRows(); ++i) {
+        for (int j = 0; j < getCols(); ++j) {
+            std::cout << getGrid(i, j);
+        }
+        std::cout << std::endl;
+    }
+    for(int i = 0; i < getRows(); ++i) {
+        for (int j = 0; j < getCols(); ++j) {
+            std::cout << getPoint(i, j) << " ";
+        }
+        std::cout << std::endl;
     }
 }
 
 std::string parser::getGrid(int row, int col) const {
     int index = row * cols + col;
-    if (index >= 0 && index < boards.size()) {
+    if (index >= 0 && static_cast<std::size_t>(index) < boards.size()) {
         return std::string(1, boards[index].getGrid());
     }
     return "";
@@ -70,8 +80,16 @@ std::string parser::getGrid(int row, int col) const {
 
 int parser::getPoint(int row, int col) const {
     int index = row * cols + col;
-    if (index >= 0 && index < boards.size()) {
+    if (index >= 0 && static_cast<std::size_t>(index) < boards.size()) {
         return boards[index].getPoint();
     }
     return -1;
+}
+
+int parser::getRows() const {
+    return rows;
+}
+
+int parser::getCols() const {
+    return cols;
 }
