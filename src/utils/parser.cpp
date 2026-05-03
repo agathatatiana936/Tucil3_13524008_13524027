@@ -14,6 +14,8 @@ void parser::parseFile(const std::string& filename) {
         if (!(file >> N >> M)) {
             throw std::invalid_argument("Format N atau M pada baris pertama salah (bukan angka).");
         }
+        rows = N;
+        cols = M;
 
         std::vector<char> papans;
         std::vector<int> points;
@@ -56,4 +58,20 @@ void parser::printBoards() const {
     for (const auto& b : boards) {
         std::cout << "Papan: " << b.getGrid() << ", Point: " << b.getPoint() << std::endl;
     }
+}
+
+std::string parser::getGrid(int row, int col) const {
+    int index = row * cols + col;
+    if (index >= 0 && index < boards.size()) {
+        return std::string(1, boards[index].getGrid());
+    }
+    return "";
+}
+
+int parser::getPoint(int row, int col) const {
+    int index = row * cols + col;
+    if (index >= 0 && index < boards.size()) {
+        return boards[index].getPoint();
+    }
+    return -1;
 }

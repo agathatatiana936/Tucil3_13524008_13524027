@@ -21,11 +21,13 @@ class board {
 class parser{
     private :
         std::vector<board> boards;
+        int rows;
+        int cols;
     public :
         void parseFile(const std::string& filename);
         ~parser() = default;
         std::vector<board> getBoards() const;
-        std::string getGrid(std::string row, std::string col) const;
-        int getPoint(std::string row, std::string col) const;
+        std::string getGrid(int row, int col) const;
+        int getPoint(int row, int col) const;
         void printBoards() const;
 };
