@@ -1,535 +1,301 @@
 @startuml
-title Ice Sliding Puzzle Solver - Class Diagram
-
+skinparam handwritten false
+skinparam backgroundColor #FEFEFE
 skinparam classAttributeIconSize 0
 skinparam packageStyle rectangle
+skinparam class {
+  BackgroundColor #E3F2FD
+  BorderColor #1565C0
+  ArrowColor #1565C0
+}
+skinparam abstract {
+  BackgroundColor #FFF3E0
+  BorderColor #E65100
+}
+skinparam enum {
+  BackgroundColor #F3E5F5
+  BorderColor #6A1B9A
+}
 
-package "Core Model" {
+title Ice Sliding Puzzle Solver - Class Diagram (DIP Refactored)
+
+package "Model" #F5F5F5 {
   class Position {
-    +int row
-    +int col
+    -int row
+    -int col
     +Position()
     +Position(row: int, col: int)
+    +getRow(): int
+    +getCol(): int
+    +setRow(row: int): void
+    +setCol(col: int): void
     +operator==(other: Position): bool
     +operator!=(other: Position): bool
-    +toString(): string
+    +operator<(other: Position): bool
+    +hash(): size_t
   }
 
-  enum Direction {
-    Up
-    Down
-    Left
-    Right
-  }
-
-  enum TileType {
-    Path
-    Wall
-    Lava
-    Start
-    Goal
-    Numbered
-  }
-
-  class DirectionUtil {
-    +getDelta(dir: Direction): Position
-    +directionToChar(dir: Direction): char
-    +directionToString(dir: Direction): string
-  }
-
-  class Tile {
-    -TileType type
-    -char symbol
-    -int numberValue
-    -int cost
-    +Tile()
-    +Tile(type: TileType, symbol: char, cost: int)
-    +getType(): TileType
-    +getSymbol(): char
-    +getCost(): int
-    +getNumberValue(): int
-    +setCost(cost: int): void
-    +isWall(): bool
-    +isLava(): bool
-    +isWalkable(): bool
-    +isNumbered(): bool
-    +isGoal(): bool
-    +displayChar(): char
-  }
-
-  class Board {
+  class GameMap {
     -int rows
     -int cols
-    -vector<vector<Tile>> grid
-    -Position startPosition
-    -Position goalPosition
-    -int maxNumber
-    +Board()
-    +Board(rows: int, cols: int)
-    +isInside(pos: Position): bool
-    +getTile(pos: Position): Tile
-    +setTile(pos: Position, tile: Tile): void
-    +getStartPosition(): Position
-    +getGoalPosition(): Position
+    -vector~vector~char~~ grid
+    -vector~vector~int~~ costs
+    -Position startPos
+    -Position goalPos
+    +GameMap()
+    +GameMap(rows: int, cols: int)
     +getRows(): int
     +getCols(): int
-    +getMaxNumber(): int
+    +getTile(row: int, col: int): char
+    +getCost(row: int, col: int): int
+    +getStartPosition(): Position
+    +getGoalPosition(): Position
+    +setTile(row: int, col: int, tile: char): void
+    +setCost(row: int, col: int, cost: int): void
     +setStartPosition(pos: Position): void
     +setGoalPosition(pos: Position): void
-    +setMaxNumber(value: int): void
-    +validate(): void
-    +toString(): string
-    +toStringWithActor(actor: Position): string
+    +isInsideBounds(row: int, col: int): bool
+    +isObstacle(row: int, col: int): bool
+    +isLava(row: int, col: int): bool
+    +isPassable(row: int, col: int): bool
+    +isNumbered(row: int, col: int): bool
+    +getNumber(row: int, col: int): int
+    +clone(): GameMap
+    +print(): void
   }
 
-  class PuzzleState {
-    +Position actorPosition
-    +int nextRequiredNumber
-    +PuzzleState()
-    +PuzzleState(actor: Position, nextNumber: int)
-    +isGoalState(board: Board): bool
-    +hash(): string
-    +operator==(other: PuzzleState): bool
+  class State {
+    -Position position
+    -int collectedMask
+    -int lastCollected
+    -string path
+    -int gCost
+    -int hCost
+    -shared_ptr~State~ parent
+    +State(pos: Position, collectedMask: int, lastCollected: int, path: string, gCost: int, hCost: int, parent: shared_ptr~State~)
+    +State(other: State)
+    +operator=(other: State): State
+    +getPosition(): Position
+    +getCollectedMask(): int
+    +getLastCollected(): int
+    +getPath(): string
+    +getGCost(): int
+    +getHCost(): int
+    +getFCost(): int
+    +getParent(): shared_ptr~State~
+    +setHCost(h: int): void
+    +hasCollected(number: int): bool
+    +canCollect(number: int): bool
+    +operator==(other: State): bool
+    +operator<(other: State): bool
   }
 
   class MoveResult {
-    +bool valid
-    +bool gameOver
-    +Direction direction
-    +PuzzleState nextState
-    +int movementCost
-    +vector<Position> passedTiles
-    +string reason
-    +invalid(reason: string): MoveResult
-    +gameOverResult(reason: string): MoveResult
-  }
-
-  class MovementSimulator {
-    -Board board
-    +MovementSimulator(board: Board)
-    +slide(state: PuzzleState, dir: Direction): MoveResult
-    -violatesNumberRule(tile: Tile, nextRequiredNumber: int): bool
-    -updateNextRequiredNumber(tile: Tile, currentNextNumber: int): int
-  }
-}
-
-package "Input Output" {
-  class InputParser {
-    -InputValidator validator
-    +parseFromFile(path: string): Board
-    -readLines(path: string): vector<string>
-    -parseDimension(line: string): pair<int,int>
-    -parseBoard(lines: vector<string>, rows: int, cols: int): Board
-    -parseCosts(lines: vector<string>, board: Board): void
-  }
-
-  class InputValidator {
-    +validateDimension(rows: int, cols: int): void
-    +validateBoardRows(boardLines: vector<string>, rows: int, cols: int): void
-    +validateCostRows(costs: vector<vector<int>>, rows: int, cols: int): void
-    +validateRequiredSymbols(board: Board): void
-    +validateNumberSequence(board: Board): void
-    +validateSymbol(symbol: char): void
-  }
-
-  class SolutionWriter {
-    +saveSolution(path: string, result: SearchResult, board: Board): void
-    +saveIterations(path: string, steps: vector<SearchStep>): void
-    -writeBoardStep(board: Board, state: PuzzleState): string
-  }
-
-  class Logger {
-    +info(message: string): void
-    +error(message: string): void
-    +success(message: string): void
-    +warning(message: string): void
-  }
-}
-
-package "Search Model" {
-  class SearchNode {
-    +PuzzleState state
-    +shared_ptr<SearchNode> parent
-    +Direction moveFromParent
-    +int gCost
-    +int hCost
-    +int fCost
-    +int depth
-    +SearchNode()
-    +SearchNode(state: PuzzleState)
-    +buildMovePath(): vector<Direction>
-    +buildStatePath(): vector<PuzzleState>
-  }
-
-  class SearchStep {
-    +int iteration
-    +PuzzleState currentState
-    +vector<PuzzleState> frontierStates
-    +vector<PuzzleState> visitedStates
-    +int gCost
-    +int hCost
-    +int fCost
-    +string algorithmName
-    +toString(board: Board): string
+    -bool valid
+    -Position newPosition
+    -int moveCost
+    -bool gameOver
+    -string gameOverReason
+    -vector~Position~ traversedTiles
+    +MoveResult()
+    +MoveResult(valid: bool, newPos: Position, cost: int, gameOver: bool, reason: string, traversed: vector~Position~)
+    +isValid(): bool
+    +getNewPosition(): Position
+    +getMoveCost(): int
+    +isGameOver(): bool
+    +getGameOverReason(): string
+    +getTraversedTiles(): vector~Position~
   }
 
   class SearchResult {
-    +bool found
-    +string algorithmName
-    +string heuristicName
-    +vector<Direction> moves
-    +vector<PuzzleState> states
-    +vector<SearchStep> iterations
-    +int totalCost
-    +int iterationCount
-    +double executionTimeMs
-    +string message
-    +getMoveString(): string
-    +hasSolution(): bool
-  }
-
-  class StateHasher {
-    +operator()(state: PuzzleState): size_t
-  }
-
-  enum SearchStrategy {
-    UCS
-    GBFS
-    ASTAR
-    WEIGHTED_ASTAR
-  }
-
-  class NodeComparator {
-    -SearchStrategy strategy
-    +NodeComparator(strategy: SearchStrategy)
-    +operator()(a: SearchNode, b: SearchNode): bool
+    -bool solutionFound
+    -string solutionPath
+    -int totalCost
+    -double executionTimeMs
+    -int iterationsCount
+    -string message
+    +SearchResult()
+    +SearchResult(found: bool, path: string, cost: int, timeMs: double, iterations: int, message: string)
+    +isSolutionFound(): bool
+    +getSolutionPath(): string
+    +getTotalCost(): int
+    +getExecutionTimeMs(): double
+    +getIterationsCount(): int
+    +getMessage(): string
+    +setSolutionFound(found: bool): void
+    +setSolutionPath(path: string): void
+    +setTotalCost(cost: int): void
+    +setExecutionTimeMs(timeMs: double): void
+    +setIterationsCount(iterations: int): void
+    +setMessage(message: string): void
+    +printSummary(): void
   }
 }
 
-package "Heuristic" {
-  abstract class Heuristic {
-    +calculate(board: Board, state: PuzzleState): int
-    +name(): string
+package "Heuristic" #F5F5F5 {
+  abstract class IHeuristic {
+    +compute(state: State, map: GameMap): int
   }
 
-  class ManhattanHeuristic {
-    +calculate(board: Board, state: PuzzleState): int
-    +name(): string
-    -findCurrentTarget(board: Board, state: PuzzleState): Position
+  class Manhattan {
+    +compute(state: State, map: GameMap): int
   }
 
-  class SlidingMoveHeuristic {
-    +calculate(board: Board, state: PuzzleState): int
-    +name(): string
-    -estimateSlidingMoves(board: Board, from: Position, to: Position): int
+  class Custom {
+    +compute(state: State, map: GameMap): int
   }
 
-  class CostAwareHeuristic {
-    -int minTileCost
-    +CostAwareHeuristic(board: Board)
-    +calculate(board: Board, state: PuzzleState): int
-    +name(): string
-    -findMinTileCost(board: Board): int
-  }
-
-  class CheckpointHeuristic {
-    +calculate(board: Board, state: PuzzleState): int
-    +name(): string
-    -estimateRemainingCheckpoints(board: Board, state: PuzzleState): int
-  }
-
-  class HeuristicFactory {
-    +create(heuristicName: string, board: Board): unique_ptr<Heuristic>
-    +availableHeuristics(): vector<string>
+  class Advanced {
+    +compute(state: State, map: GameMap): int
   }
 }
 
-package "Pathfinding Algorithms" {
-  abstract class IPathfinder {
-    +solve(board: Board, heuristic: Heuristic): SearchResult
-    +name(): string
+package "Solver" #F5F5F5 {
+  abstract class ISolver {
+    +solve(map: GameMap): SearchResult
   }
 
-  class SearchEngine {
-    -MovementSimulator simulator
-    +SearchEngine(board: Board)
-    +expandNode(node: SearchNode, board: Board, heuristic: Heuristic): vector<shared_ptr<SearchNode>>
-    +shouldRelaxState(state: PuzzleState, newCost: int, bestCost: unordered_map): bool
-    +createSearchStep(iteration: int, node: SearchNode, frontier: vector<PuzzleState>, visited: vector<PuzzleState>, algorithmName: string): SearchStep
-  }
-
-  class UniformCostSearch {
-    +solve(board: Board, heuristic: Heuristic): SearchResult
-    +name(): string
-  }
-
-  class GreedyBestFirstSearch {
-    +solve(board: Board, heuristic: Heuristic): SearchResult
-    +name(): string
-  }
-
-  class AStarSearch {
-    +solve(board: Board, heuristic: Heuristic): SearchResult
-    +name(): string
-  }
-
-  class WeightedAStarSearch {
-    -double weight
-    +WeightedAStarSearch(weight: double)
-    +solve(board: Board, heuristic: Heuristic): SearchResult
-    +name(): string
-  }
-
-  class PathfinderFactory {
-    +create(algorithmName: string): unique_ptr<IPathfinder>
-    +availableAlgorithms(): vector<string>
+  class AStar {
+    -IHeuristic* heuristic
+    +AStar(heuristic: IHeuristic*)
+    +solve(map: GameMap): SearchResult
+    -getPriority(state: State): int
   }
 }
 
-package "Visualization and Playback" {
-  class BoardRenderer {
-    +renderBoard(board: Board): string
-    +renderBoardWithState(board: Board, state: PuzzleState): string
-    +renderSolutionStep(board: Board, result: SearchResult, stepIndex: int): string
-    +renderSearchStep(board: Board, step: SearchStep): string
-  }
-
-  class PlaybackController {
-    -vector<SearchStep> steps
-    -int currentIndex
-    -double speedMultiplier
-    -bool playing
-    +PlaybackController()
-    +setSteps(steps: vector<SearchStep>): void
-    +next(): void
-    +previous(): void
-    +jumpTo(index: int): void
-    +play(): void
-    +pause(): void
-    +setSpeed(speed: double): void
-    +getCurrentStep(): SearchStep
-    +getCurrentIndex(): int
-    +isPlaying(): bool
-  }
-
-  class CliPlaybackView {
-    -BoardRenderer renderer
-    -PlaybackController controller
-    +run(board: Board, result: SearchResult): void
-    -handleInput(): void
-    -displayCurrentStep(board: Board): void
-  }
-}
-
-package "CLI Application" {
-  class CliApp {
-    -InputParser inputParser
-    -PathfinderFactory pathfinderFactory
-    -HeuristicFactory heuristicFactory
-    -BoardRenderer renderer
-    -SolutionWriter solutionWriter
-    -Logger logger
+package "CLI" #F5F5F5 {
+  class CLI {
+    -bool running
+    -GameMap currentMap
+    -SearchResult lastResult
+    -string currentFilename
+    -string selectedAlgorithm
+    -string selectedHeuristic
+    +CLI()
     +run(): void
-    -askInputFile(): string
-    -askAlgorithm(): string
-    -askHeuristic(): string
-    -askYesNo(question: string): bool
-    -displayResult(board: Board, result: SearchResult): void
-    -handleSaveSolution(board: Board, result: SearchResult): void
-    -handlePlayback(board: Board, result: SearchResult): void
+    -displayWelcome(): void
+    -handleInputFile(): bool
+    -handleAlgorithmSelection(): void
+    -displayResult(): void
+    -handlePlayback(): void
+    -handleSaveSolution(): void
+    -printBoard(map: GameMap, actorPos: Position): void
+    -toUpper(str: string): string$
+    -clearScreen(): void$
+    -waitForEnter(): void$
   }
 }
 
-package "GUI Bonus" {
-  class GuiState {
-    +Board board
-    +SearchResult result
-    +string selectedAlgorithm
-    +string selectedHeuristic
-    +string inputFilePath
-    +bool hasBoardLoaded
-    +bool hasResult
-    +bool isPlayingPlayback
-    +int currentStep
-    +double playbackSpeed
-    +reset(): void
-    +canRunSolver(): bool
-    +canPlayback(): bool
-  }
-
-  class GuiApp {
-    -GuiState state
-    -GuiBoardView boardView
-    -GuiControlPanel controlPanel
-    -GuiPlaybackPanel playbackPanel
-    +run(): void
-    -handleEvents(): void
-    -update(deltaTime: double): void
-    -render(): void
-  }
-
-  class GuiBoardView {
-    -float tileSize
-    -float offsetX
-    -float offsetY
-    -BoardRenderer renderer
-    +draw(board: Board, state: PuzzleState): void
-    +drawTile(tile: Tile, pos: Position): void
-    +drawActor(pos: Position): void
-    +fitToWindow(rows: int, cols: int, windowWidth: int, windowHeight: int): void
-  }
-
-  class GuiControlPanel {
-    +draw(): void
-    +handleEvent(state: GuiState): void
-    +isSolveClicked(): bool
-    +isLoadFileClicked(): bool
-    +isSaveClicked(): bool
-  }
-
-  class GuiPlaybackPanel {
-    -PlaybackController controller
-    +draw(state: GuiState): void
-    +handleEvent(state: GuiState): void
-    +nextStep(): void
-    +previousStep(): void
-    +jumpToStep(step: int): void
-    +setSpeed(speed: double): void
-  }
-
-  class AnimationController {
-    -Position from
-    -Position to
-    -float progress
-    -float duration
-    -bool active
-    +start(from: Position, to: Position, duration: float): void
-    +update(deltaTime: float): void
-    +getInterpolatedPosition(): Position
-    +isFinished(): bool
+package "Parser" #F5F5F5 {
+  class parser {
+    +parseFile(filename: string): void
+    +getGrid(row: int, col: int): string
+    +getPoint(row: int, col: int): int
+    +getRows(): int
+    +getCols(): int
   }
 }
 
-package "Utility" {
-  class Timer {
-    -time_point startTime
-    +start(): void
-    +stopMs(): double
+package "Validator" #F5F5F5 {
+  class InputValidator {
+    +validate(map: GameMap): void$
+    -validateStartGoal(map: GameMap): void$
+    -validateNumbers(map: GameMap): void$
+    -validateSymbols(map: GameMap): void$
   }
+}
 
-  class PuzzleException {
-    #string message
-    +PuzzleException(message: string)
+package "Exception" #FFF3E0 {
+  class GameException {
+    -string message
+    +GameException(message: string)
     +what(): const char*
   }
 
-  class InputException
-  class ValidationException
-  class SolverException
-  class FileException
+  class FileException {
+    +FileException(message: string)
+  }
+
+  class ValidationException {
+    +ValidationException(message: string)
+  }
+
+  class SolverException {
+    +SolverException(message: string)
+  }
 }
 
-' Relationships - Core
-Board "1" *-- "many" Tile
-Board --> Position
-PuzzleState --> Position
-MoveResult --> PuzzleState
-MoveResult --> Direction
-MoveResult --> Position
-MovementSimulator --> Board
-MovementSimulator --> MoveResult
-MovementSimulator --> PuzzleState
-DirectionUtil --> Direction
-DirectionUtil --> Position
-Tile --> TileType
+GameMap "1" --> "1" Position : startPos
+GameMap "1" --> "1" Position : goalPos
+State "1" --> "1" Position : position
+State "1" --> "0..1" State : parent
+MoveResult "1" --> "1" Position : newPosition
 
-' Relationships - IO
-InputParser --> InputValidator
-InputParser --> Board
-InputValidator --> Board
-SolutionWriter --> SearchResult
-SolutionWriter --> SearchStep
-SolutionWriter --> Board
+IHeuristic <|.. Manhattan : implements
+IHeuristic <|.. Custom : implements
+IHeuristic <|.. Advanced : implements
 
-' Relationships - Search
-SearchNode --> PuzzleState
-SearchNode --> Direction
-SearchNode --> SearchNode : parent
-SearchStep --> PuzzleState
-SearchResult *-- SearchStep
-SearchResult --> Direction
-SearchResult --> PuzzleState
-StateHasher --> PuzzleState
-NodeComparator --> SearchStrategy
-NodeComparator --> SearchNode
+ISolver <|.. AStar : implements
+AStar --> "1" IHeuristic : heuristic
 
-' Relationships - Heuristic
-Heuristic <|-- ManhattanHeuristic
-Heuristic <|-- SlidingMoveHeuristic
-Heuristic <|-- CostAwareHeuristic
-Heuristic <|-- CheckpointHeuristic
-HeuristicFactory ..> Heuristic
-ManhattanHeuristic --> Board
-SlidingMoveHeuristic --> Board
-CostAwareHeuristic --> Board
-CheckpointHeuristic --> Board
+CLI --> "1" GameMap : currentMap
+CLI --> "1" SearchResult : lastResult
+CLI ..> ISolver : uses
+CLI ..> IHeuristic : uses
+CLI ..> GameException : catches
 
-' Relationships - Algorithms
-IPathfinder <|-- UniformCostSearch
-IPathfinder <|-- GreedyBestFirstSearch
-IPathfinder <|-- AStarSearch
-IPathfinder <|-- WeightedAStarSearch
-PathfinderFactory ..> IPathfinder
-UniformCostSearch --> SearchEngine
-GreedyBestFirstSearch --> SearchEngine
-AStarSearch --> SearchEngine
-WeightedAStarSearch --> SearchEngine
-SearchEngine --> MovementSimulator
-SearchEngine --> SearchNode
-SearchEngine --> SearchStep
-SearchEngine --> Heuristic
+parser ..> GameMap : creates
+parser ..> FileException : throws
 
-' Relationships - Visualization
-BoardRenderer --> Board
-BoardRenderer --> PuzzleState
-BoardRenderer --> SearchResult
-BoardRenderer --> SearchStep
-PlaybackController *-- SearchStep
-CliPlaybackView --> BoardRenderer
-CliPlaybackView --> PlaybackController
-CliPlaybackView --> SearchResult
+InputValidator ..> GameMap : validates
+InputValidator ..> ValidationException : throws
 
-' Relationships - CLI
-CliApp --> InputParser
-CliApp --> PathfinderFactory
-CliApp --> HeuristicFactory
-CliApp --> BoardRenderer
-CliApp --> SolutionWriter
-CliApp --> Logger
-CliApp --> CliPlaybackView
-CliApp --> IPathfinder
-CliApp --> Heuristic
-CliApp --> SearchResult
+class std_exception as "std::exception"
+std_exception <|-- GameException : extends
+GameException <|-- FileException : extends
+GameException <|-- ValidationException : extends
+GameException <|-- SolverException : extends
 
-' Relationships - GUI
-GuiApp *-- GuiState
-GuiApp *-- GuiBoardView
-GuiApp *-- GuiControlPanel
-GuiApp *-- GuiPlaybackPanel
-GuiState --> Board
-GuiState --> SearchResult
-GuiBoardView --> BoardRenderer
-GuiBoardView --> Tile
-GuiBoardView --> Position
-GuiControlPanel --> GuiState
-GuiPlaybackPanel --> PlaybackController
-GuiPlaybackPanel --> GuiState
-AnimationController --> Position
+note right of ISolver
+  <b>Pure Interface (DIP)</b>
+  Hanya 1 method: solve()
+  Tidak punya atribut,
+  constructor, maupun
+  method implementasi.
+  Tidak bergantung pada
+  IHeuristic atau GameMap.
+end note
 
-' Relationships - Utility
-PuzzleException <|-- InputException
-PuzzleException <|-- ValidationException
-PuzzleException <|-- SolverException
-PuzzleException <|-- FileException
+note right of AStar
+  <b>Concrete Implementation</b>
+  Owns heuristic pointer.
+  Implements solve() dan
+  getPriority() sendiri.
+end note
+
+note right of IHeuristic
+  <b>Pure Interface (DIP)</b>
+  Hanya 1 method: compute()
+  Tidak punya atribut atau
+  method implementasi.
+end note
+
+note right of CLI
+  <b>High-level Module</b>
+  Bergantung pada abstraksi
+  ISolver dan IHeuristic,
+  bukan concrete class.
+  Catch GameException untuk
+  handle semua error.
+end note
+
+note right of GameException
+  <b>Exception Hierarchy</b>
+  Base class untuk semua
+  custom exception.
+  CLI catch GameException&
+  untuk handle FileException
+  dan ValidationException.
+end note
 
 @enduml
