@@ -166,7 +166,13 @@ void GuiApp::draw() {
     if (left.heuristicH3) selectedHeuristic = "H3";
     if (left.solveClicked) solve();
 
-    auto right = renderer->drawRightPanel(filename, statusMsg, statusOk,
+    std::string displayFilename = filename;
+    size_t lastSep = displayFilename.find_last_of("/\\");
+    if (lastSep != std::string::npos) {
+        displayFilename = displayFilename.substr(lastSep + 1);
+    }
+
+    auto right = renderer->drawRightPanel(displayFilename, statusMsg, statusOk,
                                            hasResult, result);
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
         filenameFocused = false;
