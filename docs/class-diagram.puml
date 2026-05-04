@@ -137,10 +137,6 @@ package "Heuristic" #F5F5F5 {
     +compute(state: State, map: GameMap): int
   }
 
-  class Manhattan {
-    +compute(state: State, map: GameMap): int
-  }
-
   class Custom {
     +compute(state: State, map: GameMap): int
   }
@@ -231,7 +227,6 @@ State "1" --> "1" Position : position
 State "1" --> "0..1" State : parent
 MoveResult "1" --> "1" Position : newPosition
 
-IHeuristic <|.. Manhattan : implements
 IHeuristic <|.. Custom : implements
 IHeuristic <|.. Advanced : implements
 
