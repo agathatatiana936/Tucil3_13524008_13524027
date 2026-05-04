@@ -2,10 +2,24 @@ CXX      := g++
 CXXFLAGS := -std=c++17 -Wall -Wextra -Iinclude
 LDFLAGS  :=
 
+HAVE_RAYLIB := $(shell pkg-config --exists raylib && echo 1 || echo 0)
+
+ifeq ($(HAVE_RAYLIB),1)
+    CXXFLAGS += -DHAVE_RAYLIB $(shell pkg-config --cflags raylib)
+    LDFLAGS  += $(shell pkg-config --libs raylib)
+endif
+
+ifeq ($(OS),Windows_NT)
+    LDFLAGS += -lole32 -lshell32 -lcomdlg32
+else
+    CXXFLAGS += -pthread
+    LDFLAGS  += -pthread
+endif
+
 SRCDIR   := src
 INCDIR   := include
 BUILDDIR := build
-TARGET   := $(BUILDDIR)/solver
+TARGET   := $(BUILDDIR)/ice_solver
 
 SRCS := $(shell find $(SRCDIR) -name '*.cpp')
 OBJS := $(patsubst $(SRCDIR)/%.cpp,$(BUILDDIR)/%.o,$(SRCS))
