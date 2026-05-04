@@ -32,10 +32,13 @@ static void writeBoard(std::ofstream& file, const GameMap& map, const Position& 
 void SolutionSaver::save(const SearchResult& result, const GameMap& map,
                          const std::string& algorithm, const std::string& heuristic,
                          const std::string& filename) {
-    std::string saveDir = "saves";
-    std::ofstream file(saveDir + "/" + filename);
+    std::string actualPath = filename;
+    if (actualPath.find('/') == std::string::npos && actualPath.find('\\') == std::string::npos) {
+        actualPath = "saves/" + actualPath;
+    }
+    std::ofstream file(actualPath);
     if (!file.is_open()) {
-        std::cout << "Error: Gagal membuka file '" << filename << "' untuk menulis.\n";
+        std::cout << "Error: Gagal membuka file '" << actualPath << "' untuk menulis.\n";
         return;
     }
 
@@ -90,5 +93,5 @@ void SolutionSaver::save(const SearchResult& result, const GameMap& map,
     }
 
     file.close();
-    std::cout << ">> Solusi disimpan pada saves/" << filename << "\n\n";
+    std::cout << ">> Solusi disimpan pada " << actualPath << "\n\n";
 }
