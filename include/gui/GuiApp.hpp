@@ -11,6 +11,8 @@
 #include <raylib.h>
 #endif
 
+class GuiRenderer;
+
 class GuiApp {
 public:
     GuiApp();
@@ -24,29 +26,15 @@ private:
 #ifdef HAVE_RAYLIB
     void update();
     void draw();
-    void drawLeftPanel();
-    void drawRightPanel();
-    void drawCenterPanel();
-    void drawPlaybackControls(int cx, int cy);
+    void computePlaybackState();
 
     void loadFile();
     void solve();
     void saveResult(const std::string& outPath);
-    void computePlaybackState();
-
-    bool radioButton(int x, int y, const char* label, bool selected, int fontSize);
-    bool buttonRect(int x, int y, int w, int h, const char* label);
-    bool imageButton(int x, int y, int w, int h, const std::string& texName);
-    void drawPanel(int x, int y, int w, int h, Color fill, Color border);
-    void drawStat(int x, int y, const char* key, const char* val, Color valColor, int fontSize);
-
-    void drawTextC(const char* text, int x, int y, int fontSize, Color color);
-    void drawTextC(const std::string& text, int x, int y, int fontSize, Color color);
-    int measureTextC(const char* text, int fontSize);
-    int measureTextC(const std::string& text, int fontSize);
 
     AssetManager assets;
     std::unique_ptr<BoardRenderer> boardRenderer;
+    std::unique_ptr<GuiRenderer> renderer;
     Font font;
 
     GameMap map;
