@@ -26,7 +26,7 @@ private:
     void displayResult() const;
     void handlePlayback() const;
     void handleSaveSolution() const;
-    void printBoard(const GameMap& map, const Position& actorPos) const;
+    void printBoard(const GameMap& map, const Position& actorPos, int collectedMask = 0) const;
     static std::string toUpper(const std::string& str);
     static void clearScreen();
     static void waitForEnter();

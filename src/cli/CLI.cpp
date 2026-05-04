@@ -2,6 +2,7 @@
 #include "utils/parser.hpp"
 #include "utils/InputValidator.hpp"
 #include "utils/SolutionSaver.hpp"
+#include "utils/MovementEngine.hpp"
 #include "exception/GameException.hpp"
 #include "exception/FileException.hpp"
 #include "exception/ValidationException.hpp"
@@ -150,13 +151,50 @@ void CLI::displayResult() const {
 }
 
 void CLI::handlePlayback() const {
-    std::cout << ">> Pada step berapa anda ingin melakukan playback: ";
-    int step;
-    std::cin >> step;
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    if (!lastResult.isSolutionFound()) {
+        std::cout << "Tidak ada solusi untuk di-playback.\n";
+        return;
+    }
 
-    std::cout << "\n[Playback placeholder - Step " << step << "]\n";
-    std::cout << "bentar belum ku bikin.\n\n";
+    const std::string& path = lastResult.getSolutionPath();
+    int maxStep = static_cast<int>(path.length());
+
+    bool keepPlaying = true;
+    while (keepPlaying) {
+        std::cout << ">> Pada step berapa anda ingin melakukan playback (0-" << maxStep << "): ";
+        int step;
+        std::cin >> step;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+        if (step < 0 || step > maxStep) {
+            std::cout << "Error: Step tidak valid. Range: 0-" << maxStep << "\n";
+        } else {
+            Position actorPos = currentMap.getStartPosition();
+            int collectedMask = 0;
+            int lastCollected = -1;
+
+            for (int i = 0; i < step; ++i) {
+                State state(actorPos, collectedMask, lastCollected, "", 0, 0, nullptr);
+                MoveResult move = MovementEngine::slide(currentMap, state, path[i]);
+                if (!move.isValid()) break;
+                actorPos = move.getNewPosition();
+                collectedMask = move.getNewCollectedMask();
+                lastCollected = move.getNewLastCollected();
+            }
+
+            std::cout << "\n=== Playback Step " << step << " ===\n";
+            if (step > 0) {
+                std::cout << "Gerakan: " << path.substr(0, step) << "\n";
+            }
+            printBoard(currentMap, actorPos, collectedMask);
+            std::cout << "\n";
+        }
+
+        std::cout << ">> Lanjutkan playback step lain? (Ya/Tidak): ";
+        std::string again;
+        std::getline(std::cin, again);
+        keepPlaying = (toUpper(again) == "YA" || toUpper(again) == "Y");
+    }
 }
 
 void CLI::handleSaveSolution() const {
@@ -176,13 +214,23 @@ void CLI::handleSaveSolution() const {
     SolutionSaver::save(lastResult, currentMap, selectedAlgorithm, selectedHeuristic, outPath);
 }
 
-void CLI::printBoard(const GameMap& map, const Position& actorPos) const {
+void CLI::printBoard(const GameMap& map, const Position& actorPos, int collectedMask) const {
     for (int i = 0; i < map.getRows(); ++i) {
         for (int j = 0; j < map.getCols(); ++j) {
             if (actorPos.getRow() == i && actorPos.getCol() == j) {
                 std::cout << 'Z';
             } else {
-                std::cout << map.getTile(i, j);
+                char tile = map.getTile(i, j);
+                if (tile >= '0' && tile <= '9') {
+                    int num = tile - '0';
+                    if ((collectedMask & (1 << num)) != 0) {
+                        std::cout << '*';
+                    } else {
+                        std::cout << tile;
+                    }
+                } else {
+                    std::cout << tile;
+                }
             }
         }
         std::cout << '\n';
