@@ -12,6 +12,7 @@ BoardRenderer::BoardRenderer(const AssetManager& am, Font f)
     : assets(am), font(f) {}
 
 void BoardRenderer::render(const GameMap& map, const Position& actorPos,
+                           int collectedMask,
                            int x, int y, int maxW, int maxH) const {
     if (map.getRows() == 0 || map.getCols() == 0) return;
 
@@ -26,16 +27,27 @@ void BoardRenderer::render(const GameMap& map, const Position& actorPos,
         for (int c = 0; c < map.getCols(); ++c) {
             int tx = bx + c * tileSize;
             int ty = by + r * tileSize;
-            drawTile(map.getTile(r, c), tx, ty, tileSize);
+            drawTile(map.getTile(r, c), tx, ty, tileSize, collectedMask);
         }
     }
 
     drawActor(actorPos, bx, by, tileSize);
 }
 
-void BoardRenderer::drawTile(char tile, int x, int y, int size) const {
+void BoardRenderer::drawTile(char tile, int x, int y, int size, int collectedMask) const {
+    bool isCollected = false;
+    if (tile >= '0' && tile <= '9') {
+        int number = tile - '0';
+        isCollected = (collectedMask & (1 << number)) != 0;
+    }
+
+    char displayTile = tile;
+    if (isCollected) {
+        displayTile = '.';
+    }
+
     Texture2D tex{0,0,0,0,0};
-    switch (tile) {
+    switch (displayTile) {
         case '.':
         case 'Z':
             tex = assets.has("iceTile") ? assets.get("iceTile") : tex;
@@ -61,20 +73,20 @@ void BoardRenderer::drawTile(char tile, int x, int y, int size) const {
             Vector2{0, 0}, 0.0f, WHITE);
     } else {
         Color col = WHITE;
-        switch (tile) {
+        switch (displayTile) {
             case '.': col = {200, 220, 240, 255}; break;
             case 'X': col = {80, 80, 80, 255}; break;
             case 'L': col = {100, 200, 100, 255}; break;
             case 'O': col = {255, 200, 50, 255}; break;
             case 'Z': col = {200, 200, 200, 255}; break;
             default:
-                if (tile >= '1' && tile <= '9') col = {100, 150, 255, 255};
+                if (displayTile >= '0' && displayTile <= '9') col = {100, 150, 255, 255};
                 break;
         }
         DrawRectangle(x, y, size, size, col);
     }
 
-    if (tile >= '1' && tile <= '9') {
+    if (!isCollected && tile >= '0' && tile <= '9') {
         std::string numName = "num";
         numName.push_back(tile);
         Texture2D numTex = assets.has(numName) ? assets.get(numName) : Texture2D{0,0,0,0,0};
@@ -95,8 +107,8 @@ void BoardRenderer::drawTile(char tile, int x, int y, int size) const {
         const char* label = nullptr;
         switch (tile) {
             case 'X': label = "X"; break;
-            case 'L': label = "L"; break;
-            case 'O': label = "O"; break;
+            case 'L': break;
+            case 'O': break;
         }
         if (label) {
             int fs = size / 2;

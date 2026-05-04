@@ -14,6 +14,7 @@ public:
 #ifdef HAVE_RAYLIB
     explicit BoardRenderer(const AssetManager& am, Font f);
     void render(const GameMap& map, const Position& actorPos,
+                int collectedMask,
                 int x, int y, int maxW, int maxH) const;
 #endif
 
@@ -22,7 +23,7 @@ private:
 #ifdef HAVE_RAYLIB
     Font font;
 
-    void drawTile(char tile, int x, int y, int size) const;
+    void drawTile(char tile, int x, int y, int size, int collectedMask) const;
     void drawActor(const Position& pos, int bx, int by, int size) const;
     void drawTextC(const char* text, int x, int y, int size, Color c) const;
     int measureW(const char* text, int size) const;

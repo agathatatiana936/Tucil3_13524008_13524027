@@ -33,6 +33,7 @@ void AssetManager::loadAll() {
         {"btnNextArrow", "assets/button-1/nextArrow.png"},
         {"btnBackArrow", "assets/button-1/backArrow.png"},
         {"btnHome", "assets/button-1/homeButton.png"},
+        {"num0", "assets/number/0.png"},
         {"num1", "assets/number/1.png"},
         {"num2", "assets/number/2.png"},
         {"num3", "assets/number/3.png"},

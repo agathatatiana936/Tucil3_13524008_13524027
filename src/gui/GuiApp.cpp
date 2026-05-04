@@ -126,14 +126,16 @@ void GuiApp::update() {
 void GuiApp::computePlaybackState() {
     playbackActorPos = map.getStartPosition();
     playbackCollectedMask = 0;
+    int playbackLastCollected = -1;
 
     const std::string& path = result.getSolutionPath();
     for (int i = 0; i < currentStep && i < static_cast<int>(path.length()); ++i) {
-        State state(playbackActorPos, playbackCollectedMask, 0, "", 0, 0, nullptr);
+        State state(playbackActorPos, playbackCollectedMask, playbackLastCollected, "", 0, 0, nullptr);
         MoveResult move = MovementEngine::slide(map, state, path[i]);
         if (move.isValid()) {
             playbackActorPos = move.getNewPosition();
             playbackCollectedMask = move.getNewCollectedMask();
+            playbackLastCollected = move.getNewLastCollected();
         }
     }
 }
@@ -395,7 +397,7 @@ void GuiApp::drawCenterPanel() {
 
     int boardH = h - margin * 2 - 100;
     if (map.getRows() > 0 && map.getCols() > 0) {
-        boardRenderer->render(map, playbackActorPos, x, margin + 10, w, boardH - 20);
+        boardRenderer->render(map, playbackActorPos, playbackCollectedMask, x, margin + 10, w, boardH - 20);
     } else {
         int msgSize = std::max(18, sh / 40);
         const char* msg = "Load a file to display the board";
