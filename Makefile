@@ -24,12 +24,18 @@ TARGET   := $(BUILDDIR)/ice_solver
 SRCS := $(shell find $(SRCDIR) -name '*.cpp')
 OBJS := $(patsubst $(SRCDIR)/%.cpp,$(BUILDDIR)/%.o,$(SRCS))
 
-.PHONY: build run clean deps
+.PHONY: build run gui cli clean deps
 
 build: $(TARGET)
 
 run: build
 	./$(TARGET)
+
+gui: build
+	./$(TARGET)
+
+cli: build
+	./$(TARGET) --cli
 
 $(TARGET): $(OBJS)
 	@mkdir -p $(dir $@)
