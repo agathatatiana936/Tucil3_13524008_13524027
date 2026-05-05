@@ -6,6 +6,7 @@
 #include "utils/SolutionSaver.hpp"
 #include "utils/MovementEngine.hpp"
 #include "solver/AStar.hpp"
+#include "heuristic/Manhattan.hpp"
 #include "heuristic/Custom.hpp"
 #include "heuristic/Advanced.hpp"
 #include "exception/GameException.hpp"
@@ -283,7 +284,9 @@ void GuiApp::solve() {
     std::unique_ptr<IHeuristic> heuristic;
 
     std::string h = toUpperStr(selectedHeuristic);
-    if (h == "H1" || h == "H2") {
+    if (h == "H1") {
+        heuristic = std::make_unique<Manhattan>();
+    } else if (h == "H2") {
         heuristic = std::make_unique<Custom>();
     } else {
         heuristic = std::make_unique<Advanced>();

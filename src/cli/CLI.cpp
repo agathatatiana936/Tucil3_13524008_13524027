@@ -7,6 +7,7 @@
 #include "exception/FileException.hpp"
 #include "exception/ValidationException.hpp"
 #include "solver/AStar.hpp"
+#include "heuristic/Manhattan.hpp"
 #include "heuristic/Custom.hpp"
 #include "heuristic/Advanced.hpp"
 #include <iostream>
@@ -103,24 +104,24 @@ void CLI::handleAlgorithmSelection() {
 
         if (hChoice == "H1") {
             selectedHeuristic = "H1";
-            heuristic = std::make_unique<Custom>();
+            heuristic = std::make_unique<Manhattan>();
         } else if (hChoice == "H2") {
             selectedHeuristic = "H2";
             heuristic = std::make_unique<Custom>();
         } else if (hChoice == "H3") {
             selectedHeuristic = "H3";
-            heuristic = std::make_unique<Custom>();
+            heuristic = std::make_unique<Advanced>();
         } else {
             std::cout << "Heuristic tidak dikenal, menggunakan H1.\n";
             selectedHeuristic = "H1";
-            heuristic = std::make_unique<Custom>();
+            heuristic = std::make_unique<Manhattan>();
         }
 
         solver = std::make_unique<AStar>(heuristic.get());
     } else {
         std::cout << "Algoritma tidak dikenal, menggunakan A*.\n";
         selectedHeuristic = "H1";
-        heuristic = std::make_unique<Custom>();
+        heuristic = std::make_unique<Manhattan>();
         solver = std::make_unique<AStar>(heuristic.get());
     }
 
