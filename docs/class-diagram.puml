@@ -182,6 +182,71 @@ package "CLI" #F5F5F5 {
   }
 }
 
+package "GUI" #F5F5F5 {
+  class GuiApp {
+    -AssetManager assets
+    -unique_ptr~BoardRenderer~ boardRenderer
+    -Font font
+    -GameMap map
+    -SearchResult result
+    -string filename
+    -string statusMsg
+    -bool statusOk
+    -bool hasResult
+    -bool filenameFocused
+    -string selectedAlgo
+    -string selectedHeuristic
+    -int currentStep
+    -int totalSteps
+    -bool isPlaying
+    -float playTimer
+    -Position playbackActorPos
+    -int playbackCollectedMask
+    -bool running
+    -int screenWidth
+    -int screenHeight
+    +GuiApp()
+    +~GuiApp()
+    +init(): bool
+    +run(): void
+    +shutdown(): void
+    -update(): void
+    -draw(): void
+    -drawLeftPanel(): void
+    -drawRightPanel(): void
+    -drawCenterPanel(): void
+    -drawPlaybackControls(cx: int, cy: int): void
+    -loadFile(): void
+    -solve(): void
+    -saveResult(outPath: string): void
+    -computePlaybackState(): void
+    -radioButton(...): bool
+    -buttonRect(...): bool
+    -imageButton(...): bool
+    -drawPanel(...): void
+    -drawStat(...): void
+  }
+
+  class AssetManager {
+    -unordered_map~string,Texture2D~ textures
+    +AssetManager()
+    +~AssetManager()
+    +loadAll(): void
+    +unloadAll(): void
+    +get(name: string): Texture2D
+    +has(name: string): bool
+  }
+
+  class BoardRenderer {
+    -const AssetManager& assets
+    -Font font
+    +BoardRenderer(am: AssetManager, f: Font)
+    +render(map: GameMap, actorPos: Position, collectedMask: int, x: int, y: int, maxW: int, maxH: int): void
+    -drawTile(tile: char, x: int, y: int, size: int, collectedMask: int): void
+    -drawActor(pos: Position, bx: int, by: int, size: int): void
+  }
+}
+
 package "Parser" #F5F5F5 {
   class parser {
     +parseFile(filename: string): void
@@ -238,6 +303,14 @@ CLI --> "1" SearchResult : lastResult
 CLI ..> ISolver : uses
 CLI ..> IHeuristic : uses
 CLI ..> GameException : catches
+
+GuiApp --> "1" AssetManager : assets
+GuiApp --> "1" BoardRenderer : boardRenderer
+BoardRenderer --> "1" AssetManager : assets
+GuiApp ..> GameMap : uses
+GuiApp ..> SearchResult : uses
+GuiApp ..> ISolver : uses
+GuiApp ..> IHeuristic : uses
 
 parser ..> GameMap : creates
 parser ..> FileException : throws

@@ -3,6 +3,7 @@
 #include "model/State.hpp"
 #include <fstream>
 #include <iostream>
+#include <filesystem>
 
 static void writeBoard(std::ofstream& file, const GameMap& map, const Position& actorPos, int collectedMask) {
     for (int i = 0; i < map.getRows(); ++i) {
@@ -34,6 +35,11 @@ void SolutionSaver::save(const SearchResult& result, const GameMap& map,
                          const std::string& filename) {
     std::string actualPath = filename;
     if (actualPath.find('/') == std::string::npos && actualPath.find('\\') == std::string::npos) {
+        std::string folder = "saves";
+        if (!std::filesystem::exists(folder)) {
+            std::filesystem::create_directory(folder);
+            std::cout << ">> Folder 'saves' dibuat untuk menyimpan solusi.\n";
+        }
         actualPath = "saves/" + actualPath;
     }
     std::ofstream file(actualPath);
