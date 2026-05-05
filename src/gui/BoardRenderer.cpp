@@ -117,22 +117,6 @@ void BoardRenderer::drawTile(char tile, int x, int y, int size, int collectedMas
             drawTextC("*", x + (size - tw) / 2, y + (size - fs) / 2, fs, DARKGRAY);
         }
     }
-
-    if (tile == 'X' || tile == 'L' || tile == 'O') {
-        const char* label = nullptr;
-        switch (tile) {
-            case 'X': label = "X"; break;
-            case 'L': break;
-            case 'O': break;
-        }
-        if (label) {
-            int fs = size / 2;
-            int tw = measureW(label, fs);
-            drawTextC(label, x + (size - tw) / 2, y + (size - fs) / 2, fs, DARKGRAY);
-        }
-    }
-
-    DrawRectangleLines(x, y, size, size, {60, 70, 90, 255});
 }
 
 void BoardRenderer::drawActor(const Position& pos, int bx, int by, int size) const {
