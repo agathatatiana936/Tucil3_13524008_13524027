@@ -12,6 +12,7 @@
 #endif
 
 class GuiRenderer;
+class BoardViewPage;
 
 class GuiApp {
 public:
@@ -35,6 +36,7 @@ private:
     AssetManager assets;
     std::unique_ptr<BoardRenderer> boardRenderer;
     std::unique_ptr<GuiRenderer> renderer;
+    std::unique_ptr<BoardViewPage> boardViewPage;
     Font font;
 
     GameMap map;
@@ -57,6 +59,7 @@ private:
     Position playbackActorPos;
     int playbackCollectedMask;
 
+    bool boardViewMode;
     bool running;
     int screenWidth;
     int screenHeight;

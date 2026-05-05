@@ -15,7 +15,8 @@ public:
     explicit BoardRenderer(const AssetManager& am, Font f);
     void render(const GameMap& map, const Position& actorPos,
                 int collectedMask,
-                int x, int y, int maxW, int maxH) const;
+                int x, int y, int maxW, int maxH,
+                int maxRows = 0, int maxCols = 0) const;
 #endif
 
 private:

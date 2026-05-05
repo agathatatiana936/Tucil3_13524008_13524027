@@ -1,5 +1,6 @@
 #include "gui/GuiApp.hpp"
 #include "gui/GuiRenderer.hpp"
+#include "gui/BoardViewPage.hpp"
 #include "gui/portable-file-dialogs.h"
 #include "utils/parser.hpp"
 #include "utils/InputValidator.hpp"
@@ -73,6 +74,7 @@ GuiApp::GuiApp()
       playTimer(0.0f),
       playbackActorPos(0, 0),
       playbackCollectedMask(0),
+      boardViewMode(false),
       running(true),
       screenWidth(1280),
       screenHeight(720) {}
@@ -99,12 +101,14 @@ bool GuiApp::init() {
     assets.loadAll();
     boardRenderer = std::make_unique<BoardRenderer>(assets, font);
     renderer = std::make_unique<GuiRenderer>(assets, font);
+    boardViewPage = std::make_unique<BoardViewPage>(assets, font);
     return true;
 }
 
 void GuiApp::shutdown() {
     boardRenderer.reset();
     renderer.reset();
+    boardViewPage.reset();
     if (font.baseSize != 0 && font.texture.id != 0) {
         UnloadFont(font);
     }
@@ -158,6 +162,38 @@ void GuiApp::computePlaybackState() {
 }
 
 void GuiApp::draw() {
+    if (boardViewMode) {
+        boardViewPage->beginFrame();
+        auto bv = boardViewPage->draw(map, playbackActorPos, playbackCollectedMask,
+                                       hasResult, isPlaying, currentStep, totalSteps,
+                                       *boardRenderer);
+        boardViewPage->endFrame();
+        if (bv.back) {
+            boardViewMode = false;
+        }
+        if (bv.rewind) {
+            currentStep = 0; isPlaying = false; computePlaybackState();
+        }
+        if (bv.prev) {
+            if (currentStep > 0) currentStep--;
+            isPlaying = false; computePlaybackState();
+        }
+        if (bv.playPause) {
+            isPlaying = !isPlaying;
+            if (currentStep >= totalSteps && totalSteps > 0) {
+                currentStep = 0; computePlaybackState();
+            }
+        }
+        if (bv.next) {
+            if (currentStep < totalSteps) currentStep++;
+            isPlaying = false; computePlaybackState();
+        }
+        if (bv.end) {
+            currentStep = totalSteps; isPlaying = false; computePlaybackState();
+        }
+        return;
+    }
+
     renderer->beginFrame();
 
     auto left = renderer->drawLeftPanel(selectedAlgo, selectedHeuristic);
@@ -196,6 +232,9 @@ void GuiApp::draw() {
 
     auto center = renderer->drawCenterPanel(map, playbackActorPos, playbackCollectedMask,
                                              hasResult, isPlaying, currentStep, totalSteps);
+    if (center.viewBoard) {
+        boardViewMode = true;
+    }
     if (center.rewind) {
         currentStep = 0; isPlaying = false; computePlaybackState();
     }
@@ -226,9 +265,10 @@ void GuiApp::draw() {
     int w = sw - leftW - rightW - margin * 4;
     int h = sh;
     int boardH = h - margin * 2 - 100;
-    if (map.getRows() > 0 && map.getCols() > 0) {
+    bool isLargeBoard = map.getRows() > 10 || map.getCols() > 10;
+    if (map.getRows() > 0 && map.getCols() > 0 && !isLargeBoard) {
         boardRenderer->render(map, playbackActorPos, playbackCollectedMask,
-                              x, margin + 10, w, boardH - 20);
+                              x, margin + 10, w, boardH - 20, 6, 6);
     }
 
     renderer->endFrame();

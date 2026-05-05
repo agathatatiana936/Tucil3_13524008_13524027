@@ -6,6 +6,7 @@
 #include <string>
 
 class AssetManager;
+class BoardRenderer;
 class GameMap;
 class Position;
 class SearchResult;
@@ -34,6 +35,16 @@ struct CenterPanelInput {
     bool playPause = false;
     bool next = false;
     bool end = false;
+    bool viewBoard = false;
+};
+
+struct BoardViewInput {
+    bool back = false;
+    bool rewind = false;
+    bool prev = false;
+    bool playPause = false;
+    bool next = false;
+    bool end = false;
 };
 
 class GuiRenderer {
@@ -51,8 +62,14 @@ public:
                                     bool hasResult,
                                     const SearchResult& result);
     CenterPanelInput drawCenterPanel(const GameMap& map,
-                                      const Position& actorPos,
-                                      int collectedMask,
+                                       const Position& actorPos,
+                                       int collectedMask,
+                                       bool hasResult,
+                                       bool isPlaying,
+                                       int currentStep,
+                                       int totalSteps);
+
+    BoardViewInput drawBoardViewPage(const GameMap& map,
                                       bool hasResult,
                                       bool isPlaying,
                                       int currentStep,

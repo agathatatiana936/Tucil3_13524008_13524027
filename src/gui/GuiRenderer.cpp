@@ -220,8 +220,27 @@ RightPanelInput GuiRenderer::drawRightPanel(const std::string& filename,
         drawStat(x, y, "Found:", found, result.isSolutionFound() ? GREEN : RED, itemSize);
         y += itemSize + 8;
 
-        drawStat(x, y, "Path:", result.getSolutionPath().c_str(), WHITE, itemSize);
-        y += itemSize + 8;
+        drawTextC("Path:", x, y, itemSize, LIGHTGRAY);
+        y += itemSize + 4;
+        {
+            const std::string& path = result.getSolutionPath();
+            int maxLineW = pw - 40;
+            int lineX = x;
+            int lineY = y;
+            size_t start = 0;
+            while (start < path.length()) {
+                size_t len = 1;
+                while (start + len <= path.length() &&
+                       measureTextC(path.substr(start, len), itemSize) < maxLineW) {
+                    ++len;
+                }
+                if (len > 1 && start + len <= path.length()) --len;
+                drawTextC(path.substr(start, len), lineX, lineY, itemSize, WHITE);
+                lineY += itemSize + 2;
+                start += len;
+            }
+            y = lineY + 4;
+        }
 
         drawStat(x, y, "Cost:", std::to_string(result.getTotalCost()).c_str(), WHITE, itemSize);
         y += itemSize + 8;
@@ -266,6 +285,22 @@ CenterPanelInput GuiRenderer::drawCenterPanel(const GameMap& map,
     int w = sw - leftW - rightW - margin * 4;
     int h = sh;
 
+    bool isLargeBoard = map.getRows() > 10 || map.getCols() > 10;
+
+    if (isLargeBoard && map.getRows() > 0 && map.getCols() > 0) {
+        int btnW = std::min(250, w - 40);
+        int btnH = std::max(45, sh / 16);
+        int bx = x + (w - btnW) / 2;
+        int by = h / 2 - btnH / 2;
+
+        drawTextC("Ukuran Boardnya kegedean, cek aja dihalaman ini", x + (w - measureTextC("Ukuran Boardnya kegedean, cek aja dihalaman ini", 18)) / 2,
+                  by - 40, 18, BLACK);
+        if (buttonRect(bx, by, btnW, btnH, "VIEW BOARD")) {
+            input.viewBoard = true;
+        }
+        return input;
+    }
+
     Texture2D boardTex = assets.has("board") ? assets.get("board") : Texture2D{0,0,0,0,0};
     if (boardTex.id != 0) {
         DrawTexturePro(boardTex,
@@ -274,13 +309,7 @@ CenterPanelInput GuiRenderer::drawCenterPanel(const GameMap& map,
             Vector2{0, 0}, 0.0f, WHITE);
     }
 
-    if (map.getRows() > 0 && map.getCols() > 0) {
-        // Need BoardRenderer here, but we don't have it in GuiRenderer
-        // So we draw placeholder or nothing. Actually BoardRenderer is in GuiApp.
-        // To keep separation, GuiRenderer only draws UI chrome.
-        // Board rendering will be done by GuiApp using BoardRenderer after calling drawCenterPanel.
-        // But we need to keep the layout space.
-    } else {
+    if (map.getRows() == 0 || map.getCols() == 0) {
         int msgSize = std::max(18, sh / 40);
         const char* msg = "Load a file to display the board";
         int tw = measureTextC(msg, msgSize);
@@ -295,7 +324,7 @@ CenterPanelInput GuiRenderer::drawCenterPanel(const GameMap& map,
         int sx = x + w / 2 - totalW / 2;
         int cy = h - margin - 70;
 
-        if (imageButton(sx, cy, btnW, btnH, "btnBackArrow")) input.rewind = true;
+        if (imageButton(sx, cy, btnW, btnH, "btnFirst")) input.rewind = true;
         sx += btnW + gap;
 
         if (imageButton(sx, cy, btnW, btnH, "btnPrev")) input.prev = true;
@@ -308,12 +337,72 @@ CenterPanelInput GuiRenderer::drawCenterPanel(const GameMap& map,
         if (imageButton(sx, cy, btnW, btnH, "btnNext")) input.next = true;
         sx += btnW + gap;
 
-        if (imageButton(sx, cy, btnW, btnH, "btnNextArrow")) input.end = true;
+        if (imageButton(sx, cy, btnW, btnH, "btnLast")) input.end = true;
 
         int stepSize = std::max(14, sh / 50);
         std::string stepStr = "Step: " + std::to_string(currentStep) + " / " + std::to_string(totalSteps);
         int stw = measureTextC(stepStr, stepSize);
         drawTextC(stepStr, x + w / 2 - stw / 2, cy - stepSize - 8, stepSize, WHITE);
+    }
+
+    return input;
+}
+
+BoardViewInput GuiRenderer::drawBoardViewPage(const GameMap& map,
+                                               bool hasResult,
+                                               bool isPlaying,
+                                               int currentStep,
+                                               int totalSteps) {
+    (void)map;
+    BoardViewInput input;
+    int sw = GetScreenWidth();
+    int sh = GetScreenHeight();
+
+    Texture2D bgTex = assets.has("bg") ? assets.get("bg") : Texture2D{0,0,0,0,0};
+    if (bgTex.id != 0) {
+        DrawTexturePro(bgTex,
+            Rectangle{0, 0, (float)bgTex.width, (float)bgTex.height},
+            Rectangle{0, 0, (float)sw, (float)sh},
+            Vector2{0, 0}, 0.0f, WHITE);
+    } else {
+        ClearBackground({22, 28, 38, 255});
+    }
+
+    int margin = 20;
+    int backBtnH = 40;
+    int backBtnW = 120;
+
+    if (buttonRect(margin, margin, backBtnW, backBtnH, "BACK")) {
+        input.back = true;
+    }
+
+    if (hasResult) {
+        int btnW = 60;
+        int btnH = 40;
+        int gap = 15;
+        int totalW = btnW * 5 + gap * 4;
+        int sx = sw / 2 - totalW / 2;
+        int cy = sh - margin - btnH;
+
+        if (imageButton(sx, cy, btnW, btnH, "btnFirst")) input.rewind = true;
+        sx += btnW + gap;
+
+        if (imageButton(sx, cy, btnW, btnH, "btnPrev")) input.prev = true;
+        sx += btnW + gap;
+
+        std::string playTex = isPlaying ? "btnPause" : "btnPlay";
+        if (imageButton(sx, cy, btnW, btnH, playTex)) input.playPause = true;
+        sx += btnW + gap;
+
+        if (imageButton(sx, cy, btnW, btnH, "btnNext")) input.next = true;
+        sx += btnW + gap;
+
+        if (imageButton(sx, cy, btnW, btnH, "btnLast")) input.end = true;
+
+        int stepSize = std::max(16, sh / 45);
+        std::string stepStr = "Step: " + std::to_string(currentStep) + " / " + std::to_string(totalSteps);
+        int stw = measureTextC(stepStr, stepSize);
+        drawTextC(stepStr, sw / 2 - stw / 2, cy - stepSize - 10, stepSize, WHITE);
     }
 
     return input;

@@ -13,13 +13,28 @@ BoardRenderer::BoardRenderer(const AssetManager& am, Font f)
 
 void BoardRenderer::render(const GameMap& map, const Position& actorPos,
                            int collectedMask,
-                           int x, int y, int maxW, int maxH) const {
+                           int x, int y, int maxW, int maxH,
+                           int maxRows, int maxCols) const {
     if (map.getRows() == 0 || map.getCols() == 0) return;
 
-    int tileSize = std::min(maxW / map.getCols(), maxH / map.getRows());
+    int refRows = map.getRows();
+    int refCols = map.getCols();
+    if (maxRows > 0 && map.getRows() < maxRows) refRows = maxRows;
+    if (maxCols > 0 && map.getCols() < maxCols) refCols = maxCols;
+
+    int tileSize = std::min(maxW / refCols, maxH / refRows);
+    int maxBoardW = 64 * 6;
     tileSize = std::min(tileSize, 64);
     int boardW = map.getCols() * tileSize;
     int boardH = map.getRows() * tileSize;
+    if(boardW > maxBoardW && map.getCols() < 11){
+        boardW = maxBoardW;
+        tileSize = boardW / map.getCols();
+    }
+    if(boardH > maxBoardW && map.getRows() < 11){
+        boardH = maxBoardW;
+        tileSize = boardH / map.getRows();
+    }
     int bx = x + (maxW - boardW) / 2;
     int by = y + (maxH - boardH) / 2;
 

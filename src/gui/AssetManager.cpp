@@ -30,6 +30,8 @@ void AssetManager::loadAll() {
         {"btnPause", "assets/button-1/pauseButton.png"},
         {"btnNext", "assets/button-1/nextButton.png"},
         {"btnPrev", "assets/button-1/prevButton.png"},
+        {"btnFirst", "assets/button-1/firstButton.png"},
+        {"btnLast", "assets/button-1/lastButton.png"},
         {"btnNextArrow", "assets/button-1/nextArrow.png"},
         {"btnBackArrow", "assets/button-1/backArrow.png"},
         {"btnHome", "assets/button-1/homeButton.png"},
