@@ -6,6 +6,8 @@
 #include "utils/SolutionSaver.hpp"
 #include "utils/MovementEngine.hpp"
 #include "solver/AStar.hpp"
+#include "solver/GBFS.hpp"
+#include "solver/UCS.hpp"
 #include "heuristic/Manhattan.hpp"
 #include "heuristic/Custom.hpp"
 #include "heuristic/Advanced.hpp"
