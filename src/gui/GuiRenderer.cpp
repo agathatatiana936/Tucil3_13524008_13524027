@@ -245,7 +245,7 @@ RightPanelInput GuiRenderer::drawRightPanel(const std::string& filename,
         drawStat(x, y, "Cost:", std::to_string(result.getTotalCost()).c_str(), WHITE, itemSize);
         y += itemSize + 8;
 
-        std::string timeStr = std::to_string(static_cast<int>(result.getExecutionTimeMs())) + " ms";
+        std::string timeStr = std::to_string(static_cast<float>(result.getExecutionTimeMs())) + " ms";
         drawStat(x, y, "Time:", timeStr.c_str(), WHITE, itemSize);
         y += itemSize + 8;
 
