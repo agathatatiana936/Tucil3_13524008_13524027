@@ -8,6 +8,8 @@
 #include "exception/ValidationException.hpp"
 #include "solver/AStar.hpp"
 #include "heuristic/Manhattan.hpp"
+#include "solver/UCS.hpp"
+#include "solver/GBFS.hpp"
 #include "heuristic/Custom.hpp"
 #include "heuristic/Advanced.hpp"
 #include <iostream>
@@ -86,7 +88,7 @@ bool CLI::handleInputFile() {
 }
 
 void CLI::handleAlgorithmSelection() {
-    std::cout << ">> Algoritma apa yang anda pilih? (A*): ";
+    std::cout << ">> Algoritma apa yang anda pilih? (UCS/GBFS/A*): ";
     std::string algo;
     std::getline(std::cin, algo);
     algo = toUpper(algo);
@@ -107,7 +109,7 @@ void CLI::handleAlgorithmSelection() {
             heuristic = std::make_unique<Manhattan>();
         } else if (hChoice == "H2") {
             selectedHeuristic = "H2";
-            heuristic = std::make_unique<Custom>();
+            heuristic = std::make_unique<Advanced>();
         } else if (hChoice == "H3") {
             selectedHeuristic = "H3";
             heuristic = std::make_unique<Advanced>();
@@ -118,8 +120,35 @@ void CLI::handleAlgorithmSelection() {
         }
 
         solver = std::make_unique<AStar>(heuristic.get());
+    } else if(algo == "UCS") {
+        selectedAlgorithm = "UCS";
+        solver = std::make_unique<UCS>();
+    } else if(algo == "GBFS") {
+        selectedAlgorithm = "GBFS";
+
+        std::cout << ">> Heuristic apa yang anda pilih? (H1/H2/H3): ";
+        std::string hChoice;
+        std::getline(std::cin, hChoice);
+        hChoice = toUpper(hChoice);
+
+        if (hChoice == "H1") {
+            selectedHeuristic = "H1";
+            heuristic = std::make_unique<Custom>();
+        } else if (hChoice == "H2") {
+            selectedHeuristic = "H2";
+            heuristic = std::make_unique<Custom>();
+        } else if (hChoice == "H3") {
+            selectedHeuristic = "H3";
+            heuristic = std::make_unique<Custom>();
+        } else {
+            std::cout << "Heuristic tidak dikenal, menggunakan H1.\n";
+            selectedHeuristic = "H1";
+            heuristic = std::make_unique<Custom>();
+        }
+        solver = std::make_unique<GBFS>(heuristic.get());
     } else {
         std::cout << "Algoritma tidak dikenal, menggunakan A*.\n";
+        selectedAlgorithm = "A*";
         selectedHeuristic = "H1";
         heuristic = std::make_unique<Manhattan>();
         solver = std::make_unique<AStar>(heuristic.get());

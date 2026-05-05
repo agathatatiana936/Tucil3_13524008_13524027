@@ -295,9 +295,13 @@ void GuiApp::solve() {
     std::string algo = toUpperStr(selectedAlgo);
     if (algo == "A*" || algo == "ASTAR") {
         solver = std::make_unique<AStar>(heuristic.get());
+    } else if (algo == "UCS") {
+        solver = std::make_unique<UCS>();
+    } else if (algo == "GBFS") {
+        solver = std::make_unique<GBFS>(heuristic.get());
     } else {
         solver = std::make_unique<AStar>(heuristic.get());
-    }
+}
 
     result = solver->solve(map);
     hasResult = true;

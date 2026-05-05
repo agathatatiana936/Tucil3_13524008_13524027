@@ -137,6 +137,10 @@ package "Heuristic" #F5F5F5 {
     +compute(state: State, map: GameMap): int
   }
 
+  class Manhattan {
+    +compute(state: State, map: GameMap): int
+  }
+
   class Custom {
     +compute(state: State, map: GameMap): int
   }
@@ -144,6 +148,23 @@ package "Heuristic" #F5F5F5 {
   class Advanced {
     +compute(state: State, map: GameMap): int
   }
+
+  note bottom of Manhattan
+    H1: Straight-line distance
+    to goal (Manhattan).
+    O(1), weakest.
+  end note
+
+  note bottom of Custom
+    H2: Distance to next required
+    number + goal.
+    O(1), medium.
+  end note
+
+  note bottom of Advanced
+    H3: Relaxed TSP greedy sum.
+    O(N²), strongest.
+  end note
 }
 
 package "Solver" #F5F5F5 {
