@@ -15,6 +15,7 @@ class SearchResult;
 
 struct LeftPanelInput {
     bool algoAStar = false;
+    bool algoWAStar = false;
     bool algoUCS = false;
     bool algoGBFS = false;
     bool heuristicH1 = false;

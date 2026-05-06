@@ -7,6 +7,7 @@
 #include "exception/FileException.hpp"
 #include "exception/ValidationException.hpp"
 #include "solver/AStar.hpp"
+#include "solver/WeightedAStar.hpp"
 #include "heuristic/Manhattan.hpp"
 #include "solver/UCS.hpp"
 #include "solver/GBFS.hpp"
@@ -88,7 +89,7 @@ bool CLI::handleInputFile() {
 }
 
 void CLI::handleAlgorithmSelection() {
-    std::cout << ">> Algoritma apa yang anda pilih? (UCS/GBFS/A*): ";
+    std::cout << ">> Algoritma apa yang anda pilih? (UCS/GBFS/A*/WA*): ";
     std::string algo;
     std::getline(std::cin, algo);
     algo = toUpper(algo);
@@ -120,6 +121,29 @@ void CLI::handleAlgorithmSelection() {
         }
 
         solver = std::make_unique<AStar>(heuristic.get());
+    } else if (algo == "WA*" || algo == "WASTAR") {
+        selectedAlgorithm = "WA*";
+        std::cout << ">> Heuristic apa yang anda pilih? (H1/H2/H3): ";
+        std::string hChoice;
+        std::getline(std::cin, hChoice);
+        hChoice = toUpper(hChoice);
+
+        if (hChoice == "H1") {
+            selectedHeuristic = "H1";
+            heuristic = std::make_unique<Manhattan>();
+        } else if (hChoice == "H2") {
+            selectedHeuristic = "H2";
+            heuristic = std::make_unique<Advanced>();
+        } else if (hChoice == "H3") {
+            selectedHeuristic = "H3";
+            heuristic = std::make_unique<Advanced>();
+        } else {
+            std::cout << "Heuristic tidak dikenal, menggunakan H1.\n";
+            selectedHeuristic = "H1";
+            heuristic = std::make_unique<Manhattan>();
+        }
+
+        solver = std::make_unique<WeightedAStar>(heuristic.get());
     } else if(algo == "UCS") {
         selectedAlgorithm = "UCS";
         solver = std::make_unique<UCS>();

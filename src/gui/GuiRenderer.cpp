@@ -148,6 +148,8 @@ LeftPanelInput GuiRenderer::drawLeftPanel(const std::string& selectedAlgo,
 
     if (radioButton(x, y, "A*", selectedAlgo == "A*", itemSize)) input.algoAStar = true;
     y += 30;
+    if (radioButton(x, y, "WA*", selectedAlgo == "WA*", itemSize)) input.algoWAStar = true;
+    y += 30;
     if (radioButton(x, y, "UCS", selectedAlgo == "UCS", itemSize)) input.algoUCS = true;
     y += 30;
     if (radioButton(x, y, "GBFS", selectedAlgo == "GBFS", itemSize)) input.algoGBFS = true;

@@ -7,6 +7,7 @@
 #include "utils/SolutionSaver.hpp"
 #include "utils/MovementEngine.hpp"
 #include "solver/AStar.hpp"
+#include "solver/WeightedAStar.hpp"
 #include "solver/GBFS.hpp"
 #include "solver/UCS.hpp"
 #include "heuristic/Manhattan.hpp"
@@ -198,6 +199,7 @@ void GuiApp::draw() {
 
     auto left = renderer->drawLeftPanel(selectedAlgo, selectedHeuristic);
     if (left.algoAStar) selectedAlgo = "A*";
+    if (left.algoWAStar) selectedAlgo = "WA*";
     if (left.algoUCS) selectedAlgo = "UCS";
     if (left.algoGBFS) selectedAlgo = "GBFS";
     if (left.heuristicH1) selectedHeuristic = "H1";
@@ -337,13 +339,15 @@ void GuiApp::solve() {
     std::string algo = toUpperStr(selectedAlgo);
     if (algo == "A*" || algo == "ASTAR") {
         solver = std::make_unique<AStar>(heuristic.get());
+    } else if (algo == "WA*" || algo == "WASTAR") {
+        solver = std::make_unique<WeightedAStar>(heuristic.get());
     } else if (algo == "UCS") {
         solver = std::make_unique<UCS>();
     } else if (algo == "GBFS") {
         solver = std::make_unique<GBFS>(heuristic.get());
     } else {
         solver = std::make_unique<AStar>(heuristic.get());
-}
+    }
 
     result = solver->solve(map);
     hasResult = true;
