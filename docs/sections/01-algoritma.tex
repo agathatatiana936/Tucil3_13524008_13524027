@@ -446,31 +446,358 @@ dengan:
 	\end{tabular}
 \end{table}
 
-\section{Perbandingan UCS, GBFS, dan A*}
+\subsection{Weighted A*}
 
-Ketiga algoritma memiliki strategi pemilihan state yang berbeda. 
-UCS berfokus pada cost aktual, GBFS berfokus pada estimasi ke target, sedangkan A* menggabungkan keduanya. 
+Weighted A* merupakan algoritma pathfinding tambahan yang diimplementasikan sebagai bagian dari spesifikasi bonus. 
+Algoritma ini dikembangkan dari A* biasa, tetapi memberikan bobot lebih besar pada komponen heuristik. 
+Tujuan penambahan Weighted A* adalah untuk menguji \textit{trade-off} antara kecepatan pencarian dan optimalitas solusi pada kasus \textit{Ice Sliding Puzzle}.
+
+\begin{tcolorbox}[
+	colback=purple!5,
+	colframe=purple!60!black,
+	title=\textbf{Prinsip Weighted A*},
+	arc=2mm,
+	boxrule=0.8pt
+]
+Weighted A* menggunakan fungsi evaluasi:
+\[
+	f(n) = g(n) + w \cdot h(n)
+\]
+dengan:
+\[
+	g(n) = \text{total cost aktual dari start ke state } n
+\]
+\[
+	h(n) = \text{estimasi jarak atau cost dari state } n \text{ ke target berikutnya}
+\]
+\[
+	w = \text{bobot heuristik}
+\]
+
+Pada implementasi program ini, nilai bobot yang digunakan adalah:
+\[
+	w = 2
+\]
+\end{tcolorbox}
+
+\subsubsection{Perbedaan Weighted A* dengan A* Biasa}
+
+Weighted A* memiliki struktur dasar yang mirip dengan A*, tetapi nilai heuristiknya diperbesar dengan bobot tertentu. 
+Pada A* biasa, fungsi evaluasi adalah $f(n)=g(n)+h(n)$, sedangkan pada Weighted A* fungsi evaluasinya menjadi $f(n)=g(n)+w \cdot h(n)$. 
+Karena nilai heuristik diperbesar, algoritma menjadi lebih agresif dalam memilih state yang terlihat dekat dengan target.
+
+\begin{table}[H]
+	\centering
+	\caption{Perbedaan A* dan Weighted A*}
+	\begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
+		\hline
+		\rowcolor{purple!15}
+		\textbf{Aspek} & \textbf{A*} & \textbf{Weighted A*} \\
+		\hline
+		Fungsi evaluasi & $f(n)=g(n)+h(n)$ & $f(n)=g(n)+w \cdot h(n)$ \\
+		\hline
+		Bobot heuristik & $w=1$ & $w=2$ pada implementasi program \\
+		\hline
+		Peran heuristik & Menyeimbangkan cost aktual dan estimasi & Lebih dominan dalam pemilihan state \\
+		\hline
+		Karakter pencarian & Lebih seimbang & Lebih agresif menuju target \\
+		\hline
+		Optimalitas & Optimal jika heuristik admissible & Tidak selalu menjamin optimalitas \\
+		\hline
+		Tujuan utama & Menjaga keseimbangan antara cost dan arah pencarian & Mengurangi jumlah iterasi dan mempercepat pencarian \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsubsection{Pengaruh Bobot terhadap Pemilihan State}
+
+Nilai bobot $w$ menentukan seberapa besar pengaruh heuristik terhadap prioritas state. 
+Semakin besar nilai $w$, semakin besar pengaruh $h(n)$ dibandingkan $g(n)$. 
+Akibatnya, Weighted A* cenderung memilih state yang terlihat lebih dekat ke target, walaupun cost aktualnya belum tentu paling kecil.
+
+\begin{tcolorbox}[
+	colback=purple!5,
+	colframe=purple!60!black,
+	title=\textbf{Ilustrasi Pengaruh Bobot},
+	arc=2mm,
+	boxrule=0.8pt
+]
+Misalkan terdapat dua state berikut:
+\[
+\begin{array}{c|c|c|c}
+\text{State} & g(n) & h(n) & g(n)+2h(n) \\
+\hline
+A & 10 & 7 & 24 \\
+B & 14 & 3 & 20 \\
+\end{array}
+\]
+
+Weighted A* akan memilih state B karena nilai evaluasinya lebih kecil, meskipun cost aktual $g(n)$ state B lebih besar daripada state A.
+\end{tcolorbox}
+
+\subsubsection{Representasi State pada Weighted A*}
+
+Representasi state pada Weighted A* sama dengan A*, karena keduanya membutuhkan informasi cost aktual dan heuristik. 
+Setiap state menyimpan posisi aktor, progres angka yang sudah dikumpulkan, path gerakan, serta nilai cost yang digunakan dalam proses pencarian.
+
+\begin{table}[H]
+	\centering
+	\caption{Representasi state pada Weighted A*}
+	\begin{tabular}{|p{4cm}|p{10cm}|}
+		\hline
+		\rowcolor{purple!15}
+		\textbf{Komponen State} & \textbf{Keterangan} \\
+		\hline
+		Posisi aktor & Menyimpan koordinat baris dan kolom aktor setelah suatu gerakan sliding. \\
+		\hline
+		\textit{Collected mask} & Menyimpan angka yang sudah dikumpulkan dalam bentuk bitmask. \\
+		\hline
+		Angka terakhir & Menyimpan angka terakhir yang berhasil dikumpulkan secara valid. \\
+		\hline
+		Path gerakan & Menyimpan urutan gerakan dari state awal sampai state saat ini. \\
+		\hline
+		\texttt{gCost} & Menyimpan total cost aktual dari start sampai state saat ini. \\
+		\hline
+		\texttt{hCost} & Menyimpan nilai estimasi dari state saat ini menuju target berikutnya atau goal. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsubsection{Struktur Data Utama}
+
+Weighted A* menggunakan dua struktur data utama, yaitu \textit{priority queue} sebagai \textit{open set} dan \textit{map} sebagai penyimpan cost terbaik untuk setiap state. 
+Priority queue mengurutkan state berdasarkan nilai evaluasi $g(n)+2h(n)$.
+
+\begin{table}[H]
+	\centering
+	\caption{Struktur data utama Weighted A*}
+	\begin{tabular}{|p{4cm}|p{10cm}|}
+		\hline
+		\rowcolor{purple!15}
+		\textbf{Struktur Data} & \textbf{Peran} \\
+		\hline
+		\texttt{priority\_queue} & Menyimpan state yang akan diproses, dengan prioritas berdasarkan nilai $g(n)+WEIGHT \cdot h(n)$. \\
+		\hline
+		\texttt{map} \texttt{bestCost} & Menyimpan cost terbaik untuk kombinasi posisi aktor dan collected mask. \\
+		\hline
+		\texttt{tuple<int,int,int>} & Digunakan sebagai key state, terdiri dari baris, kolom, dan collected mask. \\
+		\hline
+		\texttt{SearchResult} & Menyimpan hasil akhir pencarian, seperti path solusi, total cost, waktu eksekusi, dan jumlah iterasi. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsubsection{Alur Kerja Weighted A*}
+
+Alur kerja Weighted A* dimulai dari pembentukan state awal, kemudian menghitung angka maksimum pada papan, menghitung heuristik state awal, dan memasukkan state tersebut ke priority queue. 
+Selama priority queue belum kosong, algoritma mengambil state dengan nilai evaluasi terkecil, memeriksa apakah state tersebut sudah mencapai goal, lalu mengekspansi state ke empat arah gerakan.
+
+\begin{longtable}{|p{1.2cm}|p{12.8cm}|}
+	\caption{Langkah kerja Weighted A*} \\
+	\hline
+	\rowcolor{purple!15}
+	\textbf{No.} & \textbf{Langkah} \\
+	\hline
+	\endfirsthead
+	
+	\hline
+	\rowcolor{purple!15}
+	\textbf{No.} & \textbf{Langkah} \\
+	\hline
+	\endhead
+	
+	1 & Mencatat waktu mulai eksekusi menggunakan \texttt{std::chrono}. \\
+	\hline
+	2 & Menghitung angka maksimum pada papan untuk menentukan kapan seluruh angka telah dikumpulkan. \\
+	\hline
+	3 & Menetapkan nilai \texttt{WEIGHT = 2}. \\
+	\hline
+	4 & Membuat priority queue dengan pembanding berdasarkan nilai $gCost + WEIGHT \cdot hCost$. \\
+	\hline
+	5 & Membuat \texttt{bestCost} untuk menyimpan cost terbaik setiap state. \\
+	\hline
+	6 & Membentuk state awal dari posisi awal aktor, collected mask bernilai $0$, angka terakhir $-1$, path kosong, dan cost awal $0$. \\
+	\hline
+	7 & Menghitung heuristik untuk state awal menggunakan fungsi \texttt{heuristic->compute}. \\
+	\hline
+	8 & Memasukkan state awal ke dalam priority queue. \\
+	\hline
+	9 & Mengambil state dengan nilai evaluasi terkecil dari priority queue. \\
+	\hline
+	10 & Memeriksa apakah state sudah pernah dicapai dengan cost yang lebih baik. Jika ya, state diabaikan. \\
+	\hline
+	11 & Memeriksa kondisi goal, yaitu aktor berada di \texttt{O} dan semua angka sudah dikumpulkan sesuai urutan. \\
+	\hline
+	12 & Jika belum goal, state diekspansi ke empat arah: \texttt{U}, \texttt{D}, \texttt{L}, dan \texttt{R}. \\
+	\hline
+	13 & Untuk setiap arah, program memanggil \texttt{MovementEngine::slide} untuk mensimulasikan gerakan sliding. \\
+	\hline
+	14 & Jika gerakan tidak valid atau menghasilkan game over, state hasil tidak diproses. \\
+	\hline
+	15 & Jika gerakan valid, program menghitung \texttt{newGCost} dari cost saat ini ditambah cost gerakan sliding. \\
+	\hline
+	16 & Program membentuk path baru dengan menambahkan karakter arah ke path sebelumnya. \\
+	\hline
+	17 & Program membentuk state baru menggunakan posisi hasil sliding, collected mask baru, angka terakhir baru, path baru, dan \texttt{newGCost}. \\
+	\hline
+	18 & Program menghitung ulang nilai heuristik untuk state baru. \\
+	\hline
+	19 & Jika state baru sudah pernah dicapai dengan cost lebih kecil atau sama, state baru diabaikan. \\
+	\hline
+	20 & Jika state baru lebih baik, \texttt{bestCost} diperbarui dan state baru dimasukkan ke priority queue. \\
+	\hline
+	21 & Jika solusi ditemukan, program mengembalikan \texttt{SearchResult} berisi status solusi, path, total cost, waktu eksekusi, dan jumlah iterasi. \\
+	\hline
+	22 & Jika priority queue kosong dan solusi tidak ditemukan, program mengembalikan \texttt{SearchResult} dengan pesan bahwa solusi tidak ditemukan. \\
+	\hline
+\end{longtable}
+
+\subsubsection{Skema Ekspansi Weighted A*}
+
+\begin{tcolorbox}[
+	colback=gray!5,
+	colframe=black!60,
+	title=\textbf{Skema Ekspansi Weighted A*},
+	arc=2mm,
+	boxrule=0.8pt
+]
+\small
+\begin{center}
+\begin{tabular}{c}
+\fbox{\parbox{0.82\textwidth}{
+\centering
+\textbf{1. Ambil State}\\
+Ambil state dengan nilai $g(n)+2h(n)$ terkecil dari priority queue.
+}} \\[0.25cm]
+$\downarrow$ \\[-0.05cm]
+\fbox{\parbox{0.82\textwidth}{
+\centering
+\textbf{2. Cek Pruning dan Goal}\\
+Abaikan jika sudah ada cost lebih baik. Jika posisi aktor di \texttt{O} dan semua angka sudah dikumpulkan, solusi ditemukan.
+}} \\[0.25cm]
+$\downarrow$ \\[-0.05cm]
+\fbox{\parbox{0.82\textwidth}{
+\centering
+\textbf{3. Ekspansi Empat Arah}\\
+Coba gerakan \texttt{U}, \texttt{D}, \texttt{L}, dan \texttt{R} menggunakan \texttt{MovementEngine::slide}.
+}} \\[0.25cm]
+$\downarrow$ \\[-0.05cm]
+\fbox{\parbox{0.82\textwidth}{
+\centering
+\textbf{4. Bentuk State Baru}\\
+Hitung \texttt{newGCost}, bentuk path baru, hitung ulang heuristik, lalu masukkan ke priority queue jika lebih baik.
+}}
+\end{tabular}
+\end{center}
+\end{tcolorbox}
+
+\subsubsection{Penanganan Gerakan Tidak Valid dan Game Over}
+
+Weighted A* tidak langsung menganggap semua arah sebagai successor yang valid. 
+Setiap arah harus disimulasikan terlebih dahulu menggunakan \texttt{MovementEngine::slide}. 
+Jika hasil gerakan tidak valid atau menyebabkan game over, state tersebut tidak dimasukkan ke dalam priority queue.
+
+\begin{table}[H]
+	\centering
+	\caption{Penanganan aturan puzzle pada Weighted A*}
+	\begin{tabular}{|p{4cm}|p{10cm}|}
+		\hline
+		\rowcolor{purple!15}
+		\textbf{Kondisi} & \textbf{Penanganan} \\
+		\hline
+		Gerakan tidak valid & State hasil tidak diproses dan algoritma lanjut mencoba arah lain. \\
+		\hline
+		Game over & Terjadi apabila aktor melewati lava, keluar papan, atau melanggar urutan angka; state langsung diabaikan. \\
+		\hline
+		Rintangan \texttt{X} & Aktor berhenti tepat sebelum rintangan. \\
+		\hline
+		Angka berurutan & Collected mask dan angka terakhir diperbarui jika angka yang dilewati sesuai urutan. \\
+		\hline
+		State dengan cost lebih buruk & Diabaikan jika sudah ada state dengan posisi dan collected mask sama serta cost lebih kecil atau sama. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsubsection{Output Weighted A*}
+
+Weighted A* menghasilkan output dengan format yang sama seperti solver lainnya. 
+Apabila solusi ditemukan, program mengembalikan path solusi, total cost, waktu eksekusi, dan jumlah iterasi. 
+Apabila solusi tidak ditemukan, program mengembalikan status gagal dan pesan bahwa solusi tidak ditemukan.
+
+\begin{table}[H]
+	\centering
+	\caption{Output Weighted A*}
+	\begin{tabular}{|p{4cm}|p{10cm}|}
+		\hline
+		\rowcolor{purple!15}
+		\textbf{Kondisi} & \textbf{Output} \\
+		\hline
+		Solusi ditemukan & Status solusi ditemukan, path solusi, total cost, waktu eksekusi dalam milidetik, dan jumlah iterasi. \\
+		\hline
+		Solusi tidak ditemukan & Status solusi tidak ditemukan, pesan \texttt{Solusi tidak ditemukan.}, waktu eksekusi, dan jumlah iterasi. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsubsection{Kelebihan dan Kekurangan Weighted A*}
+
+\begin{table}[H]
+	\centering
+	\caption{Kelebihan dan kekurangan Weighted A*}
+	\begin{tabular}{|p{3.5cm}|p{10.5cm}|}
+		\hline
+		\rowcolor{purple!15}
+		\textbf{Aspek} & \textbf{Penjelasan} \\
+		\hline
+		Kelebihan & Weighted A* cenderung lebih cepat daripada A* biasa karena lebih fokus mengikuti arah heuristik. Dengan bobot heuristik yang lebih besar, jumlah iterasi yang ditinjau dapat berkurang. \\
+		\hline
+		Kekurangan & Weighted A* tidak selalu menjamin solusi optimal. Cost solusi yang dihasilkan dapat lebih besar daripada UCS atau A* dengan heuristik admissible. Performa algoritma juga sangat bergantung pada kualitas heuristik. \\
+		\hline
+		Peran eksperimen & Weighted A* digunakan sebagai pembanding terhadap UCS, GBFS, dan A* untuk melihat trade-off antara kecepatan pencarian dan optimalitas solusi. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{tcolorbox}[
+	colback=purple!5,
+	colframe=purple!60!black,
+	title=\textbf{Alasan Weighted A* Cocok sebagai Algoritma Bonus},
+	arc=2mm,
+	boxrule=0.8pt
+]
+Weighted A* cocok dijadikan algoritma bonus karena masih berada dalam keluarga A*, tetapi memiliki karakteristik pencarian yang berbeda. 
+Dengan memperbesar pengaruh heuristik, algoritma ini dapat menunjukkan bagaimana perubahan fungsi evaluasi memengaruhi jumlah iterasi, waktu eksekusi, dan kualitas cost solusi. 
+Oleh karena itu, Weighted A* berguna untuk menganalisis trade-off antara pencarian yang cepat dan pencarian yang optimal.
+\end{tcolorbox}
+
+\section{Perbandingan UCS, GBFS, A*, dan Weighted A*}
+
+Keempat algoritma memiliki strategi pemilihan state yang berbeda. 
+UCS berfokus pada cost aktual, GBFS berfokus pada estimasi ke target, A* menggabungkan cost aktual dan heuristik secara seimbang, sedangkan Weighted A* memperbesar pengaruh heuristik dengan bobot tertentu. 
 Perbandingan ini penting karena karakteristik puzzle dipengaruhi oleh dua hal utama, yaitu cost tile yang bervariasi dan posisi target yang harus dicapai secara berurutan.
 
 \begin{table}[H]
 	\centering
 	\caption{Perbandingan algoritma pathfinding}
-	\begin{tabular}{|p{3cm}|p{3.5cm}|p{3.5cm}|p{3.5cm}|}
+	\small
+	\begin{tabular}{|p{2.8cm}|p{2.6cm}|p{2.6cm}|p{2.8cm}|p{3cm}|}
 		\hline
 		\rowcolor{gray!25}
-		\textbf{Aspek} & \textbf{UCS} & \textbf{GBFS} & \textbf{A*} \\
+		\textbf{Aspek} & \textbf{UCS} & \textbf{GBFS} & \textbf{A*} & \textbf{Weighted A*} \\
 		\hline
-		Dasar prioritas & $g(n)$ & $h(n)$ & $f(n)=g(n)+h(n)$ \\
+		Dasar prioritas & $g(n)$ & $h(n)$ & $g(n)+h(n)$ & $g(n)+2h(n)$ \\
 		\hline
-		Memperhatikan cost aktual & Ya & Tidak sebagai prioritas utama & Ya \\
+		Memperhatikan cost aktual & Ya & Tidak sebagai prioritas utama & Ya & Ya, tetapi pengaruh heuristik lebih besar \\
 		\hline
-		Menggunakan heuristik & Tidak & Ya & Ya \\
+		Menggunakan heuristik & Tidak & Ya & Ya & Ya, dengan bobot $w=2$ \\
 		\hline
-		Kecepatan pencarian & Cenderung lebih lambat & Cenderung lebih cepat & Bergantung kualitas heuristik \\
+		Kecepatan pencarian & Cenderung lebih lambat & Cenderung lebih cepat & Bergantung kualitas heuristik & Cenderung lebih cepat dari A* \\
 		\hline
-		Optimalitas solusi & Optimal untuk cost positif & Tidak selalu optimal & Optimal jika heuristik admissible \\
+		Optimalitas solusi & Optimal untuk cost positif & Tidak selalu optimal & Optimal jika heuristik admissible & Tidak selalu optimal \\
 		\hline
-		Kelemahan utama & Eksplorasi state besar & Dapat memilih jalur mahal & Bergantung pada heuristik \\
+		Kelemahan utama & Eksplorasi state besar & Dapat memilih jalur mahal & Bergantung pada heuristik & Cost solusi dapat lebih besar karena terlalu mengikuti heuristik \\
+		\hline
+		Cocok digunakan untuk & Mencari cost minimum & Mencari solusi cepat & Keseimbangan cost dan kecepatan & Eksperimen trade-off kecepatan dan optimalitas \\
 		\hline
 	\end{tabular}
 \end{table}
@@ -486,5 +813,6 @@ Perbandingan ini penting karena karakteristik puzzle dipengaruhi oleh dua hal ut
 	\item UCS cocok digunakan ketika prioritas utama adalah mendapatkan solusi dengan total cost minimum.
 	\item GBFS cocok digunakan ketika pencarian ingin diarahkan secepat mungkin menuju target, meskipun tidak menjamin solusi optimal.
 	\item A* menjadi pendekatan yang lebih seimbang karena mempertimbangkan cost aktual dan estimasi menuju target.
+	\item Weighted A* cocok digunakan untuk menguji pengaruh pembesaran heuristik terhadap kecepatan pencarian dan kualitas cost solusi.
 \end{itemize}
 \end{tcolorbox}
