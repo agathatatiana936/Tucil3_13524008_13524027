@@ -1,7 +1,7 @@
 #include "gui/GuiApp.hpp"
 #include "gui/GuiRenderer.hpp"
 #include "gui/BoardViewPage.hpp"
-#include "gui/portable-file-dialogs.h"
+#include "gui/FileDialog.hpp"
 #include "utils/parser.hpp"
 #include "utils/InputValidator.hpp"
 #include "utils/SolutionSaver.hpp"
@@ -31,26 +31,6 @@ std::string toUpperStr(const std::string& s) {
     std::transform(r.begin(), r.end(), r.begin(),
                    [](unsigned char c){ return std::toupper(c); });
     return r;
-}
-
-std::string pickFileOpen() {
-    auto f = pfd::open_file("Select Input File", ".",
-                            {"Text Files", "*.txt"},
-                            pfd::opt::none);
-    std::vector<std::string> res = f.result();
-    if (!res.empty()) return res[0];
-    return "";
-}
-
-std::string pickFileSave() {
-    auto f = pfd::save_file("Save Solution", "solution.txt",
-                            {"Text Files", "*.txt"},
-                            pfd::opt::force_overwrite);
-    std::string path = f.result();
-    if (!path.empty() && path.size() < 4) {
-        path += ".txt";
-    }
-    return path;
 }
 
 }
