@@ -13,6 +13,7 @@ BoardViewPage::BoardViewPage(AssetManager& am, Font f)
     : assets(am), font(f) {}
 
 void BoardViewPage::beginFrame() {
+    BeginDrawing();
     int sw = GetScreenWidth();
     int sh = GetScreenHeight();
 

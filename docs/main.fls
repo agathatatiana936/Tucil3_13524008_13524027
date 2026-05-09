@@ -1,6 +1,6 @@
-PWD c:\Agatha\Semester 4\Algorithm Strategy\Stima-Tucil3\docs\laporan
+PWD c:\Agatha\Semester 4\Algorithm Strategy\Stima-Tucil3\docs
 INPUT C:\Users\atias\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
-INPUT c:\Agatha\Semester 4\Algorithm Strategy\Stima-Tucil3\docs\laporan\main.tex
+INPUT c:\Agatha\Semester 4\Algorithm Strategy\Stima-Tucil3\docs\main.tex
 OUTPUT main.log
 INPUT C:\Program Files\MiKTeX\tex\latex\base\report.cls
 INPUT C:\Program Files\MiKTeX\tex\latex\base\report.cls
@@ -362,12 +362,12 @@ OUTPUT main.out
 INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecrm2074.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecbx2074.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecrm1440.tfm
-INPUT .\public\foto-kelompok.jpg
-INPUT .\public\foto-kelompok.jpg
-INPUT .\public\foto-kelompok.jpg
-INPUT .\public\foto-kelompok.jpg
-INPUT .\public\foto-kelompok.jpg
-INPUT .\public\foto-kelompok.jpg
+INPUT .\public\foto-kelompok.png
+INPUT .\public\foto-kelompok.png
+INPUT .\public\foto-kelompok.png
+INPUT .\public\foto-kelompok.png
+INPUT .\public\foto-kelompok.png
+INPUT .\public\foto-kelompok.png
 INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecbx1200.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmr8.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmr6.tfm
@@ -509,6 +509,61 @@ INPUT .\sections\02-analisa.tex
 INPUT .\sections\02-analisa.tex
 INPUT .\sections\02-analisa.tex
 INPUT sections\02-analisa.tex
+INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecbx1095.tfm
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
 INPUT .\public\logo-itb.png
 INPUT .\public\logo-itb.png
 INPUT .\public\logo-itb.png
@@ -592,6 +647,28 @@ INPUT .\public\logo-itb.png
 INPUT .\public\logo-stei.png
 INPUT .\public\logo-stei.png
 INPUT .\public\logo-stei.png
+INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ectt0800.tfm
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecrm1000.tfm
+INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecbx1000.tfm
+INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ectt1000.tfm
 INPUT .\public\logo-itb.png
 INPUT .\public\logo-itb.png
 INPUT .\public\logo-itb.png
@@ -616,7 +693,12 @@ INPUT .\public\logo-itb.png
 INPUT .\public\logo-stei.png
 INPUT .\public\logo-stei.png
 INPUT .\public\logo-stei.png
-INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecbx1095.tfm
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
 INPUT .\public\logo-itb.png
 INPUT .\public\logo-itb.png
 INPUT .\public\logo-itb.png
@@ -716,6 +798,14 @@ INPUT .\public\logo-stei.png
 INPUT main.aux
 INPUT .\main.out
 INPUT .\main.out
+INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1000.pk
+INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1000.pk
+INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\ectt1000.pk
+INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\ectt1000.pk
+INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1000.pk
+INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1000.pk
+INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\ectt0800.pk
+INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\ectt0800.pk
 INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1095.pk
 INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1095.pk
 INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm0800.pk
@@ -748,12 +838,16 @@ INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\ecb
 INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx2074.pk
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmex10.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmex10.pfb
+INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi10.pfb
+INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi10.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi12.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi12.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi6.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi6.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi8.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi8.pfb
+INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr10.pfb
+INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr10.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr12.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr12.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr8.pfb

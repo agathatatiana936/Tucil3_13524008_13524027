@@ -15,6 +15,7 @@ GuiRenderer::GuiRenderer(AssetManager& am, Font f)
     : assets(am), font(f) {}
 
 void GuiRenderer::beginFrame() {
+    BeginDrawing(); 
     int sw = GetScreenWidth();
     int sh = GetScreenHeight();
 

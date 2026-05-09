@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.3.14)  6 MAY 2026 13:22
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.3.14)  8 MAY 2026 21:08
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**"c:/Agatha/Semester 4/Algorithm Strategy/Stima-Tucil3/docs/laporan/main.tex"
-(c:/Agatha/Semester 4/Algorithm Strategy/Stima-Tucil3/docs/laporan/main.tex
+**"c:/Agatha/Semester 4/Algorithm Strategy/Stima-Tucil3/docs/main.tex"
+(c:/Agatha/Semester 4/Algorithm Strategy/Stima-Tucil3/docs/main.tex
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
 (C:\Program Files\MiKTeX\tex/latex/base\report.cls
@@ -894,30 +894,30 @@ Package hyperref Info: Link coloring OFF on input line 87.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-<public/foto-kelompok.jpg, id=246, 147.4308pt x 91.0602pt>
-File: public/foto-kelompok.jpg Graphic file (type jpg)
-<use public/foto-kelompok.jpg>
-Package pdftex.def Info: public/foto-kelompok.jpg  used on input line 106.
-(pdftex.def)             Requested size: 384.1096pt x 237.28168pt.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 114.
+<public/foto-kelompok.png, id=278, 471.26062pt x 303.38344pt>
+File: public/foto-kelompok.png Graphic file (type png)
+<use public/foto-kelompok.png>
+Package pdftex.def Info: public/foto-kelompok.png  used on input line 104.
+(pdftex.def)             Requested size: 384.1096pt x 247.28078pt.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 110.
 (C:\Program Files\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 114.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 110.
  (C:\Program Files\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
-{C:/Users/atias/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map} <./public/foto-kelompok.jpg>] (main.toc
-<public/logo-itb.png, id=291, 575.90157pt x 572.1375pt>
+{C:/Users/atias/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map} <./public/foto-kelompok.png>] (main.toc
+<public/logo-itb.png, id=326, 575.90157pt x 572.1375pt>
 File: public/logo-itb.png Graphic file (type png)
 <use public/logo-itb.png>
-Package pdftex.def Info: public/logo-itb.png  used on input line 37.
+Package pdftex.def Info: public/logo-itb.png  used on input line 38.
 (pdftex.def)             Requested size: 31.50333pt x 31.2982pt.
-<public/logo-stei.png, id=292, 813.0375pt x 620.3175pt>
+<public/logo-stei.png, id=327, 813.0375pt x 620.3175pt>
 File: public/logo-stei.png Graphic file (type png)
 <use public/logo-stei.png>
-Package pdftex.def Info: public/logo-stei.png  used on input line 37.
+Package pdftex.def Info: public/logo-stei.png  used on input line 38.
 (pdftex.def)             Requested size: 41.01402pt x 31.2982pt.
 
 
@@ -931,7 +931,7 @@ Package fancyhdr Warning: \headheight is too small (10.0pt):
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.37 ...ruktur Folder Repository}{25}{section.3.2}
+l.38 ...ne {2.6.2}UCS vs A*}{29}{subsection.2.6.2}
                                                   % [1
 
 
@@ -941,11 +941,11 @@ l.37 ...ruktur Folder Repository}{25}{section.3.2}
 
 File: public/logo-itb.png Graphic file (type png)
 <use public/logo-itb.png>
-Package pdftex.def Info: public/logo-itb.png  used on input line 133.
+Package pdftex.def Info: public/logo-itb.png  used on input line 128.
 (pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
 File: public/logo-stei.png Graphic file (type png)
 <use public/logo-stei.png>
-Package pdftex.def Info: public/logo-stei.png  used on input line 133.
+Package pdftex.def Info: public/logo-stei.png  used on input line 128.
 (pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
 
 
@@ -1179,11 +1179,11 @@ Package fancyhdr Warning: \headheight is too small (10.0pt):
 [10])
 File: public/logo-itb.png Graphic file (type png)
 <use public/logo-itb.png>
-Package pdftex.def Info: public/logo-itb.png  used on input line 138.
+Package pdftex.def Info: public/logo-itb.png  used on input line 133.
 (pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
 File: public/logo-stei.png Graphic file (type png)
 <use public/logo-stei.png>
-Package pdftex.def Info: public/logo-stei.png  used on input line 138.
+Package pdftex.def Info: public/logo-stei.png  used on input line 133.
 (pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
 
 
@@ -1196,22 +1196,57 @@ Package fancyhdr Warning: \headheight is too small (10.0pt):
 [11]
 Bab 2.
 (sections/02-analisa.tex
-Underfull \hbox (badness 1009) in paragraph at lines 41--41
-\T1/cmr/m/n/12 so-lu-si, te-ta-pi ti-dak
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 33.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 33.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 33.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 33.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 33.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 33.
+
+
+Underfull \hbox (badness 4353) in paragraph at lines 47--47
+[]|\T1/cmr/m/n/10.95 Total cost ak-tu-al
  []
 
 
-Overfull \hbox (15.85626pt too wide) in paragraph at lines 34--46
- [][] 
+Underfull \hbox (badness 4846) in paragraph at lines 49--49
+\T1/cmr/m/n/10.95 lu-si, te-ta-pi ti-dak
+ []
+
+
+Underfull \hbox (badness 4353) in paragraph at lines 51--51
+[]|\T1/cmr/m/n/10.95 Total cost ak-tu-al
+ []
+
+
+Underfull \hbox (badness 4353) in paragraph at lines 53--53
+[]|\T1/cmr/m/n/10.95 Total cost ak-tu-al
  []
 
 File: public/logo-itb.png Graphic file (type png)
 <use public/logo-itb.png>
-Package pdftex.def Info: public/logo-itb.png  used on input line 47.
+Package pdftex.def Info: public/logo-itb.png  used on input line 57.
 (pdftex.def)             Requested size: 31.50333pt x 31.2982pt.
 File: public/logo-stei.png Graphic file (type png)
 <use public/logo-stei.png>
-Package pdftex.def Info: public/logo-stei.png  used on input line 47.
+Package pdftex.def Info: public/logo-stei.png  used on input line 57.
 (pdftex.def)             Requested size: 41.01402pt x 31.2982pt.
 
 Package fancyhdr Warning: \headheight is too small (10.0pt): 
@@ -1223,18 +1258,15 @@ Package fancyhdr Warning: \headheight is too small (10.0pt):
 [12
 
 ]
-Overfull \hbox (58.08444pt too wide) detected at line 103
-[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 n\OT1/cmr/m/n/12 ) = []
- []
-
 File: public/logo-itb.png Graphic file (type png)
 <use public/logo-itb.png>
-Package pdftex.def Info: public/logo-itb.png  used on input line 105.
+Package pdftex.def Info: public/logo-itb.png  used on input line 99.
 (pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
 File: public/logo-stei.png Graphic file (type png)
 <use public/logo-stei.png>
-Package pdftex.def Info: public/logo-stei.png  used on input line 105.
+Package pdftex.def Info: public/logo-stei.png  used on input line 99.
 (pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
+
 
 Package fancyhdr Warning: \headheight is too small (10.0pt): 
 (fancyhdr)                Make it at least 59.81941pt, for example:
@@ -1243,50 +1275,38 @@ Package fancyhdr Warning: \headheight is too small (10.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
 
 [13]
-Overfull \hbox (9.14719pt too wide) in alignment at lines 130--136
- [] [] [] 
+Underfull \hbox (badness 4531) in paragraph at lines 114--115
+[]|\T1/cmr/m/n/12 Memilih sta-te de-ngan mem-per-tim-
  []
 
 
-Overfull \hbox (9.14719pt too wide) in alignment at lines 136--142
- [] [] [] 
+Overfull \hbox (9.14719pt too wide) in paragraph at lines 103--117
+ [][] 
  []
 
 
-Underfull \hbox (badness 4441) in paragraph at lines 148--148
-\T1/cmr/m/n/12 lik-an cost ti-le mi-ni-mum
+Underfull \hbox (badness 4726) in paragraph at lines 136--137
+\T1/cmr/m/n/10.95 ke-cil dan ni-lai
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 148--149
-\T1/cmr/m/n/12 ka-re-na mem-per-tim-bangk-an
+Underfull \hbox (badness 10000) in paragraph at lines 138--139
+[]|\T1/cmr/m/n/10.95 Tidak men-ja-di
  []
 
 
-Underfull \hbox (badness 2600) in paragraph at lines 148--149
-\T1/cmr/m/n/12 pi te-tap be-lum se-pe-nuh-nya
+Overfull \hbox (49.1926pt too wide) in paragraph at lines 129--141
+ [][] 
  []
 
-
-Underfull \hbox (badness 4713) in paragraph at lines 150--150
-[]|\T1/cmr/m/n/12 Remaining Tar-get
- []
-
-
-Overfull \hbox (9.14719pt too wide) in alignment at lines 142--152
- [] [] [] 
- []
-
-sections/02-analisa.tex:152: ignored error: Infinite glue shrinkage found in box being split
 File: public/logo-itb.png Graphic file (type png)
 <use public/logo-itb.png>
-Package pdftex.def Info: public/logo-itb.png  used on input line 152.
+Package pdftex.def Info: public/logo-itb.png  used on input line 142.
 (pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
 File: public/logo-stei.png Graphic file (type png)
 <use public/logo-stei.png>
-Package pdftex.def Info: public/logo-stei.png  used on input line 152.
+Package pdftex.def Info: public/logo-stei.png  used on input line 142.
 (pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
-
 
 Package fancyhdr Warning: \headheight is too small (10.0pt): 
 (fancyhdr)                Make it at least 59.81941pt, for example:
@@ -1295,58 +1315,15 @@ Package fancyhdr Warning: \headheight is too small (10.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
 
 [14]
-Overfull \hbox (37.48738pt too wide) in paragraph at lines 165--165
-[]|\T1/cmr/bx/n/12 Dipertimbangkan?| 
- []
-
-
-Underfull \hbox (badness 1430) in paragraph at lines 167--168
-[]|\T1/cmr/m/n/12 Goal di-gu-nak-an se-ba-gai tar-get
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 171--171
-[]|\T1/cmr/m/n/12 Tidak lang-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 173--173
-[]|\T1/cmr/m/n/12 Tergantung
- []
-
-
-Underfull \hbox (badness 1377) in paragraph at lines 173--174
-\T1/cmr/m/n/12 hi-tungk-an cost ti-le, se-dangk-an
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 175--175
-[]|\T1/cmr/m/n/12 Tidak lang-
- []
-
-
-Underfull \hbox (badness 1264) in paragraph at lines 175--176
-[]|\T1/cmr/m/n/12 Obstacle ti-dak di-hi-tung da-lam
- []
-
-
-Underfull \hbox (badness 1867) in paragraph at lines 175--176
-\T1/cmr/m/n/12 ru-mus ja-rak se-der-ha-na, te-ta-pi
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 177--177
-[]|\T1/cmr/m/n/12 Tidak lang-
- []
-
 File: public/logo-itb.png Graphic file (type png)
 <use public/logo-itb.png>
-Package pdftex.def Info: public/logo-itb.png  used on input line 204.
+Package pdftex.def Info: public/logo-itb.png  used on input line 190.
 (pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
 File: public/logo-stei.png Graphic file (type png)
 <use public/logo-stei.png>
-Package pdftex.def Info: public/logo-stei.png  used on input line 204.
+Package pdftex.def Info: public/logo-stei.png  used on input line 190.
 (pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
+
 
 Package fancyhdr Warning: \headheight is too small (10.0pt): 
 (fancyhdr)                Make it at least 59.81941pt, for example:
@@ -1355,22 +1332,32 @@ Package fancyhdr Warning: \headheight is too small (10.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
 
 [15]
-Underfull \hbox (badness 10000) in paragraph at lines 239--239
-[]|\T1/cmr/m/n/12 Tidak mem-per-tim-
+Overfull \hbox (21.9808pt too wide) in paragraph at lines 208--208
+[]    \T1/cmtt/m/n/10.95 virtual int compute(const State& state, const GameMap& map) const = 0;[] 
  []
 
 
-Overfull \hbox (9.14719pt too wide) in paragraph at lines 252--264
+Overfull \hbox (27.68504pt too wide) in paragraph at lines 213--215
+[]\T1/cmr/m/n/12 Pada im-ple-men-ta-si pro-gram, ter-da-pat ti-ga he-u-ris-tik yang di-gu-nak-an, ya-i-tu \T1/cmtt/m/n/12 Manhattan\T1/cmr/m/n/12 ,
+ []
+
+
+Underfull \hbox (badness 1264) in paragraph at lines 228--229
+\T1/cmr/m/n/12 me-mi-lih tar-get ter-de-kat se-ca-ra
+ []
+
+
+Overfull \hbox (9.14719pt too wide) in paragraph at lines 219--231
  [][] 
  []
 
 File: public/logo-itb.png Graphic file (type png)
 <use public/logo-itb.png>
-Package pdftex.def Info: public/logo-itb.png  used on input line 265.
+Package pdftex.def Info: public/logo-itb.png  used on input line 232.
 (pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
 File: public/logo-stei.png Graphic file (type png)
 <use public/logo-stei.png>
-Package pdftex.def Info: public/logo-stei.png  used on input line 265.
+Package pdftex.def Info: public/logo-stei.png  used on input line 232.
 (pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
 
 Package fancyhdr Warning: \headheight is too small (10.0pt): 
@@ -1380,15 +1367,28 @@ Package fancyhdr Warning: \headheight is too small (10.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
 
 [16]
+Underfull \hbox (badness 10000) in paragraph at lines 275--275
+[]|\T1/cmr/m/n/12 Mempertimbangkan
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 277--277
+[]|\T1/cmr/m/n/12 Mempertimbangkan
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 279--279
+[]|\T1/cmr/m/n/12 Mempertimbangkan
+ []
+
 File: public/logo-itb.png Graphic file (type png)
 <use public/logo-itb.png>
-Package pdftex.def Info: public/logo-itb.png  used on input line 307.
+Package pdftex.def Info: public/logo-itb.png  used on input line 287.
 (pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
 File: public/logo-stei.png Graphic file (type png)
 <use public/logo-stei.png>
-Package pdftex.def Info: public/logo-stei.png  used on input line 307.
+Package pdftex.def Info: public/logo-stei.png  used on input line 287.
 (pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
-
 
 Package fancyhdr Warning: \headheight is too small (10.0pt): 
 (fancyhdr)                Make it at least 59.81941pt, for example:
@@ -1397,27 +1397,17 @@ Package fancyhdr Warning: \headheight is too small (10.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
 
 [17]
-Overfull \hbox (6.30174pt too wide) in alignment at lines 316--322
- [] [] [] 
- []
-
-
-Overfull \hbox (6.30174pt too wide) in alignment at lines 322--328
- [] [] [] 
- []
-
-
-Overfull \hbox (6.30174pt too wide) in alignment at lines 328--336
- [] [] [] 
+Overfull \hbox (10.66406pt too wide) in paragraph at lines 327--327
+[]        \T1/cmtt/m/n/10.95 if (map.isNumbered(i, j) && map.getNumber(i, j) == nextNumber) {[] 
  []
 
 File: public/logo-itb.png Graphic file (type png)
 <use public/logo-itb.png>
-Package pdftex.def Info: public/logo-itb.png  used on input line 362.
+Package pdftex.def Info: public/logo-itb.png  used on input line 353.
 (pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
 File: public/logo-stei.png Graphic file (type png)
 <use public/logo-stei.png>
-Package pdftex.def Info: public/logo-stei.png  used on input line 362.
+Package pdftex.def Info: public/logo-stei.png  used on input line 353.
 (pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
 
 Package fancyhdr Warning: \headheight is too small (10.0pt): 
@@ -1427,15 +1417,38 @@ Package fancyhdr Warning: \headheight is too small (10.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
 
 [18]
+Underfull \hbox (badness 10000) in paragraph at lines 365--365
+[]|\T1/cmr/m/n/12 Mempertimbangkan
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 367--367
+[]|\T1/cmr/m/n/12 Mempertimbangkan
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 369--369
+[]|\T1/cmr/m/n/12 Mempertimbangkan
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 371--371
+[]|\T1/cmr/m/n/12 Mempertimbangkan
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 373--373
+[]|\T1/cmr/m/n/12 Mempertimbangkan
+ []
+
 File: public/logo-itb.png Graphic file (type png)
 <use public/logo-itb.png>
-Package pdftex.def Info: public/logo-itb.png  used on input line 404.
+Package pdftex.def Info: public/logo-itb.png  used on input line 432.
 (pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
 File: public/logo-stei.png Graphic file (type png)
 <use public/logo-stei.png>
-Package pdftex.def Info: public/logo-stei.png  used on input line 404.
+Package pdftex.def Info: public/logo-stei.png  used on input line 432.
 (pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
-
 
 Package fancyhdr Warning: \headheight is too small (10.0pt): 
 (fancyhdr)                Make it at least 59.81941pt, for example:
@@ -1444,42 +1457,47 @@ Package fancyhdr Warning: \headheight is too small (10.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
 
 [19]
-Underfull \hbox (badness 1817) in paragraph at lines 438--438
-[]|\T1/cmr/m/n/12 Ketergantungan he-u-
+Overfull \hbox (5.00569pt too wide) in paragraph at lines 445--445
+[]                    \T1/cmtt/m/n/10.95 + std::abs(current.getCol() - targets[0].getCol());[] 
  []
 
 
-Underfull \hbox (badness 1248) in paragraph at lines 440--441
-[]|\T1/cmr/m/n/12 Kurang am-an un-tuk cost
+Underfull \hbox (badness 10000) in paragraph at lines 474--474
+[]|\T1/cmr/m/n/12 Mempertimbangkan
  []
 
 
-Overfull \hbox (9.1472pt too wide) in paragraph at lines 427--443
- [][] 
+Underfull \hbox (badness 10000) in paragraph at lines 476--476
+[]|\T1/cmr/m/n/12 Mempertimbangkan
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 457--458
-[]|\T1/cmr/m/n/12 Optimal ji-ka he-u-ris-tik
+Underfull \hbox (badness 10000) in paragraph at lines 478--478
+[]|\T1/cmr/m/n/12 Mempertimbangkan
  []
 
 
-Underfull \hbox (badness 3118) in paragraph at lines 463--463
-[]|\T1/cmr/m/n/12 Tidak meng-gu-nak-an es-ti-
+Underfull \hbox (badness 10000) in paragraph at lines 480--480
+[]|\T1/cmr/m/n/12 Mempertimbangkan
  []
 
 
-Overfull \hbox (9.1472pt too wide) in paragraph at lines 450--466
- [][] 
+Underfull \hbox (badness 10000) in paragraph at lines 482--482
+[]|\T1/cmr/m/n/12 Mempertimbangkan
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 484--484
+[]|\T1/cmr/m/n/12 Mempertimbangkan
  []
 
 File: public/logo-itb.png Graphic file (type png)
 <use public/logo-itb.png>
-Package pdftex.def Info: public/logo-itb.png  used on input line 467.
+Package pdftex.def Info: public/logo-itb.png  used on input line 492.
 (pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
 File: public/logo-stei.png Graphic file (type png)
 <use public/logo-stei.png>
-Package pdftex.def Info: public/logo-stei.png  used on input line 467.
+Package pdftex.def Info: public/logo-stei.png  used on input line 492.
 (pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
 
 Package fancyhdr Warning: \headheight is too small (10.0pt): 
@@ -1489,77 +1507,97 @@ Package fancyhdr Warning: \headheight is too small (10.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
 
 [20]
-Underfull \hbox (badness 10000) in paragraph at lines 482--483
-[]|\T1/cmr/m/n/12 Dijamin ji-ka he-u-ris-tik
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 484--484
-[]|\T1/cmr/m/n/12 Tidak men-ja-di pri-o-ri-tas
- []
-
-
-Underfull \hbox (badness 1092) in paragraph at lines 486--486
-[]|\T1/cmr/m/n/12 Terjebak pa-da ja-lur yang
- []
-
-
-Overfull \hbox (9.1472pt too wide) in paragraph at lines 473--489
- [][] 
- []
-
-
-Overfull \hbox (10.1658pt too wide) in alignment at lines 491--497
+Overfull \hbox (18.70215pt too wide) in alignment at lines 498--504
  [] [] [] [] 
  []
 
 
-Overfull \hbox (10.1658pt too wide) in alignment at lines 497--503
+Overfull \hbox (18.70215pt too wide) in alignment at lines 504--510
  [] [] [] [] 
  []
 
 
-Underfull \hbox (badness 1412) in paragraph at lines 505--506
-[]|\T1/cmr/m/n/12 Tinggi ji-ka he-u-
+Underfull \hbox (badness 10000) in paragraph at lines 514--514
+[]|\T1/cmr/m/n/12 Angka ber-i-kut-nya,
  []
 
 
-Underfull \hbox (badness 4291) in paragraph at lines 509--509
-[]|\T1/cmr/m/n/12 Cenderung le-bih
+Underfull \hbox (badness 2443) in paragraph at lines 514--514
+[]|\T1/cmr/m/n/12 Lebih se-su-ai de-
  []
 
 
-Underfull \hbox (badness 4291) in paragraph at lines 509--509
-[]|\T1/cmr/m/n/12 Cenderung le-bih
+Underfull \hbox (badness 10000) in paragraph at lines 516--516
+[]|\T1/cmr/m/n/12 Lebih in-for-ma-tif
  []
 
 
-Underfull \hbox (badness 2088) in paragraph at lines 509--510
-[]|\T1/cmr/m/n/12 Bergantung he-u-
+Underfull \hbox (badness 10000) in paragraph at lines 516--516
+\T1/cmr/m/n/12 ter-ha-dap si-sa
  []
 
 
-Underfull \hbox (badness 1817) in paragraph at lines 513--513
-[]|\T1/cmr/m/n/12 Ketergantungan he-u-
+Underfull \hbox (badness 10000) in paragraph at lines 516--517
+[]|\T1/cmr/m/n/12 Tidak meng-i-ku-ti
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 515--515
-[]|\T1/cmr/m/n/12 Kurang co-cok
+Underfull \hbox (badness 2302) in paragraph at lines 516--517
+\T1/cmr/m/n/12 urut-an ang-ka se-ca-
  []
 
 
-Overfull \hbox (10.1658pt too wide) in alignment at lines 503--517
+Underfull \hbox (badness 2057) in paragraph at lines 516--517
+\T1/cmr/m/n/12 ra ke-tat dan le-bih
+ []
+
+
+Overfull \hbox (18.70215pt too wide) in alignment at lines 510--518
  [] [] [] [] 
+ []
+
+
+Underfull \hbox (badness 1082) in paragraph at lines 536--536
+[]|\T1/cmr/m/n/10.95 Posisi ang-ka ber-i-kut-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 536--537
+[]|\T1/cmr/m/n/10.95 Tidak khu-sus;
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 536--537
+\T1/cmr/m/n/10.95 lum ter-kum-pul
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 536--537
+\T1/cmr/m/n/10.95 di-per-tim-bangk-
+ []
+
+
+Underfull \hbox (badness 4441) in paragraph at lines 538--538
+[]|\T1/cmr/m/n/10.95 Semua ang-ka be-lum
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 540--540
+[]|\T1/cmr/m/n/10.95 Ya, me-la-lui
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 540--540
+\T1/cmtt/m/n/10.95 lastCollected
  []
 
 File: public/logo-itb.png Graphic file (type png)
 <use public/logo-itb.png>
-Package pdftex.def Info: public/logo-itb.png  used on input line 532.
+Package pdftex.def Info: public/logo-itb.png  used on input line 551.
 (pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
 File: public/logo-stei.png Graphic file (type png)
 <use public/logo-stei.png>
-Package pdftex.def Info: public/logo-stei.png  used on input line 532.
+Package pdftex.def Info: public/logo-stei.png  used on input line 551.
 (pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
 
 Package fancyhdr Warning: \headheight is too small (10.0pt): 
@@ -1569,32 +1607,17 @@ Package fancyhdr Warning: \headheight is too small (10.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
 
 [21]
-Underfull \hbox (badness 3179) in paragraph at lines 549--550
-[]|\T1/cmr/m/n/12 Jumlah cost se-lu-ruh ti-le
- []
-
-
-Overfull \hbox (9.1472pt too wide) in paragraph at lines 542--562
+Overfull \hbox (9.14719pt too wide) in paragraph at lines 577--589
  [][] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 588--588
-[]|\T1/cmr/m/n/12 Lava me-nye-babk-an
- []
-
-
-Underfull \hbox (badness 2334) in paragraph at lines 594--594
-[]|\T1/cmr/m/n/12 Goal ha-rus ber-hen-ti
  []
 
 File: public/logo-itb.png Graphic file (type png)
 <use public/logo-itb.png>
-Package pdftex.def Info: public/logo-itb.png  used on input line 598.
+Package pdftex.def Info: public/logo-itb.png  used on input line 590.
 (pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
 File: public/logo-stei.png Graphic file (type png)
 <use public/logo-stei.png>
-Package pdftex.def Info: public/logo-stei.png  used on input line 598.
+Package pdftex.def Info: public/logo-stei.png  used on input line 590.
 (pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
 
 Package fancyhdr Warning: \headheight is too small (10.0pt): 
@@ -1603,16 +1626,24 @@ Package fancyhdr Warning: \headheight is too small (10.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
 
-[22])
+[22]
+Underfull \hbox (badness 10000) in paragraph at lines 630--630
+[]|\T1/cmr/m/n/12 Mempertimbangkan
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 632--632
+[]|\T1/cmr/m/n/12 Tidak mem-per-tim-
+ []
+
 File: public/logo-itb.png Graphic file (type png)
 <use public/logo-itb.png>
-Package pdftex.def Info: public/logo-itb.png  used on input line 141.
+Package pdftex.def Info: public/logo-itb.png  used on input line 636.
 (pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
 File: public/logo-stei.png Graphic file (type png)
 <use public/logo-stei.png>
-Package pdftex.def Info: public/logo-stei.png  used on input line 141.
+Package pdftex.def Info: public/logo-stei.png  used on input line 636.
 (pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
-
 
 Package fancyhdr Warning: \headheight is too small (10.0pt): 
 (fancyhdr)                Make it at least 59.81941pt, for example:
@@ -1621,6 +1652,332 @@ Package fancyhdr Warning: \headheight is too small (10.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
 
 [23]
+Overfull \hbox (9.14719pt too wide) in paragraph at lines 645--659
+ [][] 
+ []
+
+File: public/logo-itb.png Graphic file (type png)
+<use public/logo-itb.png>
+Package pdftex.def Info: public/logo-itb.png  used on input line 671.
+(pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
+File: public/logo-stei.png Graphic file (type png)
+<use public/logo-stei.png>
+Package pdftex.def Info: public/logo-stei.png  used on input line 671.
+(pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
+
+Package fancyhdr Warning: \headheight is too small (10.0pt): 
+(fancyhdr)                Make it at least 59.81941pt, for example:
+(fancyhdr)                \setlength{\headheight}{59.81941pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
+
+[24]
+File: public/logo-itb.png Graphic file (type png)
+<use public/logo-itb.png>
+Package pdftex.def Info: public/logo-itb.png  used on input line 722.
+(pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
+File: public/logo-stei.png Graphic file (type png)
+<use public/logo-stei.png>
+Package pdftex.def Info: public/logo-stei.png  used on input line 722.
+(pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
+
+
+Package fancyhdr Warning: \headheight is too small (10.0pt): 
+(fancyhdr)                Make it at least 59.81941pt, for example:
+(fancyhdr)                \setlength{\headheight}{59.81941pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
+
+[25]
+Overfull \hbox (6.30174pt too wide) in alignment at lines 731--737
+ [] [] [] 
+ []
+
+
+Overfull \hbox (6.30174pt too wide) in alignment at lines 737--743
+ [] [] [] 
+ []
+
+
+Overfull \hbox (6.30174pt too wide) in alignment at lines 743--753
+ [] [] [] 
+ []
+
+File: public/logo-itb.png Graphic file (type png)
+<use public/logo-itb.png>
+Package pdftex.def Info: public/logo-itb.png  used on input line 781.
+(pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
+File: public/logo-stei.png Graphic file (type png)
+<use public/logo-stei.png>
+Package pdftex.def Info: public/logo-stei.png  used on input line 781.
+(pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
+
+Package fancyhdr Warning: \headheight is too small (10.0pt): 
+(fancyhdr)                Make it at least 59.81941pt, for example:
+(fancyhdr)                \setlength{\headheight}{59.81941pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
+
+[26]
+File: public/logo-itb.png Graphic file (type png)
+<use public/logo-itb.png>
+Package pdftex.def Info: public/logo-itb.png  used on input line 823.
+(pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
+File: public/logo-stei.png Graphic file (type png)
+<use public/logo-stei.png>
+Package pdftex.def Info: public/logo-stei.png  used on input line 823.
+(pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
+
+
+Package fancyhdr Warning: \headheight is too small (10.0pt): 
+(fancyhdr)                Make it at least 59.81941pt, for example:
+(fancyhdr)                \setlength{\headheight}{59.81941pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
+
+[27]
+Underfull \hbox (badness 1817) in paragraph at lines 872--872
+[]|\T1/cmr/m/n/12 Ketergantungan he-u-
+ []
+
+
+Underfull \hbox (badness 1248) in paragraph at lines 874--875
+[]|\T1/cmr/m/n/12 Kurang am-an un-tuk cost
+ []
+
+
+Overfull \hbox (9.1472pt too wide) in paragraph at lines 861--877
+ [][] 
+ []
+
+File: public/logo-itb.png Graphic file (type png)
+<use public/logo-itb.png>
+Package pdftex.def Info: public/logo-itb.png  used on input line 878.
+(pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
+File: public/logo-stei.png Graphic file (type png)
+<use public/logo-stei.png>
+Package pdftex.def Info: public/logo-stei.png  used on input line 878.
+(pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
+
+Package fancyhdr Warning: \headheight is too small (10.0pt): 
+(fancyhdr)                Make it at least 59.81941pt, for example:
+(fancyhdr)                \setlength{\headheight}{59.81941pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
+
+[28]
+Underfull \hbox (badness 10000) in paragraph at lines 891--892
+[]|\T1/cmr/m/n/12 Optimal ji-ka he-u-ris-tik
+ []
+
+
+Underfull \hbox (badness 3118) in paragraph at lines 897--897
+[]|\T1/cmr/m/n/12 Tidak meng-gu-nak-an es-ti-
+ []
+
+
+Overfull \hbox (9.1472pt too wide) in paragraph at lines 884--900
+ [][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 916--917
+[]|\T1/cmr/m/n/12 Dijamin ji-ka he-u-ris-tik
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 918--918
+[]|\T1/cmr/m/n/12 Tidak men-ja-di pri-o-ri-tas
+ []
+
+
+Underfull \hbox (badness 1092) in paragraph at lines 920--920
+[]|\T1/cmr/m/n/12 Terjebak pa-da ja-lur yang
+ []
+
+
+Overfull \hbox (9.1472pt too wide) in paragraph at lines 907--923
+ [][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 941--941
+[]|\T1/cmr/m/n/12 Optimal ji-ka he-u-ris-tik
+ []
+
+
+Underfull \hbox (badness 1533) in paragraph at lines 943--944
+\T1/cmr/m/n/12 ter-li-hat de-kat te-ta-pi cost
+ []
+
+
+Overfull \hbox (9.1472pt too wide) in paragraph at lines 930--948
+ [][] 
+ []
+
+File: public/logo-itb.png Graphic file (type png)
+<use public/logo-itb.png>
+Package pdftex.def Info: public/logo-itb.png  used on input line 949.
+(pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
+File: public/logo-stei.png Graphic file (type png)
+<use public/logo-stei.png>
+Package pdftex.def Info: public/logo-stei.png  used on input line 949.
+(pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
+
+Package fancyhdr Warning: \headheight is too small (10.0pt): 
+(fancyhdr)                Make it at least 59.81941pt, for example:
+(fancyhdr)                \setlength{\headheight}{59.81941pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
+
+[29]
+Overfull \hbox (36.79303pt too wide) in alignment at lines 950--956
+ [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (36.79303pt too wide) in alignment at lines 956--962
+ [] [] [] [] [] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 964--965
+[]|\T1/cmr/m/n/12 Tidak se-la-lu
+ []
+
+
+Underfull \hbox (badness 6510) in paragraph at lines 966--967
+[]|\T1/cmr/m/n/12 Cenderung le-
+ []
+
+
+Underfull \hbox (badness 3209) in paragraph at lines 966--967
+\T1/cmr/m/n/12 bih ke-cil da-ri
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 968--968
+[]|\T1/cmr/m/n/12 Bergantung
+ []
+
+
+Underfull \hbox (badness 6510) in paragraph at lines 968--969
+[]|\T1/cmr/m/n/12 Cenderung le-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 970--970
+[]|\T1/cmr/m/n/12 Penggunaan me-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 972--972
+[]|\T1/cmr/m/n/12 Ketergantungan
+ []
+
+
+Underfull \hbox (badness 1406) in paragraph at lines 974--974
+[]|\T1/cmr/m/n/12 Cocok un-tuk cost
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 974--975
+[]|\T1/cmr/m/n/12 Cocok un-tuk
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 974--975
+\T1/cmr/m/n/12 eks-pe-ri-men
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 974--975
+\T1/cmr/m/n/12 ke-ce-pat-an,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 974--975
+\T1/cmr/m/n/12 te-ta-pi ku-rang
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 974--975
+\T1/cmr/m/n/12 am-an un-tuk
+ []
+
+
+Overfull \hbox (36.79303pt too wide) in alignment at lines 962--978
+ [] [] [] [] [] 
+ []
+
+File: public/logo-itb.png Graphic file (type png)
+<use public/logo-itb.png>
+Package pdftex.def Info: public/logo-itb.png  used on input line 994.
+(pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
+File: public/logo-stei.png Graphic file (type png)
+<use public/logo-stei.png>
+Package pdftex.def Info: public/logo-stei.png  used on input line 994.
+(pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
+
+Package fancyhdr Warning: \headheight is too small (10.0pt): 
+(fancyhdr)                Make it at least 59.81941pt, for example:
+(fancyhdr)                \setlength{\headheight}{59.81941pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
+
+[30]
+Underfull \hbox (badness 3179) in paragraph at lines 1011--1012
+[]|\T1/cmr/m/n/12 Jumlah cost se-lu-ruh ti-le
+ []
+
+
+Overfull \hbox (9.1472pt too wide) in paragraph at lines 1004--1024
+ [][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1050--1050
+[]|\T1/cmr/m/n/12 Lava me-nye-babk-an
+ []
+
+
+Underfull \hbox (badness 2334) in paragraph at lines 1056--1056
+[]|\T1/cmr/m/n/12 Goal ha-rus ber-hen-ti
+ []
+
+File: public/logo-itb.png Graphic file (type png)
+<use public/logo-itb.png>
+Package pdftex.def Info: public/logo-itb.png  used on input line 1060.
+(pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
+File: public/logo-stei.png Graphic file (type png)
+<use public/logo-stei.png>
+Package pdftex.def Info: public/logo-stei.png  used on input line 1060.
+(pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
+
+Package fancyhdr Warning: \headheight is too small (10.0pt): 
+(fancyhdr)                Make it at least 59.81941pt, for example:
+(fancyhdr)                \setlength{\headheight}{59.81941pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
+
+[31])
+File: public/logo-itb.png Graphic file (type png)
+<use public/logo-itb.png>
+Package pdftex.def Info: public/logo-itb.png  used on input line 136.
+(pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
+File: public/logo-stei.png Graphic file (type png)
+<use public/logo-stei.png>
+Package pdftex.def Info: public/logo-stei.png  used on input line 136.
+(pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
+
+
+Package fancyhdr Warning: \headheight is too small (10.0pt): 
+(fancyhdr)                Make it at least 59.81941pt, for example:
+(fancyhdr)                \setlength{\headheight}{59.81941pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
+
+[32]
 Bab 3.
 (sections/03-implementasi.tex
 Underfull \hbox (badness 1371) in paragraph at lines 38--39
@@ -1647,399 +2004,18 @@ Package fancyhdr Warning: \headheight is too small (10.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-38.79674pt}.
 
-[24
+[33
 
 ]
 File: public/logo-itb.png Graphic file (type png)
 <use public/logo-itb.png>
-Package pdftex.def Info: public/logo-itb.png  used on input line 90.
+Package pdftex.def Info: public/logo-itb.png  used on input line 116.
 (pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
 File: public/logo-stei.png Graphic file (type png)
 <use public/logo-stei.png>
-Package pdftex.def Info: public/logo-stei.png  used on input line 90.
+Package pdftex.def Info: public/logo-stei.png  used on input line 116.
 (pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
 
-
-Package fancyhdr Warning: \headheight is too small (10.0pt): 
-(fancyhdr)                Make it at least 59.81941pt, for example:
-(fancyhdr)                \setlength{\headheight}{59.81941pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
-
-[25]
-Underfull \hbox (badness 10000) in paragraph at lines 113--113
-[]|\T1/cmtt/m/n/12 src/model/ \T1/cmr/m/n/12 dan
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 115--115
-[]|\T1/cmtt/m/n/12 src/heuristic/
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 115--115
-\T1/cmr/m/n/12 dan
- []
-
-
-Overfull \hbox (11.53822pt too wide) in paragraph at lines 115--115
-\T1/cmtt/m/n/12 include/heuristic/| 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 117--117
-[]|\T1/cmtt/m/n/12 src/utils/ \T1/cmr/m/n/12 dan
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 119--119
-[]|\T1/cmtt/m/n/12 src/cli/ \T1/cmr/m/n/12 dan
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 121--121
-[]|\T1/cmtt/m/n/12 src/gui/ \T1/cmr/m/n/12 dan
- []
-
-sections/03-implementasi.tex:131: ignored error: Infinite glue shrinkage found in box being split
-File: public/logo-itb.png Graphic file (type png)
-<use public/logo-itb.png>
-Package pdftex.def Info: public/logo-itb.png  used on input line 131.
-(pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
-File: public/logo-stei.png Graphic file (type png)
-<use public/logo-stei.png>
-Package pdftex.def Info: public/logo-stei.png  used on input line 131.
-(pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
-
-
-Package fancyhdr Warning: \headheight is too small (10.0pt): 
-(fancyhdr)                Make it at least 59.81941pt, for example:
-(fancyhdr)                \setlength{\headheight}{59.81941pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
-
-[26]
-Overfull \hbox (9.1472pt too wide) in alignment at lines 169--175
- [] [] [] 
- []
-
-
-Overfull \hbox (9.1472pt too wide) in alignment at lines 175--181
- [] [] [] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 183--183
-[]|\T1/cmtt/m/n/12 include/model/ \T1/cmr/m/n/12 dan
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 185--185
-[]|\T1/cmtt/m/n/12 include/model/ \T1/cmr/m/n/12 dan
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 185--186
-[]|\T1/cmr/m/n/12 Merepresentasikan sta-te
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 185--186
-\T1/cmr/m/n/12 ter-a-khir, dan co-lle-cted
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 187--187
-[]|\T1/cmtt/m/n/12 include/model/ \T1/cmr/m/n/12 dan
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 187--188
-[]|\T1/cmr/m/n/12 Menyimpan kon-fi-gu-ra-si
- []
-
-
-Underfull \hbox (badness 6477) in paragraph at lines 187--188
-\T1/cmr/m/n/12 pap-an, cost ti-le, po-si-si
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
-[]|\T1/cmtt/m/n/12 include/model/ \T1/cmr/m/n/12 dan
- []
-
-
-Underfull \hbox (badness 1466) in paragraph at lines 189--190
-[]|\T1/cmr/m/n/12 Menyimpan ha-sil si-mu-la-si
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 191--191
-[]|\T1/cmtt/m/n/12 include/model/ \T1/cmr/m/n/12 dan
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 193--193
-[]|\T1/cmtt/m/n/12 include/utils/ \T1/cmr/m/n/12 atau
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 195--196
-[]|\T1/cmr/m/n/12 Memvalidasi kon-fi-gu-ra-si
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 197--197
-[]|\T1/cmtt/m/n/12 include/utils/ \T1/cmr/m/n/12 dan
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 197--198
-\T1/cmr/m/n/12 sli-ding dan me-nen-tuk-an
- []
-
-
-Overfull \hbox (18.24702pt too wide) in paragraph at lines 199--199
-[]|\T1/cmtt/m/n/12 include/solver/ISolver.hpp| 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 201--201
-[]|\T1/cmtt/m/n/12 include/solver/UCS.hpp
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 203--203
-[]|\T1/cmtt/m/n/12 include/solver/GBFS.hpp
- []
-
-
-Overfull \hbox (5.90004pt too wide) in paragraph at lines 205--205
-[]|\T1/cmtt/m/n/12 include/solver/AStar.hpp
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 205--205
-\T1/cmr/m/n/12 dan
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 209--209
-[]|\T1/cmtt/m/n/12 include/utils/ \T1/cmr/m/n/12 atau
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 211--211
-[]|\T1/cmtt/m/n/12 include/cli/ \T1/cmr/m/n/12 dan
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
-[]|\T1/cmtt/m/n/12 include/gui/ \T1/cmr/m/n/12 dan
- []
-
-
-Overfull \hbox (9.1472pt too wide) in alignment at lines 181--215
- [] [] [] 
- []
-
-File: public/logo-itb.png Graphic file (type png)
-<use public/logo-itb.png>
-Package pdftex.def Info: public/logo-itb.png  used on input line 215.
-(pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
-File: public/logo-stei.png Graphic file (type png)
-<use public/logo-stei.png>
-Package pdftex.def Info: public/logo-stei.png  used on input line 215.
-(pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
-
-Package fancyhdr Warning: \headheight is too small (10.0pt): 
-(fancyhdr)                Make it at least 59.81941pt, for example:
-(fancyhdr)                \setlength{\headheight}{59.81941pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
-
-[27]
-sections/03-implementasi.tex:215: ignored error: Infinite glue shrinkage found in box being split
-File: public/logo-itb.png Graphic file (type png)
-<use public/logo-itb.png>
-Package pdftex.def Info: public/logo-itb.png  used on input line 215.
-(pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
-File: public/logo-stei.png Graphic file (type png)
-<use public/logo-stei.png>
-Package pdftex.def Info: public/logo-stei.png  used on input line 215.
-(pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
-
-
-Package fancyhdr Warning: \headheight is too small (10.0pt): 
-(fancyhdr)                Make it at least 59.81941pt, for example:
-(fancyhdr)                \setlength{\headheight}{59.81941pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
-
-[28]
-Underfull \hbox (badness 1558) in paragraph at lines 278--278
-[]|\T1/cmr/m/n/12 Memvalidasi kon-fi-gu-ra-si
- []
-
-
-Underfull \hbox (badness 2582) in paragraph at lines 282--283
-\T1/cmr/m/n/12 at ini, dan arah ge-rak-an, la-lu meng-em-ba-lik-an
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 288--288
-[]|\T1/cmr/m/n/12 Menjalankan al-go-ri-tma
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 294--295
-[]|\T1/cmr/m/n/12 Program meng-gu-nak-an
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 294--295
-\T1/cmtt/m/n/12 std::chrono::high_resolution_clock \T1/cmr/m/n/12 un-tuk
- []
-
-sections/03-implementasi.tex:304: ignored error: Infinite glue shrinkage found in box being split
-File: public/logo-itb.png Graphic file (type png)
-<use public/logo-itb.png>
-Package pdftex.def Info: public/logo-itb.png  used on input line 304.
-(pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
-File: public/logo-stei.png Graphic file (type png)
-<use public/logo-stei.png>
-Package pdftex.def Info: public/logo-stei.png  used on input line 304.
-(pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
-
-
-Package fancyhdr Warning: \headheight is too small (10.0pt): 
-(fancyhdr)                Make it at least 59.81941pt, for example:
-(fancyhdr)                \setlength{\headheight}{59.81941pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
-
-[29]
-LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <12> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 318.
-File: public/logo-itb.png Graphic file (type png)
-<use public/logo-itb.png>
-Package pdftex.def Info: public/logo-itb.png  used on input line 334.
-(pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
-File: public/logo-stei.png Graphic file (type png)
-<use public/logo-stei.png>
-Package pdftex.def Info: public/logo-stei.png  used on input line 334.
-(pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
-
-
-Package fancyhdr Warning: \headheight is too small (10.0pt): 
-(fancyhdr)                Make it at least 59.81941pt, for example:
-(fancyhdr)                \setlength{\headheight}{59.81941pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
-
-[30]
-Overfull \hbox (16.32243pt too wide) in paragraph at lines 374--374
-[]    \T1/cmtt/m/n/10.95 if (a.getGCost() != b.getGCost()) return a.getGCost() > b.getGCost();[] 
- []
-
-
-Overfull \hbox (27.63918pt too wide) in paragraph at lines 377--377
-[]\T1/cmtt/m/n/10.95 std::priority_queue<State, std::vector<State>, decltype(cmp)> openSet(cmp);[] 
- []
-
-
-Underfull \hbox (badness 1472) in paragraph at lines 388--388
-[]|\T1/cmr/bx/n/12 Bagian Im-ple-men-
- []
-
-
-Overfull \hbox (15.83232pt too wide) in paragraph at lines 396--396
-[]|\T1/cmtt/m/n/12 MovementEngine::slide| 
- []
-
-File: public/logo-itb.png Graphic file (type png)
-<use public/logo-itb.png>
-Package pdftex.def Info: public/logo-itb.png  used on input line 402.
-(pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
-File: public/logo-stei.png Graphic file (type png)
-<use public/logo-stei.png>
-Package pdftex.def Info: public/logo-stei.png  used on input line 402.
-(pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
-
-Package fancyhdr Warning: \headheight is too small (10.0pt): 
-(fancyhdr)                Make it at least 59.81941pt, for example:
-(fancyhdr)                \setlength{\headheight}{59.81941pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
-
-[31]
-Overfull \hbox (16.32243pt too wide) in paragraph at lines 447--447
-[]    \T1/cmtt/m/n/10.95 if (a.getHCost() != b.getHCost()) return a.getHCost() > b.getHCost();[] 
- []
-
-
-Overfull \hbox (27.63918pt too wide) in paragraph at lines 450--450
-[]\T1/cmtt/m/n/10.95 std::priority_queue<State, std::vector<State>, decltype(cmp)> openSet(cmp);[] 
- []
-
-File: public/logo-itb.png Graphic file (type png)
-<use public/logo-itb.png>
-Package pdftex.def Info: public/logo-itb.png  used on input line 474.
-(pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
-File: public/logo-stei.png Graphic file (type png)
-<use public/logo-stei.png>
-Package pdftex.def Info: public/logo-stei.png  used on input line 474.
-(pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
-
-Package fancyhdr Warning: \headheight is too small (10.0pt): 
-(fancyhdr)                Make it at least 59.81941pt, for example:
-(fancyhdr)                \setlength{\headheight}{59.81941pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
-
-[32]
-Underfull \hbox (badness 1472) in paragraph at lines 481--481
-[]|\T1/cmr/bx/n/12 Bagian Im-ple-men-
- []
-
-File: public/logo-itb.png Graphic file (type png)
-<use public/logo-itb.png>
-Package pdftex.def Info: public/logo-itb.png  used on input line 527.
-(pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
-File: public/logo-stei.png Graphic file (type png)
-<use public/logo-stei.png>
-Package pdftex.def Info: public/logo-stei.png  used on input line 527.
-(pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
-
-Package fancyhdr Warning: \headheight is too small (10.0pt): 
-(fancyhdr)                Make it at least 59.81941pt, for example:
-(fancyhdr)                \setlength{\headheight}{59.81941pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
-
-[33]
-Overfull \hbox (27.63918pt too wide) in paragraph at lines 540--540
-[]\T1/cmtt/m/n/10.95 std::priority_queue<State, std::vector<State>, decltype(cmp)> openSet(cmp);[] 
- []
-
-
-Underfull \hbox (badness 1472) in paragraph at lines 580--580
-[]|\T1/cmr/bx/n/12 Bagian Im-ple-men-
- []
-
-
-Overfull \hbox (15.83232pt too wide) in paragraph at lines 590--590
-[]|\T1/cmtt/m/n/12 MovementEngine::slide| 
- []
-
-File: public/logo-itb.png Graphic file (type png)
-<use public/logo-itb.png>
-Package pdftex.def Info: public/logo-itb.png  used on input line 594.
-(pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
-File: public/logo-stei.png Graphic file (type png)
-<use public/logo-stei.png>
-Package pdftex.def Info: public/logo-stei.png  used on input line 594.
-(pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
 
 Package fancyhdr Warning: \headheight is too small (10.0pt): 
 (fancyhdr)                Make it at least 59.81941pt, for example:
@@ -2048,13 +2024,48 @@ Package fancyhdr Warning: \headheight is too small (10.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
 
 [34]
+Underfull \hbox (badness 10000) in paragraph at lines 139--139
+[]|\T1/cmtt/m/n/12 src/model/ \T1/cmr/m/n/12 dan
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 141--141
+[]|\T1/cmtt/m/n/12 src/heuristic/
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 141--141
+\T1/cmr/m/n/12 dan
+ []
+
+
+Overfull \hbox (11.53822pt too wide) in paragraph at lines 141--141
+\T1/cmtt/m/n/12 include/heuristic/| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 143--143
+[]|\T1/cmtt/m/n/12 src/utils/ \T1/cmr/m/n/12 dan
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 145--145
+[]|\T1/cmtt/m/n/12 src/cli/ \T1/cmr/m/n/12 dan
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 147--147
+[]|\T1/cmtt/m/n/12 src/gui/ \T1/cmr/m/n/12 dan
+ []
+
+sections/03-implementasi.tex:157: ignored error: Infinite glue shrinkage found in box being split
 File: public/logo-itb.png Graphic file (type png)
 <use public/logo-itb.png>
-Package pdftex.def Info: public/logo-itb.png  used on input line 651.
+Package pdftex.def Info: public/logo-itb.png  used on input line 157.
 (pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
 File: public/logo-stei.png Graphic file (type png)
 <use public/logo-stei.png>
-Package pdftex.def Info: public/logo-stei.png  used on input line 651.
+Package pdftex.def Info: public/logo-stei.png  used on input line 157.
 (pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
 
 
@@ -2065,18 +2076,13 @@ Package fancyhdr Warning: \headheight is too small (10.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
 
 [35]
-Underfull \hbox (badness 10000) in paragraph at lines 671--671
-[]|\T1/cmr/m/n/12 Membersihkan ha-sil
- []
-
-)
 File: public/logo-itb.png Graphic file (type png)
 <use public/logo-itb.png>
-Package pdftex.def Info: public/logo-itb.png  used on input line 143.
+Package pdftex.def Info: public/logo-itb.png  used on input line 192.
 (pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
 File: public/logo-stei.png Graphic file (type png)
 <use public/logo-stei.png>
-Package pdftex.def Info: public/logo-stei.png  used on input line 143.
+Package pdftex.def Info: public/logo-stei.png  used on input line 192.
 (pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
 
 
@@ -2087,13 +2093,14 @@ Package fancyhdr Warning: \headheight is too small (10.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
 
 [36]
+sections/03-implementasi.tex:302: ignored error: Infinite glue shrinkage found in box being split
 File: public/logo-itb.png Graphic file (type png)
 <use public/logo-itb.png>
-Package pdftex.def Info: public/logo-itb.png  used on input line 144.
+Package pdftex.def Info: public/logo-itb.png  used on input line 302.
 (pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
 File: public/logo-stei.png Graphic file (type png)
 <use public/logo-stei.png>
-Package pdftex.def Info: public/logo-stei.png  used on input line 144.
+Package pdftex.def Info: public/logo-stei.png  used on input line 302.
 (pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
 
 
@@ -2104,15 +2111,337 @@ Package fancyhdr Warning: \headheight is too small (10.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
 
 [37]
+File: public/logo-itb.png Graphic file (type png)
+<use public/logo-itb.png>
+Package pdftex.def Info: public/logo-itb.png  used on input line 348.
+(pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
+File: public/logo-stei.png Graphic file (type png)
+<use public/logo-stei.png>
+Package pdftex.def Info: public/logo-stei.png  used on input line 348.
+(pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
+
+
+Package fancyhdr Warning: \headheight is too small (10.0pt): 
+(fancyhdr)                Make it at least 59.81941pt, for example:
+(fancyhdr)                \setlength{\headheight}{59.81941pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
+
+[38]
+Underfull \hbox (badness 1558) in paragraph at lines 367--367
+[]|\T1/cmr/m/n/12 Memvalidasi kon-fi-gu-ra-si
+ []
+
+
+Underfull \hbox (badness 2582) in paragraph at lines 371--372
+\T1/cmr/m/n/12 at ini, dan arah ge-rak-an, la-lu meng-em-ba-lik-an
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 377--377
+[]|\T1/cmr/m/n/12 Menjalankan al-go-ri-tma
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 383--384
+[]|\T1/cmr/m/n/12 Program meng-gu-nak-an
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 383--384
+\T1/cmtt/m/n/12 std::chrono::high_resolution_clock \T1/cmr/m/n/12 un-tuk
+ []
+
+sections/03-implementasi.tex:393: ignored error: Infinite glue shrinkage found in box being split
+File: public/logo-itb.png Graphic file (type png)
+<use public/logo-itb.png>
+Package pdftex.def Info: public/logo-itb.png  used on input line 393.
+(pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
+File: public/logo-stei.png Graphic file (type png)
+<use public/logo-stei.png>
+Package pdftex.def Info: public/logo-stei.png  used on input line 393.
+(pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
+
+
+Package fancyhdr Warning: \headheight is too small (10.0pt): 
+(fancyhdr)                Make it at least 59.81941pt, for example:
+(fancyhdr)                \setlength{\headheight}{59.81941pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
+
+[39]
+LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <12> not available
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 407.
+File: public/logo-itb.png Graphic file (type png)
+<use public/logo-itb.png>
+Package pdftex.def Info: public/logo-itb.png  used on input line 452.
+(pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
+File: public/logo-stei.png Graphic file (type png)
+<use public/logo-stei.png>
+Package pdftex.def Info: public/logo-stei.png  used on input line 452.
+(pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
+
+
+Package fancyhdr Warning: \headheight is too small (10.0pt): 
+(fancyhdr)                Make it at least 59.81941pt, for example:
+(fancyhdr)                \setlength{\headheight}{59.81941pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
+
+[40]
+Overfull \hbox (16.32243pt too wide) in paragraph at lines 463--463
+[]    \T1/cmtt/m/n/10.95 if (a.getGCost() != b.getGCost()) return a.getGCost() > b.getGCost();[] 
+ []
+
+
+Overfull \hbox (27.63918pt too wide) in paragraph at lines 466--466
+[]\T1/cmtt/m/n/10.95 std::priority_queue<State, std::vector<State>, decltype(cmp)> openSet(cmp);[] 
+ []
+
+
+Underfull \hbox (badness 1472) in paragraph at lines 477--477
+[]|\T1/cmr/bx/n/12 Bagian Im-ple-men-
+ []
+
+
+Overfull \hbox (15.83232pt too wide) in paragraph at lines 485--485
+[]|\T1/cmtt/m/n/12 MovementEngine::slide| 
+ []
+
+File: public/logo-itb.png Graphic file (type png)
+<use public/logo-itb.png>
+Package pdftex.def Info: public/logo-itb.png  used on input line 525.
+(pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
+File: public/logo-stei.png Graphic file (type png)
+<use public/logo-stei.png>
+Package pdftex.def Info: public/logo-stei.png  used on input line 525.
+(pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
+
+Package fancyhdr Warning: \headheight is too small (10.0pt): 
+(fancyhdr)                Make it at least 59.81941pt, for example:
+(fancyhdr)                \setlength{\headheight}{59.81941pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
+
+[41]
+Overfull \hbox (16.32243pt too wide) in paragraph at lines 536--536
+[]    \T1/cmtt/m/n/10.95 if (a.getHCost() != b.getHCost()) return a.getHCost() > b.getHCost();[] 
+ []
+
+
+Overfull \hbox (27.63918pt too wide) in paragraph at lines 539--539
+[]\T1/cmtt/m/n/10.95 std::priority_queue<State, std::vector<State>, decltype(cmp)> openSet(cmp);[] 
+ []
+
+
+Underfull \hbox (badness 1472) in paragraph at lines 570--570
+[]|\T1/cmr/bx/n/12 Bagian Im-ple-men-
+ []
+
+File: public/logo-itb.png Graphic file (type png)
+<use public/logo-itb.png>
+Package pdftex.def Info: public/logo-itb.png  used on input line 582.
+(pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
+File: public/logo-stei.png Graphic file (type png)
+<use public/logo-stei.png>
+Package pdftex.def Info: public/logo-stei.png  used on input line 582.
+(pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
+
+Package fancyhdr Warning: \headheight is too small (10.0pt): 
+(fancyhdr)                Make it at least 59.81941pt, for example:
+(fancyhdr)                \setlength{\headheight}{59.81941pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
+
+[42]
+Overfull \hbox (27.63918pt too wide) in paragraph at lines 629--629
+[]\T1/cmtt/m/n/10.95 std::priority_queue<State, std::vector<State>, decltype(cmp)> openSet(cmp);[] 
+ []
+
+File: public/logo-itb.png Graphic file (type png)
+<use public/logo-itb.png>
+Package pdftex.def Info: public/logo-itb.png  used on input line 662.
+(pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
+File: public/logo-stei.png Graphic file (type png)
+<use public/logo-stei.png>
+Package pdftex.def Info: public/logo-stei.png  used on input line 662.
+(pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
+
+Package fancyhdr Warning: \headheight is too small (10.0pt): 
+(fancyhdr)                Make it at least 59.81941pt, for example:
+(fancyhdr)                \setlength{\headheight}{59.81941pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
+
+[43]
+Underfull \hbox (badness 1472) in paragraph at lines 669--669
+[]|\T1/cmr/bx/n/12 Bagian Im-ple-men-
+ []
+
+
+Overfull \hbox (15.83232pt too wide) in paragraph at lines 679--679
+[]|\T1/cmtt/m/n/12 MovementEngine::slide| 
+ []
+
+File: public/logo-itb.png Graphic file (type png)
+<use public/logo-itb.png>
+Package pdftex.def Info: public/logo-itb.png  used on input line 718.
+(pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
+File: public/logo-stei.png Graphic file (type png)
+<use public/logo-stei.png>
+Package pdftex.def Info: public/logo-stei.png  used on input line 718.
+(pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
+
+Package fancyhdr Warning: \headheight is too small (10.0pt): 
+(fancyhdr)                Make it at least 59.81941pt, for example:
+(fancyhdr)                \setlength{\headheight}{59.81941pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
+
+[44]
+Overfull \hbox (27.63918pt too wide) in paragraph at lines 734--734
+[]\T1/cmtt/m/n/10.95 std::priority_queue<State, std::vector<State>, decltype(cmp)> openSet(cmp);[] 
+ []
+
+
+Underfull \hbox (badness 1472) in paragraph at lines 750--750
+[]|\T1/cmr/bx/n/12 Bagian Im-ple-men-
+ []
+
+File: public/logo-itb.png Graphic file (type png)
+<use public/logo-itb.png>
+Package pdftex.def Info: public/logo-itb.png  used on input line 780.
+(pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
+File: public/logo-stei.png Graphic file (type png)
+<use public/logo-stei.png>
+Package pdftex.def Info: public/logo-stei.png  used on input line 780.
+(pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
+
+Package fancyhdr Warning: \headheight is too small (10.0pt): 
+(fancyhdr)                Make it at least 59.81941pt, for example:
+(fancyhdr)                \setlength{\headheight}{59.81941pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
+
+[45]
+Overfull \hbox (16.32243pt too wide) in paragraph at lines 796--796
+[]    \T1/cmtt/m/n/10.95 MoveResult move = MovementEngine::slide(map, current, directions[i]);[] 
+ []
+
+File: public/logo-itb.png Graphic file (type png)
+<use public/logo-itb.png>
+Package pdftex.def Info: public/logo-itb.png  used on input line 841.
+(pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
+File: public/logo-stei.png Graphic file (type png)
+<use public/logo-stei.png>
+Package pdftex.def Info: public/logo-stei.png  used on input line 841.
+(pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
+
+Package fancyhdr Warning: \headheight is too small (10.0pt): 
+(fancyhdr)                Make it at least 59.81941pt, for example:
+(fancyhdr)                \setlength{\headheight}{59.81941pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
+
+[46]
+Underfull \hbox (badness 1472) in paragraph at lines 852--852
+[]|\T1/cmr/bx/n/12 Bagian Im-ple-men-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 860--860
+[]|\T1/cmtt/m/n/12 gCost + WEIGHT *
+ []
+
+
+Overfull \hbox (15.83232pt too wide) in paragraph at lines 862--862
+[]|\T1/cmtt/m/n/12 MovementEngine::slide| 
+ []
+
+
+Underfull \hbox (badness 4001) in paragraph at lines 862--863
+[]|\T1/cmr/m/n/12 Mensimulasikan ge-rak-an sli-ding dan meng-ha-silk-an
+ []
+
+File: public/logo-itb.png Graphic file (type png)
+<use public/logo-itb.png>
+Package pdftex.def Info: public/logo-itb.png  used on input line 887.
+(pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
+File: public/logo-stei.png Graphic file (type png)
+<use public/logo-stei.png>
+Package pdftex.def Info: public/logo-stei.png  used on input line 887.
+(pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
+
+Package fancyhdr Warning: \headheight is too small (10.0pt): 
+(fancyhdr)                Make it at least 59.81941pt, for example:
+(fancyhdr)                \setlength{\headheight}{59.81941pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
+
+[47]
+Underfull \hbox (badness 10000) in paragraph at lines 959--959
+[]|\T1/cmr/m/n/12 Membersihkan ha-sil
+ []
+
+File: public/logo-itb.png Graphic file (type png)
+<use public/logo-itb.png>
+Package pdftex.def Info: public/logo-itb.png  used on input line 963.
+(pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
+File: public/logo-stei.png Graphic file (type png)
+<use public/logo-stei.png>
+Package pdftex.def Info: public/logo-stei.png  used on input line 963.
+(pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
+
+Package fancyhdr Warning: \headheight is too small (10.0pt): 
+(fancyhdr)                Make it at least 59.81941pt, for example:
+(fancyhdr)                \setlength{\headheight}{59.81941pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
+
+[48])
+File: public/logo-itb.png Graphic file (type png)
+<use public/logo-itb.png>
+Package pdftex.def Info: public/logo-itb.png  used on input line 138.
+(pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
+File: public/logo-stei.png Graphic file (type png)
+<use public/logo-stei.png>
+Package pdftex.def Info: public/logo-stei.png  used on input line 138.
+(pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
+
+
+Package fancyhdr Warning: \headheight is too small (10.0pt): 
+(fancyhdr)                Make it at least 59.81941pt, for example:
+(fancyhdr)                \setlength{\headheight}{59.81941pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
+
+[49]
+File: public/logo-itb.png Graphic file (type png)
+<use public/logo-itb.png>
+Package pdftex.def Info: public/logo-itb.png  used on input line 139.
+(pdftex.def)             Requested size: 42.95348pt x 42.67912pt.
+File: public/logo-stei.png Graphic file (type png)
+<use public/logo-stei.png>
+Package pdftex.def Info: public/logo-stei.png  used on input line 139.
+(pdftex.def)             Requested size: 55.93837pt x 42.67912pt.
+
+
+Package fancyhdr Warning: \headheight is too small (10.0pt): 
+(fancyhdr)                Make it at least 59.81941pt, for example:
+(fancyhdr)                \setlength{\headheight}{59.81941pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-49.81941pt}.
+
+[50]
 Bab 4.
 (sections/04-eksperimen.tex)
 File: public/logo-itb.png Graphic file (type png)
 <use public/logo-itb.png>
-Package pdftex.def Info: public/logo-itb.png  used on input line 147.
+Package pdftex.def Info: public/logo-itb.png  used on input line 142.
 (pdftex.def)             Requested size: 31.50333pt x 31.2982pt.
 File: public/logo-stei.png Graphic file (type png)
 <use public/logo-stei.png>
-Package pdftex.def Info: public/logo-stei.png  used on input line 147.
+Package pdftex.def Info: public/logo-stei.png  used on input line 142.
 (pdftex.def)             Requested size: 41.01402pt x 31.2982pt.
 
 
@@ -2122,18 +2451,18 @@ Package fancyhdr Warning: \headheight is too small (10.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-38.79674pt}.
 
-[38
+[51
 
 ]
 Bab 5.
 (sections/05-penutup.tex)
 File: public/logo-itb.png Graphic file (type png)
 <use public/logo-itb.png>
-Package pdftex.def Info: public/logo-itb.png  used on input line 150.
+Package pdftex.def Info: public/logo-itb.png  used on input line 145.
 (pdftex.def)             Requested size: 31.50333pt x 31.2982pt.
 File: public/logo-stei.png Graphic file (type png)
 <use public/logo-stei.png>
-Package pdftex.def Info: public/logo-stei.png  used on input line 150.
+Package pdftex.def Info: public/logo-stei.png  used on input line 145.
 (pdftex.def)             Requested size: 41.01402pt x 31.2982pt.
 
 
@@ -2143,7 +2472,7 @@ Package fancyhdr Warning: \headheight is too small (10.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-38.79674pt}.
 
-[39
+[52
 
 ]
 Bab 6.
@@ -2164,7 +2493,7 @@ Package fancyhdr Warning: \headheight is too small (10.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-38.79674pt}.
 
-[40
+[53
 
 ]
 
@@ -2173,11 +2502,11 @@ LaTeX Warning: Empty `thebibliography' environment on input line 24.
 )
 File: public/logo-itb.png Graphic file (type png)
 <use public/logo-itb.png>
-Package pdftex.def Info: public/logo-itb.png  used on input line 155.
+Package pdftex.def Info: public/logo-itb.png  used on input line 150.
 (pdftex.def)             Requested size: 31.50333pt x 31.2982pt.
 File: public/logo-stei.png Graphic file (type png)
 <use public/logo-stei.png>
-Package pdftex.def Info: public/logo-stei.png  used on input line 155.
+Package pdftex.def Info: public/logo-stei.png  used on input line 150.
 (pdftex.def)             Requested size: 41.01402pt x 31.2982pt.
 
 
@@ -2187,7 +2516,7 @@ Package fancyhdr Warning: \headheight is too small (10.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-38.79674pt}.
 
-[41
+[54
 
 ] (main.aux)
  ***********
@@ -2195,20 +2524,20 @@ LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: DD4029AAB614479BB3DE691EFE7E9348;8593.
+(rerunfilecheck)             Checksum: C8948BE35BD120C69E6E0B070AE828ED;10300.
  ) 
 Here is how much of TeX's memory you used:
- 42066 strings out of 467871
- 929139 string characters out of 5428443
- 1479150 words of memory out of 5000000
- 70213 multiletter control sequences out of 15000+600000
- 649666 words of font info for 94 fonts, out of 8000000 for 9000
+ 42127 strings out of 467871
+ 929807 string characters out of 5428443
+ 1474161 words of memory out of 5000000
+ 70239 multiletter control sequences out of 15000+600000
+ 651831 words of font info for 98 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 106i,16n,118p,1669b,1455s stack positions out of 10000i,1000n,20000p,200000b,200000s
- <C:\Users\atias\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1095.pk> <C:\Users\atias\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm0800.pk> <C:\Users\atias\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk> <C:\Users\atias\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\atias\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt1095.pk> <C:\Users\atias\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1728.pk> <C:\Users\atias\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt1200.pk> <C:\Users\atias\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecti1200.pk> <C:\Users\atias\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbi1200.pk> <C:\Users\atias\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1095.pk> <C:\Users\atias\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx2488.pk> <C:\Users\atias\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\atias\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\atias\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1440.pk> <C:\Users\atias\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx2074.pk><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on main.pdf (42 pages, 1257959 bytes).
+ 106i,16n,118p,1661b,1455s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ <C:\Users\atias\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1000.pk> <C:\Users\atias\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt1000.pk> <C:\Users\atias\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1000.pk> <C:\Users\atias\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt0800.pk> <C:\Users\atias\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1095.pk> <C:\Users\atias\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm0800.pk> <C:\Users\atias\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk> <C:\Users\atias\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\atias\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt1095.pk> <C:\Users\atias\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1728.pk> <C:\Users\atias\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt1200.pk> <C:\Users\atias\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecti1200.pk> <C:\Users\atias\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbi1200.pk> <C:\Users\atias\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1095.pk> <C:\Users\atias\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx2488.pk> <C:\Users\atias\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\atias\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\atias\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1440.pk> <C:\Users\atias\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx2074.pk><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
+Output written on main.pdf (55 pages, 1910213 bytes).
 PDF statistics:
- 1216 PDF objects out of 1440 (max. 8388607)
- 133 named destinations out of 1000 (max. 500000)
- 580 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1515 PDF objects out of 1728 (max. 8388607)
+ 164 named destinations out of 1000 (max. 500000)
+ 644 words of extra memory for PDF output out of 10000 (max. 10000000)
 
