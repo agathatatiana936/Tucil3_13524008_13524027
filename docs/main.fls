@@ -1,6 +1,6 @@
-PWD c:\Agatha\Semester 4\Algorithm Strategy\Stima-Tucil3\docs\laporan
+PWD c:\Agatha\Semester 4\Algorithm Strategy\Tucil3_13524008_13524027\docs
 INPUT C:\Users\atias\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
-INPUT c:\Agatha\Semester 4\Algorithm Strategy\Stima-Tucil3\docs\laporan\main.tex
+INPUT c:\Agatha\Semester 4\Algorithm Strategy\Tucil3_13524008_13524027\docs\main.tex
 OUTPUT main.log
 INPUT C:\Program Files\MiKTeX\tex\latex\base\report.cls
 INPUT C:\Program Files\MiKTeX\tex\latex\base\report.cls
@@ -362,12 +362,12 @@ OUTPUT main.out
 INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecrm2074.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecbx2074.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecrm1440.tfm
-INPUT .\public\foto-kelompok.jpg
-INPUT .\public\foto-kelompok.jpg
-INPUT .\public\foto-kelompok.jpg
-INPUT .\public\foto-kelompok.jpg
-INPUT .\public\foto-kelompok.jpg
-INPUT .\public\foto-kelompok.jpg
+INPUT .\public\foto-kelompok.png
+INPUT .\public\foto-kelompok.png
+INPUT .\public\foto-kelompok.png
+INPUT .\public\foto-kelompok.png
+INPUT .\public\foto-kelompok.png
+INPUT .\public\foto-kelompok.png
 INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecbx1200.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmr8.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmr6.tfm
@@ -411,7 +411,6 @@ INPUT .\public\logo-stei.png
 INPUT .\public\logo-stei.png
 INPUT .\public\logo-stei.png
 INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecrm1095.tfm
-OUTPUT main.toc
 INPUT .\public\logo-itb.png
 INPUT .\public\logo-itb.png
 INPUT .\public\logo-itb.png
@@ -419,6 +418,13 @@ INPUT .\public\logo-stei.png
 INPUT .\public\logo-stei.png
 INPUT .\public\logo-stei.png
 INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecbi1200.tfm
+OUTPUT main.toc
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
 INPUT .\sections\01-algoritma.tex
 INPUT .\sections\01-algoritma.tex
 INPUT .\sections\01-algoritma.tex
@@ -497,6 +503,25 @@ INPUT .\public\logo-itb.png
 INPUT .\public\logo-stei.png
 INPUT .\public\logo-stei.png
 INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecbx1095.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\tcrm1200.tfm
 INPUT .\public\logo-itb.png
 INPUT .\public\logo-itb.png
@@ -581,6 +606,60 @@ INPUT .\public\logo-itb.png
 INPUT .\public\logo-stei.png
 INPUT .\public\logo-stei.png
 INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
 INPUT .\sections\03-implementasi.tex
 INPUT .\sections\03-implementasi.tex
 INPUT .\sections\03-implementasi.tex
@@ -592,6 +671,28 @@ INPUT .\public\logo-itb.png
 INPUT .\public\logo-stei.png
 INPUT .\public\logo-stei.png
 INPUT .\public\logo-stei.png
+INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ectt0800.tfm
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecrm1000.tfm
+INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecbx1000.tfm
+INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ectt1000.tfm
 INPUT .\public\logo-itb.png
 INPUT .\public\logo-itb.png
 INPUT .\public\logo-itb.png
@@ -616,7 +717,12 @@ INPUT .\public\logo-itb.png
 INPUT .\public\logo-stei.png
 INPUT .\public\logo-stei.png
 INPUT .\public\logo-stei.png
-INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecbx1095.tfm
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
 INPUT .\public\logo-itb.png
 INPUT .\public\logo-itb.png
 INPUT .\public\logo-itb.png
@@ -682,6 +788,178 @@ INPUT .\public\logo-itb.png
 INPUT .\public\logo-stei.png
 INPUT .\public\logo-stei.png
 INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\map8.png
+INPUT .\public\map8.png
+INPUT .\public\map8.png
+INPUT .\public\map8.png
+INPUT .\public\map8.png
+INPUT .\public\map8.png
+INPUT .\public\map8.png
+INPUT .\public\test8-GBFS-h3.png
+INPUT .\public\test8-GBFS-h3.png
+INPUT .\public\test8-GBFS-h3.png
+INPUT .\public\test8-GBFS-h3.png
+INPUT .\public\test8-GBFS-h3.png
+INPUT .\public\test8-GBFS-h3.png
+INPUT .\public\test8-GBFS-h3.png
+INPUT .\public\test8-WA-h2.png
+INPUT .\public\test8-WA-h2.png
+INPUT .\public\test8-WA-h2.png
+INPUT .\public\test8-WA-h2.png
+INPUT .\public\test8-WA-h2.png
+INPUT .\public\test8-WA-h2.png
+INPUT .\public\test8-WA-h2.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ectt0800.tfm
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\map17.png
+INPUT .\public\map17.png
+INPUT .\public\map17.png
+INPUT .\public\map17.png
+INPUT .\public\map17.png
+INPUT .\public\map17.png
+INPUT .\public\map17.png
+INPUT .\public\test17-GBFS-h1.png
+INPUT .\public\test17-GBFS-h1.png
+INPUT .\public\test17-GBFS-h1.png
+INPUT .\public\test17-GBFS-h1.png
+INPUT .\public\test17-GBFS-h1.png
+INPUT .\public\test17-GBFS-h1.png
+INPUT .\public\test17-GBFS-h1.png
+INPUT .\public\test17-WA-h1.png
+INPUT .\public\test17-WA-h1.png
+INPUT .\public\test17-WA-h1.png
+INPUT .\public\test17-WA-h1.png
+INPUT .\public\test17-WA-h1.png
+INPUT .\public\test17-WA-h1.png
+INPUT .\public\test17-WA-h1.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\map-20.png
+INPUT .\public\map-20.png
+INPUT .\public\map-20.png
+INPUT .\public\map-20.png
+INPUT .\public\map-20.png
+INPUT .\public\map-20.png
+INPUT .\public\map-20.png
+INPUT .\public\test20-A-h1.png
+INPUT .\public\test20-A-h1.png
+INPUT .\public\test20-A-h1.png
+INPUT .\public\test20-A-h1.png
+INPUT .\public\test20-A-h1.png
+INPUT .\public\test20-A-h1.png
+INPUT .\public\test20-A-h1.png
+INPUT .\public\test20-UCS.png
+INPUT .\public\test20-UCS.png
+INPUT .\public\test20-UCS.png
+INPUT .\public\test20-UCS.png
+INPUT .\public\test20-UCS.png
+INPUT .\public\test20-UCS.png
+INPUT .\public\test20-UCS.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\map24.png
+INPUT .\public\map24.png
+INPUT .\public\map24.png
+INPUT .\public\map24.png
+INPUT .\public\map24.png
+INPUT .\public\map24.png
+INPUT .\public\map24.png
+INPUT .\public\test24-A-h2.png
+INPUT .\public\test24-A-h2.png
+INPUT .\public\test24-A-h2.png
+INPUT .\public\test24-A-h2.png
+INPUT .\public\test24-A-h2.png
+INPUT .\public\test24-A-h2.png
+INPUT .\public\test24-A-h2.png
+INPUT .\public\test24-GBFS-h2.png
+INPUT .\public\test24-GBFS-h2.png
+INPUT .\public\test24-GBFS-h2.png
+INPUT .\public\test24-GBFS-h2.png
+INPUT .\public\test24-GBFS-h2.png
+INPUT .\public\test24-GBFS-h2.png
+INPUT .\public\test24-GBFS-h2.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\map25.png
+INPUT .\public\map25.png
+INPUT .\public\map25.png
+INPUT .\public\map25.png
+INPUT .\public\map25.png
+INPUT .\public\map25.png
+INPUT .\public\map25.png
+INPUT .\public\test25-A-h3.png
+INPUT .\public\test25-A-h3.png
+INPUT .\public\test25-A-h3.png
+INPUT .\public\test25-A-h3.png
+INPUT .\public\test25-A-h3.png
+INPUT .\public\test25-A-h3.png
+INPUT .\public\test25-A-h3.png
+INPUT .\public\test25-WA-h3.png
+INPUT .\public\test25-WA-h3.png
+INPUT .\public\test25-WA-h3.png
+INPUT .\public\test25-WA-h3.png
+INPUT .\public\test25-WA-h3.png
+INPUT .\public\test25-WA-h3.png
+INPUT .\public\test25-WA-h3.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
 INPUT .\sections\05-penutup.tex
 INPUT .\sections\05-penutup.tex
 INPUT .\sections\05-penutup.tex
@@ -693,11 +971,85 @@ INPUT .\public\logo-itb.png
 INPUT .\public\logo-stei.png
 INPUT .\public\logo-stei.png
 INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
 INPUT .\sections\06-lampiran.tex
 INPUT .\sections\06-lampiran.tex
 INPUT .\sections\06-lampiran.tex
 INPUT .\sections\06-lampiran.tex
 INPUT sections\06-lampiran.tex
+INPUT .\public\ttd-anggota1.png
+INPUT .\public\ttd-anggota1.png
+INPUT .\public\ttd-anggota1.png
+INPUT .\public\ttd-anggota1.png
+INPUT .\public\ttd-anggota1.png
+INPUT .\public\ttd-anggota1.png
+INPUT .\public\ttd-anggota1.png
+INPUT .\public\ttd-anggota2.png
+INPUT .\public\ttd-anggota2.png
+INPUT .\public\ttd-anggota2.png
+INPUT .\public\ttd-anggota2.png
+INPUT .\public\ttd-anggota2.png
+INPUT .\public\ttd-anggota2.png
+INPUT .\public\ttd-anggota2.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-itb.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
+INPUT .\public\logo-stei.png
 INPUT .\main.bbl
 INPUT .\main.bbl
 INPUT main.bbl
@@ -716,12 +1068,22 @@ INPUT .\public\logo-stei.png
 INPUT main.aux
 INPUT .\main.out
 INPUT .\main.out
-INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1095.pk
-INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1095.pk
+INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi450\ectt0800.pk
+INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi450\ectt0800.pk
+INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1000.pk
+INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1000.pk
+INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\ectt1000.pk
+INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\ectt1000.pk
+INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1000.pk
+INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1000.pk
+INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\ectt0800.pk
+INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\ectt0800.pk
 INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm0800.pk
 INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm0800.pk
 INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\tcrm1200.pk
 INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\tcrm1200.pk
+INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1095.pk
+INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1095.pk
 INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1440.pk
 INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1440.pk
 INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\ectt1095.pk
@@ -748,12 +1110,16 @@ INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\ecb
 INPUT C:\Users\atias\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx2074.pk
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmex10.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmex10.pfb
+INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi10.pfb
+INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi10.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi12.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi12.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi6.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi6.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi8.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi8.pfb
+INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr10.pfb
+INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr10.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr12.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr12.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr8.pfb
@@ -762,3 +1128,5 @@ INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy10.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy10.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy8.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy8.pfb
+INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\symbols\msam10.pfb
+INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\symbols\msam10.pfb

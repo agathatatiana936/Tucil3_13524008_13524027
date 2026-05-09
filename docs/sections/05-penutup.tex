@@ -1,0 +1,515 @@
+Bagian ini membahas hasil percobaan algoritma pathfinding yang telah dilakukan pada lima test case, yaitu Test 8, Test 17, Test 20, Test 24, dan Test 25. 
+Analisis dilakukan berdasarkan beberapa metrik utama, yaitu total cost solusi, waktu eksekusi, jumlah iterasi, stabilitas algoritma, dan pengaruh heuristik terhadap proses pencarian.
+
+\begin{tcolorbox}[
+	colback=blue!5,
+	colframe=blue!60!black,
+	title=\textbf{Tujuan Analisis Percobaan},
+	arc=2mm,
+	boxrule=0.8pt
+]
+Analisis ini bertujuan untuk membandingkan perilaku UCS, GBFS, A*, dan Weighted A* pada berbagai bentuk map. 
+Setiap algoritma diuji untuk melihat kemampuan menemukan solusi, efisiensi jumlah iterasi, kecepatan eksekusi, serta kualitas cost solusi yang dihasilkan.
+\end{tcolorbox}
+
+
+\section{Deskripsi Umum Test Case}
+
+Kelima test case yang digunakan memiliki karakteristik yang berbeda. 
+Perbedaan tersebut meliputi ukuran papan, jumlah angka wajib, keberadaan lava, banyaknya rintangan, serta variasi cost tile. 
+Perbedaan karakteristik ini penting karena dapat memengaruhi jumlah state yang dieksplorasi oleh setiap algoritma.
+
+\begin{table}[H]
+	\centering
+	\caption{Deskripsi umum test case}
+	\small
+	\begin{tabular}{|p{2cm}|p{2cm}|p{2.2cm}|p{2cm}|p{4.8cm}|}
+		\hline
+		\rowcolor{blue!15}
+		\textbf{Test Case} & \textbf{Ukuran} & \textbf{Angka Wajib} & \textbf{Lava} & \textbf{Karakteristik Map} \\
+		\hline
+		Test 8 & $6 \times 6$ & Tidak ada & Tidak ada & Map kecil dan sederhana untuk menguji mekanisme sliding dasar. \\
+		\hline
+		Test 17 & $10 \times 10$ & Ada, 0--7 & Tidak ada & Map besar dengan banyak angka dan variasi cost tile. \\
+		\hline
+		Test 20 & $12 \times 12$ & Tidak ada & Tidak ada & Map berbentuk maze dengan banyak rintangan. \\
+		\hline
+		Test 24 & $7 \times 12$ & Ada, 0--6 & Ada & Map dengan kombinasi angka berurutan, obstacle, dan lava. \\
+		\hline
+		Test 25 & $12 \times 12$ & Tidak ada & Ada & Map besar dengan banyak lava dan obstacle. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{tcolorbox}[
+	colback=gray!5,
+	colframe=black!60,
+	title=\textbf{Klasifikasi Tingkat Kesulitan Test Case},
+	arc=2mm,
+	boxrule=0.8pt
+]
+\begin{itemize}
+	\item \textbf{Test 8} merupakan kasus sederhana karena ukuran kecil dan tidak memiliki angka maupun lava.
+	\item \textbf{Test 17} menantang karena memiliki banyak angka yang harus dilewati secara berurutan.
+	\item \textbf{Test 20} menantang dari sisi rintangan karena bentuknya menyerupai maze.
+	\item \textbf{Test 24} menantang karena menggabungkan angka berurutan dan lava.
+	\item \textbf{Test 25} menantang karena memiliki banyak lava dan obstacle, meskipun tidak memiliki angka wajib.
+\end{itemize}
+\end{tcolorbox}
+
+
+\section{Metrik yang Dibandingkan}
+
+Pada setiap percobaan, beberapa metrik digunakan untuk membandingkan performa algoritma. 
+Metrik tersebut tidak hanya melihat apakah solusi ditemukan, tetapi juga memperhatikan efisiensi dan kualitas solusi.
+
+\begin{table}[H]
+	\centering
+	\caption{Metrik pembanding hasil percobaan}
+	\begin{tabular}{|p{4cm}|p{10cm}|}
+		\hline
+		\rowcolor{gray!20}
+		\textbf{Metrik} & \textbf{Makna} \\
+		\hline
+		Total cost & Menunjukkan biaya total solusi yang ditemukan. Semakin kecil nilainya, semakin baik solusi dari sisi optimalitas cost. \\
+		\hline
+		Waktu eksekusi & Menunjukkan waktu yang dibutuhkan algoritma untuk menemukan solusi dalam milidetik. \\
+		\hline
+		Jumlah iterasi & Menunjukkan banyaknya state atau konfigurasi yang ditinjau selama pencarian. \\
+		\hline
+		Stabilitas & Menunjukkan kemampuan algoritma menghasilkan performa yang konsisten pada berbagai bentuk map. \\
+		\hline
+		Optimalitas & Menunjukkan apakah algoritma menghasilkan cost solusi minimum dibanding algoritma lain. \\
+		\hline
+		Efisiensi pencarian & Menunjukkan kemampuan algoritma menemukan solusi dengan jumlah iterasi dan waktu yang rendah. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+
+\section{Rekapitulasi Hasil Percobaan}
+
+Tabel berikut merangkum hasil terbaik dari setiap test case berdasarkan cost solusi, waktu eksekusi, dan jumlah iterasi.
+
+\begin{longtable}{|p{2cm}|p{3.2cm}|p{3.2cm}|p{3.2cm}|}
+	\caption{Rekapitulasi hasil terbaik per test case} \\
+	\hline
+	\rowcolor{green!15}
+	\textbf{Test Case} & \textbf{Cost Terbaik} & \textbf{Waktu Tercepat} & \textbf{Iterasi Tersedikit} \\
+	\hline
+	\endfirsthead
+	
+	\hline
+	\rowcolor{green!15}
+	\textbf{Test Case} & \textbf{Cost Terbaik} & \textbf{Waktu Tercepat} & \textbf{Iterasi Tersedikit} \\
+	\hline
+	\endhead
+	
+	Test 8 & Semua algoritma, cost 37 & GBFS - Basic, 0.077 ms & GBFS, 3 iterasi \\
+	\hline
+	Test 17 & Semua algoritma, cost 1085 & GBFS - Custom, 0.439 ms & GBFS - Advanced, 10 iterasi \\
+	\hline
+	Test 20 & UCS, A*, WA*, cost 810 & GBFS - Basic, 0.065 ms & GBFS, 3 iterasi \\
+	\hline
+	Test 24 & Semua algoritma, cost 719 & GBFS - Custom, 0.192 ms & GBFS - Custom dan Advanced, 7 iterasi \\
+	\hline
+	Test 25 & Semua algoritma, cost 1637 & UCS, 0.159 ms & UCS dan GBFS, 11 iterasi \\
+	\hline
+\end{longtable}
+
+\begin{tcolorbox}[
+	colback=green!5,
+	colframe=green!50!black,
+	title=\textbf{Gambaran Umum Hasil},
+	arc=2mm,
+	boxrule=0.8pt
+]
+Sebagian besar test case menunjukkan bahwa semua algoritma dapat menemukan solusi valid. 
+Perbedaan utama terlihat pada jumlah iterasi dan waktu eksekusi. 
+Namun, pada Test 20, GBFS menghasilkan cost yang jauh lebih besar daripada UCS, A*, dan Weighted A*, sehingga terlihat bahwa GBFS tidak selalu aman untuk mencari solusi dengan cost minimum.
+\end{tcolorbox}
+
+
+\section{Analisis Per Test Case}
+
+\subsection{Analisis Test Case 8}
+
+Test Case 8 merupakan map kecil dan sederhana. 
+Pada test case ini, semua algoritma menghasilkan cost solusi yang sama, yaitu 37. 
+Hal ini menunjukkan bahwa pada map kecil tanpa angka dan lava, ruang pencarian relatif sederhana sehingga perbedaan strategi algoritma tidak terlalu memengaruhi kualitas cost solusi.
+
+\begin{table}[H]
+	\centering
+	\caption{Analisis ringkas Test Case 8}
+	\begin{tabular}{|p{4cm}|p{10cm}|}
+		\hline
+		\rowcolor{blue!15}
+		\textbf{Aspek} & \textbf{Analisis} \\
+		\hline
+		Cost solusi & Semua algoritma menghasilkan cost 37. \\
+		\hline
+		Jumlah iterasi & GBFS membutuhkan 3 iterasi, lebih sedikit dibanding UCS yang membutuhkan 4 iterasi dan A*/WA* yang membutuhkan 5 iterasi. \\
+		\hline
+		Waktu eksekusi & Perbedaan waktu tidak terlalu signifikan karena ukuran map kecil. \\
+		\hline
+		Pengaruh heuristik & Tidak terlalu besar karena tidak ada angka dan struktur map sederhana. \\
+		\hline
+		Kesimpulan & Semua algoritma efektif pada map kecil, tetapi GBFS lebih efisien dari sisi iterasi. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsection{Analisis Test Case 17}
+
+Test Case 17 memiliki banyak angka yang harus dilewati secara berurutan. 
+Pada kasus ini, semua algoritma tetap menghasilkan cost solusi yang sama, yaitu 1085. 
+Namun, jumlah iterasi berbeda cukup signifikan antara algoritma berbasis heuristik dan UCS/A*.
+
+\begin{table}[H]
+	\centering
+	\caption{Analisis ringkas Test Case 17}
+	\begin{tabular}{|p{4cm}|p{10cm}|}
+		\hline
+		\rowcolor{blue!15}
+		\textbf{Aspek} & \textbf{Analisis} \\
+		\hline
+		Cost solusi & Semua algoritma menghasilkan cost 1085. \\
+		\hline
+		Constraint angka & Banyak angka menyebabkan state harus menyimpan progres angka melalui collected mask. \\
+		\hline
+		Jumlah iterasi & UCS dan A* berada di sekitar 71--72 iterasi, sedangkan GBFS dapat turun hingga 10--25 iterasi. \\
+		\hline
+		Pengaruh heuristik & Heuristik sangat membantu GBFS karena mampu mengarahkan pencarian menuju target angka berikutnya. \\
+		\hline
+		Kesimpulan & Pada map dengan banyak angka, heuristik yang sesuai dapat mengurangi jumlah iterasi secara signifikan. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsection{Analisis Test Case 20}
+
+Test Case 20 merupakan map berbentuk maze dengan banyak rintangan. 
+Pada test case ini, UCS, A*, dan Weighted A* menghasilkan cost 810, sedangkan GBFS menghasilkan cost 6174. 
+Perbedaan ini menunjukkan risiko GBFS ketika heuristik terlalu berfokus pada kedekatan posisi tanpa mempertimbangkan cost aktual.
+
+\begin{table}[H]
+	\centering
+	\caption{Analisis ringkas Test Case 20}
+	\begin{tabular}{|p{4cm}|p{10cm}|}
+		\hline
+		\rowcolor{orange!20}
+		\textbf{Aspek} & \textbf{Analisis} \\
+		\hline
+		Cost solusi & UCS, A*, dan WA* menghasilkan cost 810, sedangkan GBFS menghasilkan cost 6174. \\
+		\hline
+		Banyak rintangan & Rintangan membuat heuristik jarak menjadi kurang akurat karena jalur yang tampak dekat belum tentu murah. \\
+		\hline
+		Jumlah iterasi & GBFS hanya membutuhkan 3 iterasi, tetapi menghasilkan cost yang jauh lebih besar. \\
+		\hline
+		Optimalitas & UCS, A*, dan WA* lebih baik dari sisi cost pada test case ini. \\
+		\hline
+		Kesimpulan & GBFS cepat, tetapi pada map maze dapat memilih jalur yang tidak optimal dari sisi cost. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsection{Analisis Test Case 24}
+
+Test Case 24 menggabungkan angka berurutan dan lava. 
+Semua algoritma menghasilkan cost yang sama, yaitu 719. 
+Meskipun terdapat lava, program tetap dapat menyaring jalur tidak valid melalui mekanisme \texttt{MovementEngine}.
+
+\begin{table}[H]
+	\centering
+	\caption{Analisis ringkas Test Case 24}
+	\begin{tabular}{|p{4cm}|p{10cm}|}
+		\hline
+		\rowcolor{blue!15}
+		\textbf{Aspek} & \textbf{Analisis} \\
+		\hline
+		Cost solusi & Semua algoritma menghasilkan cost 719. \\
+		\hline
+		Lava & Gerakan yang melewati lava dianggap tidak valid sehingga tidak masuk ke state berikutnya. \\
+		\hline
+		Angka berurutan & Algoritma harus tetap mengikuti urutan angka sebelum menuju goal. \\
+		\hline
+		Jumlah iterasi & GBFS dengan Custom dan Advanced hanya membutuhkan 7 iterasi, lebih sedikit dibanding UCS, A*, dan WA*. \\
+		\hline
+		Kesimpulan & Heuristik efektif pada map ini karena mampu mengarahkan pencarian meskipun terdapat lava dan angka wajib. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsection{Analisis Test Case 25}
+
+Test Case 25 memiliki banyak lava dan obstacle, tetapi tidak memiliki angka wajib. 
+Semua algoritma menghasilkan cost yang sama, yaitu 1637. 
+Hal ini menunjukkan bahwa meskipun map cukup kompleks, jalur solusi yang valid relatif terarah sehingga semua algoritma dapat menemukan solusi dengan cost yang sama.
+
+\begin{table}[H]
+	\centering
+	\caption{Analisis ringkas Test Case 25}
+	\begin{tabular}{|p{4cm}|p{10cm}|}
+		\hline
+		\rowcolor{blue!15}
+		\textbf{Aspek} & \textbf{Analisis} \\
+		\hline
+		Cost solusi & Semua algoritma menghasilkan cost 1637. \\
+		\hline
+		Lava dan obstacle & Banyak jalur berisiko menyebabkan game over, sehingga validasi gerakan sangat penting. \\
+		\hline
+		Jumlah iterasi & UCS dan GBFS membutuhkan 11 iterasi, sedangkan A* dan WA* membutuhkan 12 iterasi. \\
+		\hline
+		Waktu eksekusi & UCS menjadi yang tercepat pada hasil percobaan ini. \\
+		\hline
+		Kesimpulan & Pada map ini, semua algoritma stabil dan menghasilkan kualitas solusi yang sama. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+
+\section{Analisis Per Algoritma}
+
+\subsection{Uniform Cost Search}
+
+UCS selalu memilih state berdasarkan cost aktual terkecil. 
+Berdasarkan hasil percobaan, UCS konsisten menghasilkan cost solusi terbaik atau sama dengan algoritma terbaik lainnya pada seluruh test case.
+
+\begin{table}[H]
+	\centering
+	\caption{Analisis performa UCS}
+	\begin{tabular}{|p{4cm}|p{10cm}|}
+		\hline
+		\rowcolor{green!15}
+		\textbf{Aspek} & \textbf{Analisis} \\
+		\hline
+		Optimalitas & UCS paling aman untuk mencari total cost minimum karena selalu memperluas state dengan cost aktual terkecil. \\
+		\hline
+		Map kecil & Pada Test 8, UCS menghasilkan cost optimal dengan iterasi sedikit. \\
+		\hline
+		Map besar & Pada Test 17, UCS membutuhkan lebih banyak iterasi dibanding GBFS, tetapi tetap menghasilkan cost terbaik. \\
+		\hline
+		Map banyak tembok & Pada Test 20, UCS menghasilkan cost 810, jauh lebih baik daripada GBFS yang menghasilkan cost 6174. \\
+		\hline
+		Kelebihan & Sangat cocok untuk map dengan cost tile bervariasi. \\
+		\hline
+		Kekurangan & Tidak menggunakan informasi arah tujuan, sehingga pada beberapa kasus jumlah iterasi lebih besar. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsection{Greedy Best-First Search}
+
+GBFS memilih state berdasarkan nilai heuristik terkecil. 
+Hasil percobaan menunjukkan bahwa GBFS sering memiliki jumlah iterasi paling sedikit, tetapi tidak selalu menghasilkan cost terbaik.
+
+\begin{table}[H]
+	\centering
+	\caption{Analisis performa GBFS}
+	\begin{tabular}{|p{4cm}|p{10cm}|}
+		\hline
+		\rowcolor{orange!20}
+		\textbf{Aspek} & \textbf{Analisis} \\
+		\hline
+		Kecepatan & GBFS sering menjadi algoritma dengan waktu eksekusi paling cepat. \\
+		\hline
+		Jumlah iterasi & Pada Test 8, Test 17, Test 20, dan Test 24, GBFS memiliki iterasi lebih sedikit dibanding algoritma lain. \\
+		\hline
+		Risiko optimalitas & Pada Test 20, GBFS menghasilkan cost 6174, jauh lebih besar daripada cost terbaik 810. \\
+		\hline
+		Pengaruh heuristik & Performa GBFS sangat bergantung pada kualitas heuristik yang digunakan. \\
+		\hline
+		Kelebihan & Sangat efisien untuk menemukan solusi dengan cepat. \\
+		\hline
+		Kekurangan & Tidak aman digunakan jika tujuan utama adalah cost minimum. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsection{A*}
+
+A* menggabungkan cost aktual dan heuristik melalui fungsi $f(n)=g(n)+h(n)$. 
+Berdasarkan hasil percobaan, A* menghasilkan cost terbaik pada seluruh test case, termasuk pada Test 20 yang menunjukkan kelemahan GBFS.
+
+\begin{table}[H]
+	\centering
+	\caption{Analisis performa A*}
+	\begin{tabular}{|p{4cm}|p{10cm}|}
+		\hline
+		\rowcolor{red!15}
+		\textbf{Aspek} & \textbf{Analisis} \\
+		\hline
+		Keseimbangan & A* menyeimbangkan cost aktual dan estimasi menuju target. \\
+		\hline
+		Kualitas solusi & A* menghasilkan cost yang sama dengan UCS pada seluruh test case. \\
+		\hline
+		Jumlah iterasi & A* dapat memiliki iterasi lebih besar dari GBFS, tetapi lebih aman dari sisi cost. \\
+		\hline
+		Map banyak tembok & Pada Test 20, A* tetap menghasilkan cost 810, sedangkan GBFS menghasilkan cost 6174. \\
+		\hline
+		Stabilitas & A* stabil pada berbagai bentuk map karena tetap mempertimbangkan cost aktual. \\
+		\hline
+		Kesimpulan & A* merupakan algoritma paling seimbang antara optimalitas dan efisiensi pencarian. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsection{Weighted A*}
+
+Weighted A* menggunakan fungsi evaluasi $f(n)=g(n)+2h(n)$, sehingga heuristik memiliki pengaruh lebih besar daripada A* biasa. 
+Tujuannya adalah mempercepat pencarian dengan membuat algoritma lebih agresif menuju target.
+
+\begin{table}[H]
+	\centering
+	\caption{Analisis performa Weighted A*}
+	\begin{tabular}{|p{4cm}|p{10cm}|}
+		\hline
+		\rowcolor{purple!15}
+		\textbf{Aspek} & \textbf{Analisis} \\
+		\hline
+		Pengaruh bobot & Bobot $w=2$ membuat algoritma lebih mengikuti heuristik dibanding A* biasa. \\
+		\hline
+		Kualitas solusi & Pada percobaan ini, Weighted A* menghasilkan cost yang sama dengan A* pada seluruh test case. \\
+		\hline
+		Jumlah iterasi & Jumlah iterasi Weighted A* umumnya sama dengan A* pada data uji yang digunakan. \\
+		\hline
+		Waktu eksekusi & Pada beberapa kasus, Weighted A* lebih cepat daripada A*, misalnya Test 20 dan Test 25. \\
+		\hline
+		Risiko & Secara teori, Weighted A* tidak selalu menjamin solusi optimal karena heuristik diperbesar. \\
+		\hline
+		Kesimpulan & Weighted A* cocok sebagai algoritma bonus untuk menguji trade-off antara kecepatan dan optimalitas. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+
+\section{Analisis Pengaruh Heuristik}
+
+Heuristik yang digunakan pada percobaan adalah H1, H2, dan H3. 
+Berdasarkan implementasi program, H1 merepresentasikan Manhattan menuju goal, H2 mengarah ke angka berikutnya atau goal, sedangkan H3 memperkirakan beberapa target yang belum dikumpulkan.
+
+\begin{longtable}{|p{2cm}|p{4cm}|p{7.5cm}|}
+	\caption{Karakteristik heuristik} \\
+	\hline
+	\rowcolor{orange!20}
+	\textbf{Heuristik} & \textbf{Nama} & \textbf{Karakteristik} \\
+	\hline
+	\endfirsthead
+	
+	\hline
+	\rowcolor{orange!20}
+	\textbf{Heuristik} & \textbf{Nama} & \textbf{Karakteristik} \\
+	\hline
+	\endhead
+	
+	H1 & Basic / Manhattan & Menghitung jarak Manhattan langsung menuju goal. Cepat dihitung, tetapi tidak memperhatikan angka berikutnya. \\
+	\hline
+	H2 & Custom & Menghitung jarak ke angka berikutnya yang harus dikumpulkan, lalu menuju goal jika semua angka selesai. \\
+	\hline
+	H3 & Advanced & Mengestimasi sisa perjalanan ke target-target yang belum dikumpulkan dan goal dengan pendekatan greedy. \\
+	\hline
+\end{longtable}
+
+\begin{table}[H]
+	\centering
+	\caption{Analisis pengaruh heuristik terhadap algoritma}
+	\begin{tabular}{|p{4cm}|p{10cm}|}
+		\hline
+		\rowcolor{orange!20}
+		\textbf{Aspek} & \textbf{Analisis} \\
+		\hline
+		Pengaruh pada GBFS & Sangat besar, karena GBFS hanya menggunakan $h(n)$ sebagai prioritas. Pada Test 17 dan Test 24, heuristik Custom dan Advanced menurunkan jumlah iterasi secara signifikan. \\
+		\hline
+		Pengaruh pada A* & Cukup besar, tetapi tidak sedominan GBFS karena A* tetap mempertimbangkan $g(n)$. \\
+		\hline
+		Pengaruh pada Weighted A* & Lebih besar dibanding A* karena nilai heuristik dikalikan bobot $2$. \\
+		\hline
+		Heuristik paling cepat & Pada beberapa test case, Custom menghasilkan waktu terbaik, misalnya Test 17 dan Test 24 pada GBFS. \\
+		\hline
+		Heuristik paling stabil & Custom cukup stabil untuk map dengan angka karena targetnya mengikuti angka berikutnya. \\
+		\hline
+		Risiko heuristik & Heuristik yang tidak memperhitungkan obstacle, lava, dan sliding dapat mengarahkan algoritma ke jalur yang tampak dekat tetapi tidak optimal. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+
+\section{Perbandingan Teoritis dan Eksperimental}
+
+Secara teori, UCS menjamin cost minimum untuk cost positif, GBFS cepat tetapi tidak optimal, A* menyeimbangkan cost dan heuristik, sedangkan Weighted A* memperbesar pengaruh heuristik untuk mempercepat pencarian. 
+Hasil percobaan secara umum sesuai dengan teori tersebut.
+
+\begin{table}[H]
+	\centering
+	\caption{Perbandingan teori dan hasil eksperimen}
+	\begin{tabular}{|p{3cm}|p{5cm}|p{6cm}|}
+		\hline
+		\rowcolor{gray!20}
+		\textbf{Algoritma} & \textbf{Ekspektasi Teoritis} & \textbf{Hasil Eksperimen} \\
+		\hline
+		UCS & Optimal tetapi dapat mengeksplorasi banyak state. & Menghasilkan cost terbaik pada semua test case, tetapi tidak selalu memiliki iterasi paling kecil. \\
+		\hline
+		GBFS & Cepat, tetapi tidak selalu optimal. & Sering memiliki iterasi paling kecil, tetapi pada Test 20 menghasilkan cost jauh lebih besar. \\
+		\hline
+		A* & Seimbang antara cost aktual dan heuristik. & Menghasilkan cost terbaik dan lebih stabil daripada GBFS. \\
+		\hline
+		Weighted A* & Lebih agresif mengikuti heuristik dan dapat lebih cepat, tetapi tidak selalu optimal. & Pada percobaan ini cost tetap sama dengan A*, tetapi secara teori masih memiliki risiko menghasilkan cost lebih besar. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{tcolorbox}[
+	colback=gray!5,
+	colframe=black!60,
+	title=\textbf{Faktor Penyebab Perbedaan Hasil},
+	arc=2mm,
+	boxrule=0.8pt
+]
+Perbedaan hasil antar algoritma dipengaruhi oleh beberapa faktor, yaitu bentuk map, jumlah tembok, keberadaan angka, variasi cost tile, kualitas heuristik, banyaknya gerakan yang menyebabkan game over, dan ukuran papan. 
+Pada map dengan banyak rintangan, heuristik jarak dapat menjadi kurang akurat karena jalur yang tampak dekat belum tentu dapat dicapai dengan cost rendah.
+\end{tcolorbox}
+
+
+\section{Kesimpulan Hasil Percobaan}
+
+Berdasarkan seluruh hasil percobaan, dapat disimpulkan bahwa setiap algoritma memiliki keunggulan dan kelemahan masing-masing.
+
+\begin{table}[H]
+	\centering
+	\caption{Kesimpulan hasil percobaan}
+	\begin{tabular}{|p{5cm}|p{9cm}|}
+		\hline
+		\rowcolor{green!15}
+		\textbf{Kategori} & \textbf{Kesimpulan} \\
+		\hline
+		Algoritma terbaik dari sisi optimalitas & UCS dan A* karena selalu menghasilkan cost terbaik pada seluruh test case. \\
+		\hline
+		Algoritma terbaik dari sisi waktu & GBFS sering menjadi yang tercepat, terutama pada Test 8, Test 17, Test 20, dan Test 24. \\
+		\hline
+		Algoritma terbaik dari sisi iterasi & GBFS karena sering meninjau state paling sedikit. \\
+		\hline
+		Algoritma terbaik untuk map kecil & GBFS cukup unggul karena dapat menemukan solusi dengan iterasi sedikit. \\
+		\hline
+		Algoritma terbaik untuk map banyak angka & GBFS dengan heuristik Custom atau Advanced efektif mengurangi iterasi, tetapi A* lebih aman untuk menjaga kualitas cost. \\
+		\hline
+		Algoritma terbaik untuk map banyak tembok & UCS dan A* lebih aman karena mempertimbangkan cost aktual. \\
+		\hline
+		Heuristik terbaik secara umum & Custom cukup baik karena mempertimbangkan angka berikutnya, sehingga lebih sesuai dengan constraint puzzle. \\
+		\hline
+		Rekomendasi algoritma utama & A* direkomendasikan sebagai algoritma utama karena memberikan keseimbangan antara kualitas cost solusi dan efisiensi pencarian. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{tcolorbox}[
+	colback=green!5,
+	colframe=green!50!black,
+	title=\textbf{Kesimpulan Akhir},
+	arc=2mm,
+	boxrule=0.8pt
+]
+UCS paling aman untuk memperoleh solusi dengan cost minimum, tetapi dapat membutuhkan eksplorasi lebih besar. 
+GBFS paling cepat dari sisi iterasi dan waktu, tetapi berisiko menghasilkan solusi mahal seperti pada Test 20. 
+A* menjadi pilihan paling seimbang karena tetap mempertimbangkan cost aktual dan heuristik. 
+Weighted A* berguna sebagai algoritma bonus untuk mengevaluasi trade-off antara kecepatan dan optimalitas, terutama ketika heuristik ingin diberi pengaruh lebih besar.
+\end{tcolorbox}

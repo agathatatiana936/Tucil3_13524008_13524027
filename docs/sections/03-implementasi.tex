@@ -1,7 +1,3 @@
-% ============================================================
-% BAGIAN 3 - SOURCE PROGRAM
-% ============================================================
-
 Bagian ini menjelaskan struktur source program yang digunakan untuk menyelesaikan permasalahan \textit{Ice Sliding Puzzle Solver}. 
 Program dikembangkan menggunakan bahasa C++ dengan pendekatan modular, sehingga komponen pembacaan input, representasi peta, simulasi pergerakan, algoritma pathfinding, heuristik, CLI, dan GUI dipisahkan ke dalam folder dan class yang berbeda.
 
@@ -13,7 +9,7 @@ Program dikembangkan menggunakan bahasa C++ dengan pendekatan modular, sehingga 
 	boxrule=0.8pt
 ]
 Program membaca konfigurasi papan dari file \texttt{.txt}, memvalidasi isi papan, membangun representasi map dan cost, lalu menjalankan algoritma pathfinding yang dipilih pengguna. 
-Algoritma yang diimplementasikan adalah \textbf{Uniform Cost Search}, \textbf{Greedy Best-First Search}, dan \textbf{A*}. 
+Algoritma yang diimplementasikan adalah \textbf{Uniform Cost Search}, \textbf{Greedy Best-First Search}, \textbf{A*}, dan \textbf{Weighted A*}. 
 Hasil akhir program berupa solusi gerakan, total cost, jumlah iterasi, waktu eksekusi, visualisasi langkah solusi, serta opsi penyimpanan solusi ke file.
 \end{tcolorbox}
 
@@ -56,35 +52,61 @@ Folder \texttt{include/} digunakan untuk menyimpan header file, sedangkan folder
 	arc=2mm,
 	boxrule=0.8pt
 ]
-\small
+\scriptsize
 \begin{verbatim}
 STIMA-TUCIL3/
+|-- assets/
+|-- bin/
+|-- build/
 |-- docs/
 |-- include/
 |   |-- cli/
 |   |-- exception/
 |   |-- gui/
 |   |-- heuristic/
+|   |   |-- Advanced.hpp
+|   |   |-- Custom.hpp
+|   |   |-- IHeuristic.hpp
+|   |   `-- Manhattan.hpp
 |   |-- model/
+|   |   |-- GameMap.hpp
+|   |   |-- MoveResult.hpp
+|   |   |-- Position.hpp
+|   |   |-- SearchResult.hpp
+|   |   `-- State.hpp
 |   |-- solver/
 |   |   |-- AStar.hpp
 |   |   |-- GBFS.hpp
 |   |   |-- ISolver.hpp
-|   |   `-- UCS.hpp
+|   |   |-- UCS.hpp
+|   |   `-- WeightedAStar.hpp
 |   `-- utils/
+|-- saves/
 |-- src/
 |   |-- cli/
 |   |-- exception/
 |   |-- gui/
 |   |-- heuristic/
+|   |   |-- Advanced.cpp
+|   |   |-- Custom.cpp
+|   |   `-- Manhattan.cpp
 |   |-- model/
-|   `-- solver/
-|       |-- AStar.cpp
-|       |-- GBFS.cpp
-|       `-- UCS.cpp
-|-- saves/
-|-- README.md
-`-- Makefile
+|   |   |-- GameMap.cpp
+|   |   |-- MoveResult.cpp
+|   |   |-- Position.cpp
+|   |   |-- SearchResult.cpp
+|   |   `-- State.cpp
+|   |-- solver/
+|   |   |-- AStar.cpp
+|   |   |-- GBFS.cpp
+|   |   |-- UCS.cpp
+|   |   `-- WeightedAStar.cpp
+|   |-- utils/
+|   `-- main.cpp
+|-- test/
+|-- .gitignore
+|-- CMakeLists.txt
+`-- README.md
 \end{verbatim}
 \end{tcolorbox}
 
@@ -166,7 +188,16 @@ Pembagian ini bertujuan agar implementasi algoritma tidak bercampur dengan pemba
 
 \section{Modul dan Class Utama}
 
-\begin{longtable}{|p{4cm}|p{5cm}|p{5cm}|}
+\begingroup
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.25}
+
+\begin{longtable}{
+	|>{\raggedright\arraybackslash}p{3.1cm}
+	|>{\raggedright\arraybackslash}p{4.7cm}
+	|>{\raggedright\arraybackslash}p{5.4cm}|
+}
 	\caption{Class dan modul utama program} \\
 	\hline
 	\rowcolor{green!15}
@@ -180,39 +211,93 @@ Pembagian ini bertujuan agar implementasi algoritma tidak bercampur dengan pemba
 	\hline
 	\endhead
 	
-	\texttt{Position} & \texttt{include/model/} dan \texttt{src/model/} & Menyimpan koordinat baris dan kolom aktor atau tile tertentu. \\
+	\texttt{Position} 
+	& \texttt{include/model/} dan \texttt{src/model/} 
+	& Menyimpan koordinat baris dan kolom aktor atau tile tertentu. \\
 	\hline
-	\texttt{State} & \texttt{include/model/} dan \texttt{src/model/} & Merepresentasikan state pencarian, termasuk posisi, path, cost, heuristik, angka terakhir, dan collected mask. \\
+	
+	\texttt{State} 
+	& \texttt{include/model/} dan \texttt{src/model/} 
+	& Merepresentasikan state pencarian, termasuk posisi, path, cost, heuristik, angka terakhir, dan collected mask. \\
 	\hline
-	\texttt{GameMap} & \texttt{include/model/} dan \texttt{src/model/} & Menyimpan konfigurasi papan, cost tile, posisi awal, posisi goal, dan informasi angka pada papan. \\
+	
+	\texttt{GameMap} 
+	& \texttt{include/model/} dan \texttt{src/model/} 
+	& Menyimpan konfigurasi papan, cost tile, posisi awal, posisi goal, dan informasi angka pada papan. \\
 	\hline
-	\texttt{MoveResult} & \texttt{include/model/} dan \texttt{src/model/} & Menyimpan hasil simulasi satu gerakan sliding, seperti posisi baru, cost gerakan, status valid, dan status game over. \\
+	
+	\texttt{MoveResult} 
+	& \texttt{include/model/} dan \texttt{src/model/} 
+	& Menyimpan hasil simulasi satu gerakan sliding, seperti posisi baru, cost gerakan, status valid, dan status game over. \\
 	\hline
-	\texttt{SearchResult} & \texttt{include/model/} dan \texttt{src/model/} & Menyimpan hasil akhir pencarian, seperti solusi ditemukan atau tidak, path solusi, total cost, waktu eksekusi, dan jumlah iterasi. \\
+	
+	\texttt{SearchResult} 
+	& \texttt{include/model/} dan \texttt{src/model/} 
+	& Menyimpan hasil akhir pencarian, seperti solusi ditemukan atau tidak, path solusi, total cost, waktu eksekusi, dan jumlah iterasi. \\
 	\hline
-	\texttt{InputParser} & \texttt{include/utils/} atau \texttt{include/cli/} & Membaca file testcase berekstensi \texttt{.txt}. \\
+	
+	\texttt{InputParser} 
+	& \texttt{include/utils/} atau \texttt{include/cli/} 
+	& Membaca file testcase berekstensi \texttt{.txt}. \\
 	\hline
-	\texttt{InputValidator} & \texttt{include/utils/} & Memvalidasi konfigurasi papan dan matriks cost. \\
+	
+	\texttt{InputValidator} 
+	& \texttt{include/utils/} 
+	& Memvalidasi konfigurasi papan dan matriks cost. \\
 	\hline
-	\texttt{MovementEngine} & \texttt{include/utils/} dan \texttt{src/utils/} & Mensimulasikan mekanisme sliding dan menentukan apakah suatu gerakan valid. \\
+	
+	\texttt{MovementEngine} 
+	& \texttt{include/utils/} dan \texttt{src/utils/} 
+	& Mensimulasikan mekanisme sliding dan menentukan apakah suatu gerakan valid. \\
 	\hline
-	\texttt{ISolver} & \texttt{include/solver/ISolver.hpp} & Interface umum untuk semua algoritma pathfinding. \\
+	
+	\texttt{ISolver} 
+	& \texttt{include/solver/}\newline\texttt{ISolver.hpp} 
+	& Interface umum untuk semua algoritma pathfinding. \\
 	\hline
-	\texttt{UCS} & \texttt{include/solver/UCS.hpp} dan \texttt{src/solver/UCS.cpp} & Implementasi Uniform Cost Search. \\
+	
+	\texttt{UCS} 
+	& \texttt{include/solver/}\newline\texttt{UCS.hpp} dan \newline\texttt{src/solver/}\newline\texttt{UCS.cpp} 
+	& Implementasi Uniform Cost Search. \\
 	\hline
-	\texttt{GBFS} & \texttt{include/solver/GBFS.hpp} dan \texttt{src/solver/GBFS.cpp} & Implementasi Greedy Best-First Search. \\
+	
+	\texttt{GBFS} 
+	& \texttt{include/solver/}\newline\texttt{GBFS.hpp} dan \newline\texttt{src/solver/}\newline\texttt{GBFS.cpp} 
+	& Implementasi Greedy Best-First Search. \\
 	\hline
-	\texttt{AStar} & \texttt{include/solver/AStar.hpp} dan \texttt{src/solver/AStar.cpp} & Implementasi A*. \\
+	
+	\texttt{A*} 
+	& \texttt{include/solver/}\newline\texttt{AStar.hpp} dan \newline\texttt{src/solver/}\newline\texttt{AStar.cpp} 
+	& Implementasi A*. \\
 	\hline
-	\texttt{IHeuristic} & \texttt{include/heuristic/} & Interface umum untuk heuristik. \\
+	
+	\texttt{WeightedA*} 
+	& \texttt{include/solver/}\newline\texttt{WeightedAStar.hpp} dan \newline\texttt{src/solver/}\newline\texttt{WeightedAStar.cpp} 
+	& Implementasi Weighted A*. \\
 	\hline
-	\texttt{SolutionWriter} & \texttt{include/utils/} atau \texttt{src/utils/} & Menyimpan solusi dan visualisasi langkah ke file. \\
+	
+	\texttt{IHeuristic} 
+	& \texttt{include/heuristic/} 
+	& Interface umum untuk heuristik. \\
 	\hline
-	\texttt{CLI} & \texttt{include/cli/} dan \texttt{src/cli/} & Menangani input pengguna melalui terminal. \\
+	
+	\texttt{SolutionWriter} 
+	& \texttt{include/utils/} atau \texttt{src/utils/} 
+	& Menyimpan solusi dan visualisasi langkah ke file. \\
 	\hline
-	\texttt{GUI} & \texttt{include/gui/} dan \texttt{src/gui/} & Menangani tampilan grafis dan playback visual. \\
+	
+	\texttt{CLI} 
+	& \texttt{include/cli/} dan \texttt{src/cli/} 
+	& Menangani input pengguna melalui terminal. \\
+	\hline
+	
+	\texttt{GUI} 
+	& \texttt{include/gui/} dan \texttt{src/gui/} 
+	& Menangani tampilan grafis dan playback visual. \\
 	\hline
 \end{longtable}
+
+\endgroup
 
 \section{Relasi Antar Modul}
 
@@ -245,7 +330,7 @@ $\downarrow$ \\[-0.05cm]
 \fbox{\parbox{0.82\textwidth}{
 \centering
 \textbf{3. Proses Pencarian}\\
-\texttt{UCS}, \texttt{GBFS}, \texttt{A*}, \texttt{MovementEngine}, \texttt{Heuristic}
+\texttt{UCS}, \texttt{GBFS}, \texttt{A*}, \texttt{WeightedA*}, \texttt{MovementEngine}, \texttt{Heuristic}
 }} \\[0.25cm]
 $\downarrow$ \\[-0.05cm]
 \fbox{\parbox{0.82\textwidth}{
@@ -591,6 +676,205 @@ nextState.setHCost(heuristic->compute(nextState, map));
 		\hline
 	\end{tabular}
 \end{table}
+
+\section{Implementasi Weighted A*}
+
+Class \texttt{WeightedAStar} merupakan implementasi algoritma tambahan sebagai spesifikasi bonus. 
+Algoritma ini merupakan pengembangan dari A* dengan memberikan bobot lebih besar pada nilai heuristik. 
+Pada implementasi program, Weighted A* menggunakan konstanta \texttt{WEIGHT = 2}, sehingga fungsi evaluasi yang digunakan adalah $g(n) + 2h(n)$. 
+Dengan strategi ini, pencarian menjadi lebih agresif mengikuti arah target yang diperkirakan oleh heuristik.
+
+\begin{tcolorbox}[
+	colback=purple!5,
+	colframe=purple!60!black,
+	title=\textbf{Potongan Source Code Asli: Deklarasi \texttt{WeightedAStar.hpp}},
+	arc=2mm,
+	boxrule=0.8pt
+]
+\small
+\begin{verbatim}
+#pragma once
+
+#include "solver/ISolver.hpp"
+
+class IHeuristic;
+class State;
+class GameMap;
+
+class WeightedAStar : public ISolver {
+public:
+    explicit WeightedAStar(const IHeuristic* heuristic);
+    SearchResult solve(const GameMap& map) const override;
+
+private:
+    const IHeuristic* heuristic;
+};
+\end{verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[
+	colback=purple!5,
+	colframe=purple!60!black,
+	title=\textbf{Potongan Source Code Asli: Bobot dan Prioritas Weighted A*},
+	arc=2mm,
+	boxrule=0.8pt
+]
+\small
+\begin{verbatim}
+constexpr int WEIGHT = 2;
+auto cmp = [WEIGHT](const State& a, const State& b) {
+    int fA = a.getGCost() + WEIGHT * a.getHCost();
+    int fB = b.getGCost() + WEIGHT * b.getHCost();
+    return fA > fB;
+};
+std::priority_queue<State, std::vector<State>, decltype(cmp)> openSet(cmp);
+
+std::map<std::tuple<int, int, int>, int> bestCost;
+\end{verbatim}
+\end{tcolorbox}
+
+Pada bagian tersebut, \texttt{priority\_queue} berfungsi sebagai \textit{open set}. 
+State dengan nilai evaluasi paling kecil akan diproses lebih dahulu. 
+Berbeda dengan A* biasa yang menggunakan $g(n)+h(n)$, Weighted A* menggunakan $g(n)+2h(n)$ sehingga nilai heuristik memiliki pengaruh lebih besar dalam pemilihan state.
+
+\begin{table}[H]
+	\centering
+	\caption{Penjelasan struktur data Weighted A*}
+	\begin{tabular}{|p{4cm}|p{10cm}|}
+		\hline
+		\rowcolor{purple!15}
+		\textbf{Bagian Implementasi} & \textbf{Penjelasan} \\
+		\hline
+		\texttt{WEIGHT} & Konstanta bobot heuristik. Pada program digunakan nilai $2$. \\
+		\hline
+		\texttt{openSet} & Priority queue yang menyimpan state yang akan diproses berdasarkan nilai $g(n)+2h(n)$ terkecil. \\
+		\hline
+		\texttt{bestCost} & Map untuk menyimpan cost terbaik dari setiap kombinasi posisi aktor dan collected mask. \\
+		\hline
+		\texttt{heuristic} & Digunakan untuk menghitung nilai estimasi $h(n)$ pada state awal maupun state hasil ekspansi. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{tcolorbox}[
+	colback=purple!5,
+	colframe=purple!60!black,
+	title=\textbf{Potongan Source Code Asli: Inisialisasi State Awal Weighted A*},
+	arc=2mm,
+	boxrule=0.8pt
+]
+\small
+\begin{verbatim}
+Position startPos = map.getStartPosition();
+State startState(startPos, 0, -1, "", 0, 0, nullptr);
+startState.setHCost(heuristic->compute(startState, map));
+openSet.push(startState);
+
+int iterations = 0;
+\end{verbatim}
+\end{tcolorbox}
+
+State awal dibentuk dari posisi awal aktor. 
+Nilai \texttt{collectedMask} diatur menjadi $0$ karena belum ada angka yang dikumpulkan, nilai angka terakhir diatur menjadi $-1$, path masih kosong, dan cost awal bernilai $0$. 
+Setelah itu, program menghitung nilai heuristik state awal dan memasukkannya ke dalam \texttt{openSet}.
+
+\begin{tcolorbox}[
+	colback=purple!5,
+	colframe=purple!60!black,
+	title=\textbf{Potongan Source Code Asli: Ekspansi State pada Weighted A*},
+	arc=2mm,
+	boxrule=0.8pt
+]
+\small
+\begin{verbatim}
+const char directions[4] = {'U', 'D', 'L', 'R'};
+for (int i = 0; i < 4; ++i) {
+    MoveResult move = MovementEngine::slide(map, current, directions[i]);
+    if (!move.isValid() || move.isGameOver()) {
+        continue;
+    }
+
+    std::string newPath = current.getPath() + directions[i];
+    int newGCost = current.getGCost() + move.getMoveCost();
+
+    State nextState(move.getNewPosition(),
+                   move.getNewCollectedMask(),
+                   move.getNewLastCollected(),
+                   newPath,
+                   newGCost,
+                   0,
+                   nullptr);
+    nextState.setHCost(heuristic->compute(nextState, map));
+\end{verbatim}
+\end{tcolorbox}
+
+Weighted A* mengekspansi state ke empat arah, yaitu \texttt{U}, \texttt{D}, \texttt{L}, dan \texttt{R}. 
+Setiap arah tidak langsung dianggap valid, melainkan disimulasikan terlebih dahulu menggunakan \texttt{MovementEngine::slide}. 
+Jika hasil gerakan tidak valid atau menyebabkan \textit{game over}, state tersebut langsung diabaikan. 
+Jika gerakan valid, program membentuk path baru, menghitung \texttt{newGCost}, membuat state baru, lalu menghitung ulang nilai heuristiknya.
+
+\begin{tcolorbox}[
+	colback=purple!5,
+	colframe=purple!60!black,
+	title=\textbf{Potongan Source Code Asli: Pruning State Weighted A*},
+	arc=2mm,
+	boxrule=0.8pt
+]
+\small
+\begin{verbatim}
+auto nextKey = std::make_tuple(nextState.getPosition().getRow(),
+                               nextState.getPosition().getCol(),
+                               nextState.getCollectedMask());
+auto nextIt = bestCost.find(nextKey);
+if (nextIt != bestCost.end() && nextIt->second <= newGCost) {
+    continue;
+}
+
+bestCost[nextKey] = newGCost;
+openSet.push(nextState);
+\end{verbatim}
+\end{tcolorbox}
+
+Bagian tersebut digunakan untuk menghindari eksplorasi state yang tidak lebih baik. 
+Jika sudah ada state dengan posisi dan \texttt{collectedMask} yang sama serta cost lebih kecil atau sama, maka state baru tidak dimasukkan ke \texttt{openSet}. 
+Sebaliknya, jika state baru memiliki cost yang lebih baik, \texttt{bestCost} diperbarui dan state tersebut dimasukkan ke priority queue.
+
+\begin{table}[H]
+	\centering
+	\caption{Penjelasan implementasi Weighted A*}
+	\begin{tabular}{|p{4cm}|p{10cm}|}
+		\hline
+		\rowcolor{purple!15}
+		\textbf{Bagian Implementasi} & \textbf{Penjelasan} \\
+		\hline
+		\texttt{WEIGHT = 2} & Membuat heuristik memiliki pengaruh dua kali lebih besar dibanding A* biasa. \\
+		\hline
+		\texttt{getGCost()} & Menyimpan total cost aktual dari start sampai state saat ini. \\
+		\hline
+		\texttt{getHCost()} & Menyimpan nilai estimasi dari state saat ini menuju target berikutnya. \\
+		\hline
+		\texttt{gCost + WEIGHT * hCost} & Nilai evaluasi yang digunakan untuk mengurutkan state di priority queue. \\
+		\hline
+		\texttt{MovementEngine::slide} & Mensimulasikan gerakan sliding dan menghasilkan \texttt{MoveResult}. \\
+		\hline
+		\texttt{bestCost} & Menyimpan cost terbaik untuk menghindari pemrosesan ulang state yang lebih buruk. \\
+		\hline
+		\texttt{SearchResult} & Mengembalikan hasil pencarian, seperti status solusi, path solusi, total cost, waktu eksekusi, dan jumlah iterasi. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{tcolorbox}[
+	colback=purple!5,
+	colframe=purple!60!black,
+	title=\textbf{Karakteristik Implementasi Weighted A*},
+	arc=2mm,
+	boxrule=0.8pt
+]
+Weighted A* pada program ini memiliki struktur implementasi yang mirip dengan A*, tetapi berbeda pada fungsi evaluasi yang digunakan di priority queue. 
+Dengan nilai $f(n)=g(n)+2h(n)$, algoritma menjadi lebih fokus terhadap estimasi menuju target. 
+Hal ini dapat membuat pencarian lebih cepat dan jumlah iterasi lebih sedikit, tetapi solusi yang ditemukan tidak selalu memiliki total cost paling minimum.
+\end{tcolorbox}
 
 \section{Mekanisme Goal dan Hasil Pencarian}
 

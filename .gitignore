@@ -1,6 +1,6 @@
-*pdf
 build/*
 make/*
 make/
 test/*.txt
 saves/*
+bin/

@@ -1,52 +1,92 @@
 \babel@toc {indonesian}{}\relax 
-\contentsline {chapter}{\numberline {1}Algoritma Pathfinding}{3}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Representasi State}{3}{section.1.1}%
-\contentsline {section}{\numberline {1.2}Mekanisme Ekspansi State}{4}{section.1.2}%
-\contentsline {section}{\numberline {1.3}Uniform Cost Search}{5}{section.1.3}%
-\contentsline {subsection}{\numberline {1.3.1}Langkah Kerja UCS}{5}{subsection.1.3.1}%
-\contentsline {subsection}{\numberline {1.3.2}Struktur Data UCS}{6}{subsection.1.3.2}%
-\contentsline {subsection}{\numberline {1.3.3}Kelebihan dan Kekurangan UCS}{6}{subsection.1.3.3}%
-\contentsline {section}{\numberline {1.4}Greedy Best-First Search}{6}{section.1.4}%
-\contentsline {subsection}{\numberline {1.4.1}Langkah Kerja GBFS}{7}{subsection.1.4.1}%
-\contentsline {subsection}{\numberline {1.4.2}Heuristik pada GBFS}{7}{subsection.1.4.2}%
-\contentsline {subsection}{\numberline {1.4.3}Kelebihan dan Kekurangan GBFS}{8}{subsection.1.4.3}%
-\contentsline {section}{\numberline {1.5}A*}{8}{section.1.5}%
-\contentsline {subsection}{\numberline {1.5.1}Langkah Kerja A*}{8}{subsection.1.5.1}%
-\contentsline {subsection}{\numberline {1.5.2}Peran $g(n)$, $h(n)$, dan $f(n)$}{9}{subsection.1.5.2}%
-\contentsline {subsection}{\numberline {1.5.3}Struktur Data A*}{10}{subsection.1.5.3}%
-\contentsline {subsection}{\numberline {1.5.4}Kelebihan dan Kekurangan A*}{10}{subsection.1.5.4}%
-\contentsline {section}{\numberline {1.6}Perbandingan UCS, GBFS, dan A*}{10}{section.1.6}%
-\contentsline {chapter}{\numberline {2}Analisa Algoritma Pathfinding}{12}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Definisi Cost dan Fungsi Evaluasi}{12}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Analisis Heuristik}{13}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}Heuristik Utama}{14}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}Heuristik Alternatif}{14}{subsection.2.2.2}%
-\contentsline {subsection}{\numberline {2.2.3}Aspek yang Dipertimbangkan Heuristik}{15}{subsection.2.2.3}%
-\contentsline {subsection}{\numberline {2.2.4}Admissibility Heuristik A*}{15}{subsection.2.2.4}%
-\contentsline {subsection}{\numberline {2.2.5}Konsistensi Heuristik}{16}{subsection.2.2.5}%
-\contentsline {section}{\numberline {2.3}Analisis Optimalitas}{16}{section.2.3}%
-\contentsline {section}{\numberline {2.4}Analisis Kompleksitas}{17}{section.2.4}%
-\contentsline {section}{\numberline {2.5}Analisis State Space}{19}{section.2.5}%
-\contentsline {section}{\numberline {2.6}Perbandingan Teoritis Algoritma}{20}{section.2.6}%
-\contentsline {subsection}{\numberline {2.6.1}UCS vs GBFS}{20}{subsection.2.6.1}%
-\contentsline {subsection}{\numberline {2.6.2}UCS vs A*}{21}{subsection.2.6.2}%
-\contentsline {subsection}{\numberline {2.6.3}GBFS vs A*}{21}{subsection.2.6.3}%
-\contentsline {section}{\numberline {2.7}Analisis Khusus Ice Sliding Puzzle}{22}{section.2.7}%
-\contentsline {chapter}{\numberline {3}Implementasi}{24}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Informasi Umum Program}{25}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Struktur Folder Repository}{25}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Struktur Source Code}{27}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Modul dan Class Utama}{28}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Relasi Antar Modul}{29}{section.3.5}%
-\contentsline {section}{\numberline {3.6}Penjelasan Peran Source Code}{29}{section.3.6}%
-\contentsline {section}{\numberline {3.7}Interface Solver}{30}{section.3.7}%
-\contentsline {section}{\numberline {3.8}Implementasi Uniform Cost Search}{31}{section.3.8}%
-\contentsline {section}{\numberline {3.9}Implementasi Greedy Best-First Search}{32}{section.3.9}%
-\contentsline {section}{\numberline {3.10}Implementasi A*}{33}{section.3.10}%
-\contentsline {section}{\numberline {3.11}Mekanisme Goal dan Hasil Pencarian}{35}{section.3.11}%
-\contentsline {section}{\numberline {3.12}Bukti Program Dapat Dijalankan}{36}{section.3.12}%
-\contentsline {subsection}{\numberline {3.12.1}Contoh Input File}{36}{subsection.3.12.1}%
-\contentsline {subsection}{\numberline {3.12.2}Contoh Output Singkat}{37}{subsection.3.12.2}%
-\contentsline {chapter}{\numberline {4}Eksperimen}{38}{chapter.4}%
-\contentsline {chapter}{\numberline {5}Penutup}{39}{chapter.5}%
-\contentsline {chapter}{\numberline {6}Lampiran}{40}{chapter.6}%
+\contentsline {chapter}{\numberline {1}Algoritma Pathfinding}{4}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Representasi State}{4}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Mekanisme Ekspansi State}{5}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Uniform Cost Search}{6}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}Langkah Kerja UCS}{6}{subsection.1.3.1}%
+\contentsline {subsection}{\numberline {1.3.2}Struktur Data UCS}{7}{subsection.1.3.2}%
+\contentsline {subsection}{\numberline {1.3.3}Kelebihan dan Kekurangan UCS}{7}{subsection.1.3.3}%
+\contentsline {section}{\numberline {1.4}Greedy Best-First Search}{7}{section.1.4}%
+\contentsline {subsection}{\numberline {1.4.1}Langkah Kerja GBFS}{8}{subsection.1.4.1}%
+\contentsline {subsection}{\numberline {1.4.2}Heuristik pada GBFS}{8}{subsection.1.4.2}%
+\contentsline {subsection}{\numberline {1.4.3}Kelebihan dan Kekurangan GBFS}{9}{subsection.1.4.3}%
+\contentsline {section}{\numberline {1.5}A*}{9}{section.1.5}%
+\contentsline {subsection}{\numberline {1.5.1}Langkah Kerja A*}{9}{subsection.1.5.1}%
+\contentsline {subsection}{\numberline {1.5.2}Peran $g(n)$, $h(n)$, dan $f(n)$}{10}{subsection.1.5.2}%
+\contentsline {subsection}{\numberline {1.5.3}Struktur Data A*}{11}{subsection.1.5.3}%
+\contentsline {subsection}{\numberline {1.5.4}Kelebihan dan Kekurangan A*}{11}{subsection.1.5.4}%
+\contentsline {section}{\numberline {1.6}Weighted A*}{11}{section.1.6}%
+\contentsline {subsection}{\numberline {1.6.1}Perbedaan Weighted A* dengan A* Biasa}{12}{subsection.1.6.1}%
+\contentsline {subsection}{\numberline {1.6.2}Struktur Data Utama}{12}{subsection.1.6.2}%
+\contentsline {subsection}{\numberline {1.6.3}Alur Kerja Weighted A*}{13}{subsection.1.6.3}%
+\contentsline {subsection}{\numberline {1.6.4}Kelebihan dan Kekurangan Weighted A*}{14}{subsection.1.6.4}%
+\contentsline {section}{\numberline {1.7}Perbandingan UCS, GBFS, A*, dan Weighted A*}{15}{section.1.7}%
+\contentsline {chapter}{\numberline {2}Analisa Algoritma Pathfinding}{16}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Definisi Cost dan Fungsi Evaluasi}{16}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Definisi $g(n)$, $h(n)$, dan $f(n)$}{16}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Perbedaan Utama Fungsi Evaluasi}{18}{subsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.1.3}Contoh Konseptual Pemilihan State}{18}{subsection.2.1.3}%
+\contentsline {subsection}{\numberline {2.1.4}Interpretasi Fungsi Evaluasi pada Ice Sliding Puzzle}{19}{subsection.2.1.4}%
+\contentsline {section}{\numberline {2.2}Analisis Heuristik}{20}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Heuristik Manhattan}{21}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Heuristik Custom}{22}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Heuristik Advanced}{23}{subsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.4}Perbandingan Heuristik}{25}{subsection.2.2.4}%
+\contentsline {subsection}{\numberline {2.2.5}Aspek yang Dipertimbangkan Heuristik}{25}{subsection.2.2.5}%
+\contentsline {subsection}{\numberline {2.2.6}Admissibility Heuristik A*}{26}{subsection.2.2.6}%
+\contentsline {subsection}{\numberline {2.2.7}Konsistensi Heuristik}{27}{subsection.2.2.7}%
+\contentsline {section}{\numberline {2.3}Analisis Optimalitas}{28}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Analisis Kompleksitas}{29}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Analisis State Space}{31}{section.2.5}%
+\contentsline {section}{\numberline {2.6}Perbandingan Teoritis Algoritma}{32}{section.2.6}%
+\contentsline {subsection}{\numberline {2.6.1}UCS vs GBFS}{33}{subsection.2.6.1}%
+\contentsline {subsection}{\numberline {2.6.2}UCS vs A*}{33}{subsection.2.6.2}%
+\contentsline {subsection}{\numberline {2.6.3}GBFS vs A*}{33}{subsection.2.6.3}%
+\contentsline {subsection}{\numberline {2.6.4}A* vs Weighted A*}{34}{subsection.2.6.4}%
+\contentsline {section}{\numberline {2.7}Analisis Khusus Ice Sliding Puzzle}{35}{section.2.7}%
+\contentsline {chapter}{\numberline {3}Implementasi}{37}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Informasi Umum Program}{38}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Struktur Folder Repository}{38}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Struktur Source Code}{40}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Modul dan Class Utama}{41}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Relasi Antar Modul}{42}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Penjelasan Peran Source Code}{43}{section.3.6}%
+\contentsline {section}{\numberline {3.7}Interface Solver}{44}{section.3.7}%
+\contentsline {section}{\numberline {3.8}Implementasi Uniform Cost Search}{44}{section.3.8}%
+\contentsline {section}{\numberline {3.9}Implementasi Greedy Best-First Search}{45}{section.3.9}%
+\contentsline {section}{\numberline {3.10}Implementasi A*}{47}{section.3.10}%
+\contentsline {section}{\numberline {3.11}Implementasi Weighted A*}{48}{section.3.11}%
+\contentsline {section}{\numberline {3.12}Mekanisme Goal dan Hasil Pencarian}{52}{section.3.12}%
+\contentsline {section}{\numberline {3.13}Bukti Program Dapat Dijalankan}{52}{section.3.13}%
+\contentsline {subsection}{\numberline {3.13.1}Contoh Input File}{53}{subsection.3.13.1}%
+\contentsline {subsection}{\numberline {3.13.2}Contoh Output Singkat}{54}{subsection.3.13.2}%
+\contentsline {chapter}{\numberline {4}Eksperimen}{55}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Tangkapan Layar Input dan Output}{55}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Test Case 8}{56}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Test Case 17}{58}{subsection.4.1.2}%
+\contentsline {subsection}{\numberline {4.1.3}Test Case 20}{60}{subsection.4.1.3}%
+\contentsline {subsection}{\numberline {4.1.4}Test Case 24}{62}{subsection.4.1.4}%
+\contentsline {subsection}{\numberline {4.1.5}Test Case 25}{64}{subsection.4.1.5}%
+\contentsline {section}{\numberline {4.2}Ringkasan Hasil Tangkapan Layar}{66}{section.4.2}%
+\contentsline {chapter}{\numberline {5}Analisa Eksperimen}{67}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Deskripsi Umum Test Case}{67}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Metrik yang Dibandingkan}{68}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Rekapitulasi Hasil Percobaan}{69}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Analisis Per Test Case}{70}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1}Analisis Test Case 8}{70}{subsection.5.4.1}%
+\contentsline {subsection}{\numberline {5.4.2}Analisis Test Case 17}{70}{subsection.5.4.2}%
+\contentsline {subsection}{\numberline {5.4.3}Analisis Test Case 20}{71}{subsection.5.4.3}%
+\contentsline {subsection}{\numberline {5.4.4}Analisis Test Case 24}{71}{subsection.5.4.4}%
+\contentsline {subsection}{\numberline {5.4.5}Analisis Test Case 25}{71}{subsection.5.4.5}%
+\contentsline {section}{\numberline {5.5}Analisis Per Algoritma}{72}{section.5.5}%
+\contentsline {subsection}{\numberline {5.5.1}Uniform Cost Search}{72}{subsection.5.5.1}%
+\contentsline {subsection}{\numberline {5.5.2}Greedy Best-First Search}{72}{subsection.5.5.2}%
+\contentsline {subsection}{\numberline {5.5.3}A*}{73}{subsection.5.5.3}%
+\contentsline {subsection}{\numberline {5.5.4}Weighted A*}{73}{subsection.5.5.4}%
+\contentsline {section}{\numberline {5.6}Analisis Pengaruh Heuristik}{74}{section.5.6}%
+\contentsline {section}{\numberline {5.7}Perbandingan Teoritis dan Eksperimental}{75}{section.5.7}%
+\contentsline {section}{\numberline {5.8}Kesimpulan Hasil Percobaan}{76}{section.5.8}%
+\contentsline {chapter}{\numberline {6}Lampiran}{77}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Pranala Repository}{77}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Checklist Spesifikasi Program}{77}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Pernyataan Tidak Melakukan Kecurangan}{78}{section.6.3}%

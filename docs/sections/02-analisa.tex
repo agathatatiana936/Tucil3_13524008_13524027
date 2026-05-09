@@ -1,7 +1,3 @@
-% ============================================================
-% BAGIAN 2 - ANALISIS ALGORITMA PATHFINDING
-% ============================================================
-
 Bagian ini membahas analisis terhadap algoritma UCS, GBFS, dan A* yang digunakan pada penyelesaian \textit{Ice Sliding Puzzle Solver}. 
 Analisis dilakukan dari sisi fungsi evaluasi, heuristik, optimalitas, kompleksitas, ruang state, serta kesesuaian algoritma terhadap karakteristik khusus puzzle.
 
@@ -21,29 +17,66 @@ Jika dalam satu gerakan sliding aktor melewati tile dengan cost $c_1, c_2, \ldot
 \[
 	C_{\text{move}} = \sum_{i=1}^{k} c_i
 \]
+
 Total cost solusi adalah penjumlahan cost seluruh gerakan sliding:
 \[
 	C_{\text{total}} = \sum_{j=1}^{m} C_{\text{move}_j}
 \]
+
 dengan $m$ menyatakan banyaknya aksi gerakan dalam solusi.
 \end{tcolorbox}
+
+\subsection{Definisi $g(n)$, $h(n)$, dan $f(n)$}
+
+Setiap algoritma pathfinding memiliki cara berbeda dalam menentukan state mana yang diproses lebih dahulu. 
+Perbedaan tersebut terletak pada penggunaan fungsi evaluasi, yaitu $g(n)$, $h(n)$, dan $f(n)$.
 
 \begin{table}[H]
 	\centering
 	\caption{Definisi $g(n)$, $h(n)$, dan $f(n)$ pada setiap algoritma}
-	\begin{tabular}{|p{2.7cm}|p{3.7cm}|p{3.7cm}|p{3.7cm}|}
+	\small
+	\begin{tabular}{|p{2.5cm}|p{3.3cm}|p{3.3cm}|p{4cm}|}
 		\hline
 		\rowcolor{gray!25}
 		\textbf{Algoritma} & \textbf{$g(n)$} & \textbf{$h(n)$} & \textbf{$f(n)$ / Prioritas} \\
 		\hline
 		UCS & Total cost aktual dari start ke state $n$. & Tidak digunakan. & $f(n)=g(n)$ \\
 		\hline
-		GBFS & Tetap dapat disimpan sebagai total cost solusi, tetapi tidak menjadi dasar prioritas. & Estimasi jarak atau cost dari state $n$ ke target berikutnya. & $f(n)=h(n)$ \\
+		GBFS & Tetap disimpan sebagai total cost solusi, tetapi tidak menjadi dasar prioritas. & Estimasi jarak atau cost dari state $n$ ke target berikutnya. & $f(n)=h(n)$ \\
 		\hline
 		A* & Total cost aktual dari start ke state $n$. & Estimasi jarak atau cost dari state $n$ ke target berikutnya. & $f(n)=g(n)+h(n)$ \\
 		\hline
+		Weighted A* & Total cost aktual dari start ke state $n$. & Estimasi jarak atau cost dari state $n$ ke target berikutnya. & $f(n)=g(n)+w \cdot h(n)$, dengan $w=2$ pada implementasi program. \\
+		\hline
 	\end{tabular}
 \end{table}
+
+\begin{tcolorbox}[
+	colback=purple!5,
+	colframe=purple!60!black,
+	title=\textbf{Fungsi Evaluasi Weighted A*},
+	arc=2mm,
+	boxrule=0.8pt
+]
+Weighted A* menggunakan bentuk evaluasi:
+\[
+	f(n)=g(n)+w \cdot h(n)
+\]
+
+Pada implementasi program, bobot heuristik yang digunakan adalah:
+\[
+	w = 2
+\]
+
+Sehingga fungsi evaluasi yang digunakan menjadi:
+\[
+	f(n)=g(n)+2h(n)
+\]
+
+Dengan bobot tersebut, nilai heuristik menjadi lebih berpengaruh terhadap pemilihan state dibandingkan A* biasa.
+\end{tcolorbox}
+
+\subsection{Perbedaan Utama Fungsi Evaluasi}
 
 \begin{tcolorbox}[
 	colback=gray!5,
@@ -55,166 +88,508 @@ dengan $m$ menyatakan banyaknya aksi gerakan dalam solusi.
 \begin{itemize}
 	\item UCS bersifat \textit{cost-based} karena hanya memilih state berdasarkan cost aktual terkecil.
 	\item GBFS bersifat \textit{heuristic-based} karena hanya memilih state berdasarkan estimasi kedekatan ke target.
-	\item A* bersifat gabungan karena mempertimbangkan cost aktual dan estimasi menuju target.
+	\item A* bersifat gabungan karena mempertimbangkan cost aktual dan estimasi menuju target secara seimbang.
+	\item Weighted A* merupakan variasi dari A* yang memperbesar pengaruh heuristik dengan bobot $w=2$, sehingga lebih agresif mengikuti arah target.
 \end{itemize}
 \end{tcolorbox}
 
 \begin{table}[H]
 	\centering
-	\caption{Contoh konseptual pemilihan state berdasarkan fungsi evaluasi}
-	\begin{tabular}{|p{2.3cm}|p{2.5cm}|p{2.5cm}|p{2.5cm}|p{3cm}|}
+	\caption{Perbedaan prioritas state pada setiap algoritma}
+	\begin{tabular}{|p{3cm}|p{4cm}|p{7cm}|}
 		\hline
 		\rowcolor{blue!15}
-		\textbf{State} & \textbf{$g(n)$} & \textbf{$h(n)$} & \textbf{$g(n)+h(n)$} & \textbf{Dipilih oleh} \\
+		\textbf{Algoritma} & \textbf{Prioritas State} & \textbf{Makna Pemilihan State} \\
 		\hline
-		A & 10 & 8 & 18 & UCS \\
+		UCS & $g(n)$ & Memilih state dengan total cost aktual paling kecil dari start. \\
 		\hline
-		B & 14 & 3 & 17 & GBFS dan A* \\
+		GBFS & $h(n)$ & Memilih state yang terlihat paling dekat dengan target berdasarkan heuristik. \\
 		\hline
-		C & 12 & 6 & 18 & Tidak dipilih lebih awal \\
+		A* & $g(n)+h(n)$ & Memilih state dengan kombinasi terbaik antara cost aktual dan estimasi menuju target. \\
+		\hline
+		Weighted A* & $g(n)+2h(n)$ & Memilih state dengan mempertimbangkan cost aktual, tetapi memberikan pengaruh lebih besar pada heuristik. \\
 		\hline
 	\end{tabular}
 \end{table}
 
-Pada contoh di atas, UCS memilih state A karena memiliki $g(n)$ terkecil. 
-GBFS memilih state B karena memiliki $h(n)$ terkecil. 
-A* juga memilih state B karena memiliki nilai $g(n)+h(n)$ terkecil.
+\subsection{Contoh Konseptual Pemilihan State}
+
+Misalkan terdapat tiga state kandidat, yaitu state A, B, dan C. 
+Setiap state memiliki nilai $g(n)$ dan $h(n)$ yang berbeda. 
+Tabel berikut menunjukkan bagaimana setiap algoritma dapat memilih state yang berbeda karena fungsi evaluasi yang digunakan tidak sama.
+
+\begin{table}[H]
+	\centering
+	\caption{Contoh konseptual pemilihan state berdasarkan fungsi evaluasi}
+	\small
+	\begin{tabular}{|p{1.8cm}|p{2cm}|p{2cm}|p{2.5cm}|p{3cm}|p{2.8cm}|}
+		\hline
+		\rowcolor{blue!15}
+		\textbf{State} & \textbf{$g(n)$} & \textbf{$h(n)$} & \textbf{$g(n)+h(n)$} & \textbf{$g(n)+2h(n)$} & \textbf{Catatan} \\
+		\hline
+		A & 10 & 8 & 18 & 26 & Cost aktual paling kecil. \\
+		\hline
+		B & 14 & 3 & 17 & 20 & Heuristik paling kecil dan nilai Weighted A* paling kecil. \\
+		\hline
+		C & 12 & 6 & 18 & 24 & Tidak menjadi prioritas utama. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+Berdasarkan tabel di atas:
+\begin{itemize}
+	\item UCS memilih state A karena memiliki nilai $g(n)$ paling kecil.
+	\item GBFS memilih state B karena memiliki nilai $h(n)$ paling kecil.
+	\item A* memilih state B karena memiliki nilai $g(n)+h(n)$ paling kecil.
+	\item Weighted A* juga memilih state B karena memiliki nilai $g(n)+2h(n)$ paling kecil.
+\end{itemize}
+
+\begin{tcolorbox}[
+	colback=purple!5,
+	colframe=purple!60!black,
+	title=\textbf{Dampak Bobot pada Weighted A*},
+	arc=2mm,
+	boxrule=0.8pt
+]
+Pada A* biasa, $g(n)$ dan $h(n)$ dijumlahkan dengan bobot yang sama. 
+Pada Weighted A*, nilai $h(n)$ dikalikan dengan bobot $2$, sehingga state yang lebih dekat secara heuristik akan lebih cepat diprioritaskan. 
+Hal ini dapat membuat pencarian lebih cepat, tetapi solusi yang ditemukan tidak selalu memiliki total cost paling minimum.
+\end{tcolorbox}
+
+\subsection{Interpretasi Fungsi Evaluasi pada Ice Sliding Puzzle}
+
+Pada \textit{Ice Sliding Puzzle}, fungsi evaluasi tidak hanya dipengaruhi oleh jarak posisi aktor terhadap target, tetapi juga oleh mekanisme sliding dan cost tile yang dilewati. 
+Oleh karena itu, algoritma yang hanya mengandalkan heuristik dapat memilih jalur yang terlihat dekat, tetapi sebenarnya memiliki cost besar atau bahkan tidak valid karena lava, obstacle, atau urutan angka.
+
+\begin{table}[H]
+	\centering
+	\caption{Interpretasi fungsi evaluasi pada Ice Sliding Puzzle}
+	\begin{tabular}{|p{3.5cm}|p{10.5cm}|}
+		\hline
+		\rowcolor{gray!25}
+		\textbf{Komponen} & \textbf{Interpretasi pada Program} \\
+		\hline
+		$g(n)$ & Total cost aktual dari seluruh tile yang sudah dilewati selama rangkaian gerakan sliding dari start ke state saat ini. \\
+		\hline
+		$h(n)$ & Estimasi kedekatan state terhadap target berdasarkan heuristik yang dipilih, misalnya goal, angka berikutnya, atau sisa target tertentu. \\
+		\hline
+		$f(n)$ UCS & Sama dengan $g(n)$, sehingga UCS hanya memperhatikan cost aktual. \\
+		\hline
+		$f(n)$ GBFS & Sama dengan $h(n)$, sehingga GBFS hanya memperhatikan estimasi ke target. \\
+		\hline
+		$f(n)$ A* & Gabungan $g(n)+h(n)$, sehingga A* memperhatikan cost aktual dan estimasi secara seimbang. \\
+		\hline
+		$f(n)$ Weighted A* & Gabungan $g(n)+2h(n)$, sehingga Weighted A* tetap memperhatikan cost aktual tetapi lebih agresif mengikuti heuristik. \\
+		\hline
+	\end{tabular}
+\end{table}
 
 \section{Analisis Heuristik}
 
-Heuristik digunakan pada GBFS dan A* untuk memperkirakan kedekatan suatu state terhadap target berikutnya. 
-Target berikutnya tidak selalu berupa titik tujuan \texttt{O}. 
-Jika masih terdapat angka yang belum dikumpulkan, maka target berikutnya adalah angka yang harus dilewati sesuai urutan. 
-Setelah seluruh angka terkumpul, barulah target heuristik diarahkan ke titik tujuan.
+Heuristik digunakan pada algoritma GBFS, A*, dan Weighted A* untuk memperkirakan kedekatan suatu state terhadap target. 
+Pada program ini, heuristik dibuat melalui interface \texttt{IHeuristic}, sehingga setiap jenis heuristik memiliki fungsi \texttt{compute} yang menerima \texttt{State} dan \texttt{GameMap}, lalu mengembalikan nilai estimasi berupa bilangan bulat.
 
 \begin{tcolorbox}[
 	colback=orange!5,
 	colframe=orange!70!black,
-	title=\textbf{Target Heuristik},
+	title=\textbf{Interface Heuristik},
 	arc=2mm,
 	boxrule=0.8pt
 ]
+\small
+\begin{verbatim}
+class IHeuristic {
+public:
+    virtual ~IHeuristic() = default;
+    virtual int compute(const State& state, const GameMap& map) const = 0;
+};
+\end{verbatim}
+\end{tcolorbox}
+
+Pada implementasi program, terdapat tiga heuristik yang digunakan, yaitu \texttt{Manhattan}, \texttt{Custom}, dan \texttt{Advanced}. 
+Ketiganya sama-sama menggunakan jarak Manhattan sebagai dasar perhitungan, tetapi target yang dihitung berbeda.
+
+\begin{table}[H]
+	\centering
+	\caption{Ringkasan heuristik yang diimplementasikan}
+	\begin{tabular}{|p{3cm}|p{5cm}|p{6cm}|}
+		\hline
+		\rowcolor{orange!20}
+		\textbf{Heuristik} & \textbf{Target Perhitungan} & \textbf{Karakteristik} \\
+		\hline
+		\texttt{Manhattan} & Goal \texttt{O} & Menghitung jarak posisi aktor saat ini langsung ke goal. Sederhana dan cepat, tetapi tidak mempertimbangkan angka yang harus dilewati terlebih dahulu. \\
+		\hline
+		\texttt{Custom} & Angka berikutnya yang belum dikumpulkan, atau goal jika semua angka sudah terkumpul & Lebih sesuai dengan aturan puzzle karena target heuristik mengikuti urutan angka yang harus dilewati. \\
+		\hline
+		\texttt{Advanced} & Semua angka yang belum dikumpulkan dan goal & Mengestimasi jarak total dengan memilih target terdekat secara greedy dari daftar angka yang belum dikumpulkan, kemudian menambahkan goal sebagai target akhir. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsection{Heuristik Manhattan}
+
+Heuristik \texttt{Manhattan} menghitung jarak Manhattan antara posisi aktor saat ini dengan posisi goal \texttt{O}. 
+Misalkan posisi aktor adalah $(r_s,c_s)$ dan posisi goal adalah $(r_g,c_g)$, maka nilai heuristik dihitung sebagai:
+
 \[
-	\text{Target}(n) =
+	h(n)=|r_s-r_g|+|c_s-c_g|
+\]
+
+\begin{tcolorbox}[
+	colback=orange!5,
+	colframe=orange!70!black,
+	title=\textbf{Potongan Implementasi Heuristik Manhattan},
+	arc=2mm,
+	boxrule=0.8pt
+]
+\small
+\begin{verbatim}
+int Manhattan::compute(const State& state, const GameMap& map) const {
+    int dr = std::abs(state.getPosition().getRow() - 
+                      map.getGoalPosition().getRow());
+    int dc = std::abs(state.getPosition().getCol() - 
+                      map.getGoalPosition().getCol());
+    return dr + dc;
+}
+\end{verbatim}
+\end{tcolorbox}
+
+Heuristik ini sangat cepat karena hanya melakukan perhitungan selisih baris dan kolom terhadap goal. 
+Namun, kelemahannya adalah heuristik ini tidak memperhatikan posisi angka yang wajib dilewati secara berurutan. 
+Akibatnya, state yang tampak dekat dengan goal dapat diprioritaskan meskipun belum mengumpulkan angka yang diperlukan.
+
+\begin{table}[H]
+	\centering
+	\caption{Analisis heuristik Manhattan}
+	\begin{tabular}{|p{4cm}|p{10cm}|}
+		\hline
+		\rowcolor{orange!20}
+		\textbf{Aspek} & \textbf{Analisis} \\
+		\hline
+		Target & Langsung menuju posisi goal \texttt{O}. \\
+		\hline
+		Mempertimbangkan angka berikutnya & Tidak. \\
+		\hline
+		Mempertimbangkan cost tile & Tidak. \\
+		\hline
+		Mempertimbangkan obstacle dan lava & Tidak secara langsung. Validitas tetap ditangani oleh \texttt{MovementEngine}. \\
+		\hline
+		Kelebihan & Sangat sederhana dan cepat dihitung. \\
+		\hline
+		Kekurangan & Kurang informatif untuk puzzle yang mewajibkan pengumpulan angka secara berurutan. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsection{Heuristik Custom}
+
+Heuristik \texttt{Custom} menghitung jarak Manhattan dari posisi aktor ke angka berikutnya yang harus dikumpulkan. 
+Jika semua angka sudah dikumpulkan, maka target heuristik berubah menjadi goal \texttt{O}. 
+Dengan demikian, heuristik ini lebih sesuai dengan constraint utama puzzle, yaitu angka harus dilewati sesuai urutan.
+
+\[
+	\text{nextNumber} = \text{lastCollected} + 1
+\]
+
+\[
+	\text{Target}(n)=
 	\begin{cases}
-		\text{posisi angka berikutnya}, & \text{jika masih ada angka yang belum dikumpulkan} \\
-		\text{posisi goal } O, & \text{jika semua angka sudah dikumpulkan}
+		\text{posisi } \text{nextNumber}, & \text{jika angka berikutnya belum dikumpulkan} \\
+		\text{posisi goal } O, & \text{jika angka berikutnya tidak ditemukan}
 	\end{cases}
 \]
-\end{tcolorbox}
 
-\subsection{Heuristik Utama}
+\[
+	h(n)=|r_s-r_t|+|c_s-c_t|
+\]
 
-Heuristik utama yang umum digunakan pada grid adalah jarak Manhattan. 
-Jarak Manhattan menghitung selisih absolut baris dan kolom antara posisi aktor dengan target.
+dengan $(r_t,c_t)$ adalah posisi target heuristik.
 
 \begin{tcolorbox}[
 	colback=orange!5,
 	colframe=orange!70!black,
-	title=\textbf{Heuristik Manhattan Distance},
+	title=\textbf{Potongan Implementasi Heuristik Custom},
 	arc=2mm,
 	boxrule=0.8pt
 ]
-Misalkan posisi aktor adalah $(r_1,c_1)$ dan posisi target adalah $(r_2,c_2)$, maka:
-\[
-	h(n)=|r_1-r_2|+|c_1-c_2|
-\]
-Heuristik ini dipilih karena sederhana, cepat dihitung, dan sesuai dengan papan berbentuk grid yang gerakannya hanya horizontal atau vertikal.
+\small
+\begin{verbatim}
+int nextNumber = state.getLastCollected() + 1;
+Position target = map.getGoalPosition();
+bool foundTarget = false;
+
+for (int i = 0; i < map.getRows() && !foundTarget; ++i) {
+    for (int j = 0; j < map.getCols() && !foundTarget; ++j) {
+        if (map.isNumbered(i, j) && map.getNumber(i, j) == nextNumber) {
+            if (!state.hasCollected(nextNumber)) {
+                target = Position(i, j);
+                foundTarget = true;
+            }
+        }
+    }
+}
+\end{verbatim}
 \end{tcolorbox}
 
-\subsection{Heuristik Alternatif}
+Setelah target ditemukan, program menghitung jarak Manhattan dari posisi aktor menuju target tersebut.
 
-Apabila mengerjakan bonus heuristik, beberapa alternatif heuristik dapat digunakan untuk membandingkan performa pencarian. 
-Setiap heuristik memiliki karakteristik yang berbeda terhadap akurasi estimasi dan waktu komputasi.
+\begin{tcolorbox}[
+	colback=orange!5,
+	colframe=orange!70!black,
+	title=\textbf{Perhitungan Nilai Custom},
+	arc=2mm,
+	boxrule=0.8pt
+]
+\small
+\begin{verbatim}
+int dr = std::abs(state.getPosition().getRow() - target.getRow());
+int dc = std::abs(state.getPosition().getCol() - target.getCol());
+return dr + dc;
+\end{verbatim}
+\end{tcolorbox}
 
-\begin{longtable}{|p{3.5cm}|p{5cm}|p{5.5cm}|}
-	\caption{Contoh heuristik utama dan alternatif} \\
+\begin{table}[H]
+	\centering
+	\caption{Analisis heuristik Custom}
+	\begin{tabular}{|p{4cm}|p{10cm}|}
+		\hline
+		\rowcolor{orange!20}
+		\textbf{Aspek} & \textbf{Analisis} \\
+		\hline
+		Target & Angka berikutnya yang harus dikumpulkan. Jika tidak ada, targetnya goal \texttt{O}. \\
+		\hline
+		Mempertimbangkan posisi goal & Ya, tetapi hanya setelah semua angka selesai dikumpulkan. \\
+		\hline
+		Mempertimbangkan angka berikutnya & Ya. Target dihitung dari \texttt{lastCollected + 1}. \\
+		\hline
+		Mempertimbangkan sliding movement & Tidak secara langsung. Heuristik hanya menghitung jarak grid. \\
+		\hline
+		Mempertimbangkan cost tile & Tidak. Cost tetap dihitung pada \texttt{gCost}. \\
+		\hline
+		Mempertimbangkan obstacle dan lava & Tidak secara langsung. Obstacle dan lava ditangani pada proses ekspansi state. \\
+		\hline
+		Kelebihan & Lebih sesuai dengan aturan angka berurutan dibanding Manhattan biasa. \\
+		\hline
+		Kekurangan & Hanya melihat satu target berikutnya, sehingga belum memperkirakan sisa target setelah angka tersebut. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsection{Heuristik Advanced}
+
+Heuristik \texttt{Advanced} mencoba memberikan estimasi yang lebih informatif dengan memperhitungkan semua target yang belum dikumpulkan. 
+Program mengumpulkan seluruh posisi angka yang belum dikumpulkan ke dalam daftar \texttt{targets}, kemudian menambahkan posisi goal \texttt{O} sebagai target akhir.
+
+Setelah daftar target terbentuk, heuristik memilih target terdekat secara greedy dari posisi saat ini, menambahkan jaraknya ke total estimasi, lalu berpindah ke target tersebut. 
+Proses ini diulang sampai seluruh target habis.
+
+\begin{tcolorbox}[
+	colback=orange!5,
+	colframe=orange!70!black,
+	title=\textbf{Ide Heuristik Advanced},
+	arc=2mm,
+	boxrule=0.8pt
+]
+\[
+	h(n)=\sum \text{jarak Manhattan ke target terdekat berikutnya}
+\]
+
+Target yang dipertimbangkan:
+\[
+	\{\text{semua angka yang belum dikumpulkan}\} \cup \{\text{goal } O\}
+\]
+\end{tcolorbox}
+
+\begin{tcolorbox}[
+	colback=orange!5,
+	colframe=orange!70!black,
+	title=\textbf{Potongan Implementasi Pengumpulan Target Advanced},
+	arc=2mm,
+	boxrule=0.8pt
+]
+\small
+\begin{verbatim}
+std::vector<Position> targets;
+
+for (int i = 0; i < map.getRows(); ++i) {
+    for (int j = 0; j < map.getCols(); ++j) {
+        if (map.isNumbered(i, j)) {
+            int num = map.getNumber(i, j);
+            if (!state.hasCollected(num)) {
+                targets.push_back(Position(i, j));
+            }
+        }
+    }
+}
+
+targets.push_back(map.getGoalPosition());
+\end{verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[
+	colback=orange!5,
+	colframe=orange!70!black,
+	title=\textbf{Potongan Implementasi Greedy Nearest Target},
+	arc=2mm,
+	boxrule=0.8pt
+]
+\small
+\begin{verbatim}
+while (!targets.empty()) {
+    size_t closestIdx = 0;
+    int closestDist = std::abs(current.getRow() - targets[0].getRow())
+                    + std::abs(current.getCol() - targets[0].getCol());
+
+    for (size_t i = 1; i < targets.size(); ++i) {
+        int dist = std::abs(current.getRow() - targets[i].getRow())
+                 + std::abs(current.getCol() - targets[i].getCol());
+        if (dist < closestDist) {
+            closestDist = dist;
+            closestIdx = i;
+        }
+    }
+
+    total += closestDist;
+    current = targets[closestIdx];
+    targets.erase(targets.begin() + 
+                  static_cast<std::ptrdiff_t>(closestIdx));
+}
+\end{verbatim}
+\end{tcolorbox}
+
+\begin{table}[H]
+	\centering
+	\caption{Analisis heuristik Advanced}
+	\begin{tabular}{|p{4cm}|p{10cm}|}
+		\hline
+		\rowcolor{orange!20}
+		\textbf{Aspek} & \textbf{Analisis} \\
+		\hline
+		Target & Semua angka yang belum dikumpulkan dan goal \texttt{O}. \\
+		\hline
+		Mempertimbangkan posisi goal & Ya, goal selalu dimasukkan sebagai target akhir dalam daftar target. \\
+		\hline
+		Mempertimbangkan angka belum dikumpulkan & Ya, semua angka yang belum dikumpulkan dimasukkan ke daftar target. \\
+		\hline
+		Mempertimbangkan urutan angka & Tidak secara ketat. Advanced menghitung target terdekat secara greedy, bukan berdasarkan urutan angka wajib. \\
+		\hline
+		Mempertimbangkan sliding movement & Tidak secara langsung. Perhitungan tetap berbasis jarak Manhattan antarposisi. \\
+		\hline
+		Mempertimbangkan cost tile & Tidak. Cost tile tetap dihitung pada \texttt{gCost}, bukan pada \texttt{hCost}. \\
+		\hline
+		Mempertimbangkan obstacle dan lava & Tidak secara langsung. Obstacle dan lava tetap ditangani oleh \texttt{MovementEngine}. \\
+		\hline
+		Kelebihan & Lebih informatif karena memperkirakan sisa perjalanan ke beberapa target, bukan hanya satu target. \\
+		\hline
+		Kekurangan & Karena memilih target terdekat secara greedy dan tidak selalu mengikuti urutan angka, estimasinya dapat kurang sesuai dengan constraint puzzle. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsection{Perbandingan Heuristik}
+
+Ketiga heuristik memiliki tingkat kompleksitas dan tingkat informasi yang berbeda. 
+\texttt{Manhattan} paling sederhana, \texttt{Custom} lebih sesuai dengan aturan angka berurutan, sedangkan \texttt{Advanced} lebih agresif memperkirakan sisa target yang belum dicapai.
+
+\begin{longtable}{|p{3cm}|p{3.8cm}|p{3.3cm}|p{3.8cm}|}
+	\caption{Perbandingan heuristik yang digunakan} \\
 	\hline
 	\rowcolor{orange!20}
-	\textbf{Heuristik} & \textbf{Rumus / Ide} & \textbf{Karakteristik} \\
+	\textbf{Heuristik} & \textbf{Target} & \textbf{Keunggulan} & \textbf{Keterbatasan} \\
 	\hline
 	\endfirsthead
 	
 	\hline
 	\rowcolor{orange!20}
-	\textbf{Heuristik} & \textbf{Rumus / Ide} & \textbf{Karakteristik} \\
+	\textbf{Heuristik} & \textbf{Target} & \textbf{Keunggulan} & \textbf{Keterbatasan} \\
 	\hline
 	\endhead
 	
-	Manhattan Distance & $|r_1-r_2|+|c_1-c_2|$ & Cepat dihitung dan cocok untuk grid 4 arah, tetapi belum memperhitungkan sliding, obstacle, lava, dan cost tile. \\
+	\texttt{Manhattan} & Goal \texttt{O} & Paling cepat dan sederhana. & Tidak memperhatikan angka wajib. \\
 	\hline
-	Euclidean Distance & $\sqrt{(r_1-r_2)^2+(c_1-c_2)^2}$ & Mengukur jarak garis lurus, tetapi kurang merepresentasikan gerakan grid yang hanya horizontal dan vertikal. \\
+	\texttt{Custom} & Angka berikutnya, lalu goal & Lebih sesuai dengan urutan angka. & Hanya melihat satu target berikutnya. \\
 	\hline
-	Minimum Tile Cost Weighted Manhattan & Manhattan Distance dikalikan cost tile minimum yang dapat dilewati. & Lebih dekat ke estimasi cost karena mempertimbangkan batas bawah cost tile, tetapi tetap belum sepenuhnya memperhitungkan sliding dan obstacle. \\
-	\hline
-	Remaining Target Estimate & Estimasi dari posisi saat ini ke angka berikutnya, lalu dilanjutkan secara kasar ke target-target berikutnya. & Dapat lebih informatif, tetapi perlu hati-hati agar tidak melebih-lebihkan estimasi jika digunakan pada A*. \\
+	\texttt{Advanced} & Semua angka belum terkumpul dan goal & Lebih informatif terhadap sisa target. & Tidak mengikuti urutan angka secara ketat dan lebih mahal dihitung. \\
 	\hline
 \end{longtable}
 
 \subsection{Aspek yang Dipertimbangkan Heuristik}
 
-Tidak semua heuristik memperhitungkan seluruh aturan pada Ice Sliding Puzzle. 
-Beberapa heuristik hanya memperkirakan jarak geometris, sedangkan validitas gerakan tetap ditentukan oleh simulasi sliding.
+Validitas gerakan tetap ditentukan oleh \texttt{MovementEngine}, sedangkan heuristik hanya berperan sebagai fungsi estimasi untuk menentukan prioritas state. 
+Oleh karena itu, obstacle, lava, dan efek sliding tidak dihitung secara eksplisit pada rumus heuristik.
 
 \begin{table}[H]
 	\centering
-	\caption{Aspek puzzle yang dipertimbangkan oleh heuristik}
-	\begin{tabular}{|p{5cm}|p{2.5cm}|p{6cm}|}
+	\caption{Aspek puzzle yang dipertimbangkan oleh setiap heuristik}
+	\small
+	\begin{tabular}{|p{3.8cm}|p{2.8cm}|p{2.8cm}|p{2.8cm}|}
 		\hline
 		\rowcolor{orange!20}
-		\textbf{Aspek} & \textbf{Dipertimbangkan?} & \textbf{Keterangan} \\
+		\textbf{Aspek} & \textbf{Manhattan} & \textbf{Custom} & \textbf{Advanced} \\
 		\hline
-		Posisi goal & Ya & Goal digunakan sebagai target apabila seluruh angka sudah terkumpul. \\
+		Posisi goal & Ya & Ya, setelah angka selesai & Ya \\
 		\hline
-		Posisi angka berikutnya & Ya & Jika masih ada angka, heuristik diarahkan ke angka berikutnya. \\
+		Posisi angka berikutnya & Tidak & Ya & Tidak khusus; semua angka belum terkumpul dipertimbangkan \\
 		\hline
-		Sliding movement & Tidak langsung & Heuristik jarak hanya memberi estimasi; gerakan sliding tetap divalidasi oleh mekanisme ekspansi. \\
+		Semua angka belum terkumpul & Tidak & Tidak & Ya \\
 		\hline
-		Cost tile & Tergantung heuristik & Manhattan biasa tidak memperhitungkan cost tile, sedangkan weighted heuristic dapat memasukkan cost minimum. \\
+		Urutan angka & Tidak & Ya, melalui \texttt{lastCollected + 1} & Tidak secara ketat \\
 		\hline
-		Obstacle & Tidak langsung & Obstacle tidak dihitung dalam rumus jarak sederhana, tetapi memengaruhi hasil validasi gerakan. \\
+		Sliding movement & Tidak & Tidak & Tidak \\
 		\hline
-		Lava & Tidak langsung & Lava tidak dihitung dalam heuristik sederhana, tetapi state yang melewati lava akan dibuang saat ekspansi. \\
+		Cost tile & Tidak & Tidak & Tidak \\
+		\hline
+		Obstacle & Tidak & Tidak & Tidak \\
+		\hline
+		Lava & Tidak & Tidak & Tidak \\
 		\hline
 	\end{tabular}
 \end{table}
 
 \subsection{Admissibility Heuristik A*}
 
-Heuristik dikatakan \textit{admissible} apabila tidak pernah melebih-lebihkan cost minimum sebenarnya dari suatu state menuju goal. 
-Dengan kata lain, untuk setiap state $n$ berlaku:
+Heuristik dikatakan \textit{admissible} apabila untuk setiap state $n$, nilai heuristik tidak pernah melebihi cost optimal sebenarnya dari state tersebut menuju goal.
 
 \[
 	h(n) \leq h^*(n)
 \]
 
-dengan $h^*(n)$ adalah cost optimal sebenarnya dari state $n$ menuju target.
+dengan $h^*(n)$ adalah cost optimal sebenarnya dari state $n$ menuju solusi.
 
 \begin{tcolorbox}[
 	colback=green!5,
 	colframe=green!50!black,
-	title=\textbf{Analisis Admissibility},
+	title=\textbf{Analisis Admissibility pada Heuristik Program},
 	arc=2mm,
 	boxrule=0.8pt
 ]
-Jika heuristik yang digunakan adalah Manhattan Distance murni, maka heuristik tersebut aman sebagai estimasi jarak geometris, tetapi belum tentu selalu menjadi estimasi cost yang ketat pada puzzle sliding. 
-Apabila semua cost tile minimal bernilai $1$, Manhattan Distance dapat dipandang sebagai batas bawah sederhana terhadap jumlah perpindahan grid. 
-Namun, karena satu aksi sliding dapat melewati banyak tile sekaligus dan struktur obstacle dapat membuat aktor harus mengambil rute tidak langsung, admissibility perlu dianalisis berdasarkan definisi cost yang digunakan.
+Pada implementasi ini, ketiga heuristik belum dapat dijamin selalu admissible untuk semua konfigurasi Ice Sliding Puzzle. 
+Penyebab utamanya adalah perhitungan heuristik masih berbasis jarak Manhattan, sedangkan cost sebenarnya bergantung pada mekanisme sliding, cost tile yang dilewati, obstacle, lava, serta constraint angka berurutan.
 \end{tcolorbox}
 
-Untuk menjaga heuristik A* tetap admissible terhadap cost, heuristik yang lebih aman adalah menggunakan estimasi berbasis batas bawah cost tile, misalnya:
+\begin{table}[H]
+	\centering
+	\caption{Analisis admissibility setiap heuristik}
+	\begin{tabular}{|p{3cm}|p{3cm}|p{8cm}|}
+		\hline
+		\rowcolor{green!15}
+		\textbf{Heuristik} & \textbf{Admissible?} & \textbf{Alasan} \\
+		\hline
+		\texttt{Manhattan} & Tidak selalu & Manhattan langsung ke goal dapat mengabaikan kewajiban melewati angka terlebih dahulu. Jika aktor dekat dengan goal tetapi masih harus mengambil angka jauh, nilai heuristik dapat terlalu kecil. Namun, karena cost tile dan sliding berbeda dari jarak grid biasa, jaminan formal admissible tidak dapat diberikan untuk semua kasus. \\
+		\hline
+		\texttt{Custom} & Lebih aman, tetapi tidak selalu dapat dijamin & Custom mengikuti angka berikutnya sehingga lebih sesuai dengan constraint urutan. Namun, heuristik tetap tidak menghitung sliding, obstacle, lava, dan cost tile, sehingga admissibility formal pada seluruh konfigurasi puzzle belum dapat dijamin. \\
+		\hline
+		\texttt{Advanced} & Tidak selalu & Advanced menjumlahkan jarak ke beberapa target dengan strategi greedy. Karena menambahkan banyak estimasi dan tidak selalu mengikuti urutan angka, nilainya dapat melebih-lebihkan cost optimal sebenarnya pada beberapa kasus. \\
+		\hline
+	\end{tabular}
+\end{table}
 
-\[
-	h(n)=d_{\text{Manhattan}}(n,\text{target}) \times c_{\min}
-\]
-
-dengan $c_{\min}$ adalah cost minimum dari tile yang dapat dilewati. 
-Jika $c_{\min}$ tidak melebihi cost traversal mana pun, maka estimasi ini tidak akan melebihi cost aktual minimum secara langsung terhadap jarak grid. 
-Namun, tetap perlu dicatat bahwa karakter sliding dapat membuat estimasi ini tidak selalu sangat informatif.
+Jika digunakan pada A*, heuristik \texttt{Custom} merupakan pilihan yang paling sesuai secara konsep karena targetnya mengikuti angka berikutnya yang harus dikumpulkan. 
+Namun, karena perhitungan masih berbasis Manhattan dan belum memperhitungkan mekanisme sliding maupun cost tile, optimalitas A* tetap perlu dikonfirmasi melalui hasil percobaan.
 
 \subsection{Konsistensi Heuristik}
 
-Heuristik dikatakan konsisten atau monotonic apabila untuk setiap state $n$ dan successor $n'$ berlaku:
+Heuristik dikatakan konsisten atau \textit{monotonic} apabila untuk setiap state $n$ dan successor $n'$ berlaku:
 
 \[
 	h(n) \leq c(n,n') + h(n')
@@ -222,21 +597,35 @@ Heuristik dikatakan konsisten atau monotonic apabila untuk setiap state $n$ dan 
 
 dengan $c(n,n')$ adalah cost gerakan dari $n$ ke $n'$.
 
+\begin{tcolorbox}[
+	colback=green!5,
+	colframe=green!50!black,
+	title=\textbf{Analisis Konsistensi},
+	arc=2mm,
+	boxrule=0.8pt
+]
+Pada pathfinding grid biasa, Manhattan Distance sering bersifat konsisten untuk gerakan satu langkah dengan cost seragam. 
+Namun, pada Ice Sliding Puzzle, satu aksi dapat melewati banyak tile sekaligus, cost gerakan merupakan jumlah cost sepanjang lintasan, dan state dapat berubah karena collected mask angka. 
+Oleh karena itu, konsistensi heuristik pada program ini tidak dapat dijamin secara umum untuk semua konfigurasi papan.
+\end{tcolorbox}
+
 \begin{table}[H]
 	\centering
-	\caption{Hubungan heuristik dengan performa pencarian}
+	\caption{Dampak kualitas heuristik terhadap performa pencarian}
 	\begin{tabular}{|p{4cm}|p{10cm}|}
 		\hline
 		\rowcolor{orange!20}
 		\textbf{Kualitas Heuristik} & \textbf{Dampak terhadap Algoritma} \\
 		\hline
-		Terlalu kecil & A* menjadi mirip UCS karena estimasi kurang membantu mengarahkan pencarian. \\
+		Terlalu kecil & A* dapat berperilaku mirip UCS karena estimasi kurang membantu mengarahkan pencarian. \\
 		\hline
-		Terlalu besar & A* berisiko kehilangan jaminan optimalitas jika heuristik tidak admissible. \\
+		Terlalu besar & A* dan Weighted A* dapat lebih cepat, tetapi risiko kehilangan solusi optimal meningkat. \\
 		\hline
-		Informatif dan admissible & A* dapat mengurangi jumlah iterasi tanpa mengorbankan optimalitas. \\
+		Mengikuti angka berikutnya & Pencarian lebih sesuai dengan constraint puzzle karena algoritma diarahkan ke target yang memang harus dikumpulkan selanjutnya. \\
 		\hline
-		Tidak mempertimbangkan obstacle/lava & Algoritma dapat mengejar target yang tampak dekat, tetapi sebenarnya sulit atau tidak valid dicapai. \\
+		Mempertimbangkan banyak target & Pencarian dapat lebih agresif dan informatif, tetapi estimasi bisa menjadi terlalu besar atau tidak sesuai urutan angka. \\
+		\hline
+		Tidak mempertimbangkan obstacle/lava & Algoritma dapat mengejar target yang tampak dekat secara jarak grid, tetapi sebenarnya tidak valid atau sulit dicapai melalui sliding. \\
 		\hline
 	\end{tabular}
 \end{table}
@@ -260,6 +649,8 @@ Pada Ice Sliding Puzzle, optimalitas sangat bergantung pada cara algoritma memil
 		\hline
 		A* & Ya, dengan syarat & A* optimal apabila heuristik yang digunakan admissible dan cost gerakan tidak negatif. Jika heuristik melebih-lebihkan cost, jaminan optimalitas dapat hilang. \\
 		\hline
+		Weighted A* & Tidak selalu & Weighted A* memperbesar pengaruh heuristik dengan bobot $w=2$. Akibatnya, algoritma dapat lebih cepat menuju target, tetapi tidak selalu memilih jalur dengan total cost minimum. \\
+		\hline
 	\end{tabular}
 \end{table}
 
@@ -274,9 +665,29 @@ A* dapat menjamin solusi optimal jika heuristik tidak pernah melebih-lebihkan co
 Jika $h(n)$ admissible, maka nilai $f(n)=g(n)+h(n)$ tidak akan membuat algoritma mengabaikan jalur yang sebenarnya lebih murah.
 \end{tcolorbox}
 
+\begin{tcolorbox}[
+	colback=purple!5,
+	colframe=purple!60!black,
+	title=\textbf{Optimalitas pada Weighted A*},
+	arc=2mm,
+	boxrule=0.8pt
+]
+Weighted A* menggunakan fungsi evaluasi:
+\[
+	f(n)=g(n)+w \cdot h(n)
+\]
+Pada implementasi program, nilai bobot yang digunakan adalah:
+\[
+	w=2
+\]
+Karena nilai heuristik diperbesar, Weighted A* cenderung lebih agresif mengikuti arah target. 
+Hal ini dapat mengurangi jumlah iterasi, tetapi jaminan optimalitas seperti pada A* dengan heuristik admissible tidak selalu berlaku.
+\end{tcolorbox}
+
 Pengaruh cost tile juga penting dalam optimalitas. 
 Pada papan dengan cost berbeda-beda, jalur yang secara visual lebih pendek dapat memiliki total cost lebih besar dibanding jalur yang lebih panjang tetapi melewati tile murah. 
-Karena itu, algoritma yang memperhatikan $g(n)$, seperti UCS dan A*, lebih aman digunakan untuk mencari cost minimum dibanding GBFS.
+Karena itu, algoritma yang memperhatikan $g(n)$, seperti UCS dan A*, lebih aman digunakan untuk mencari cost minimum dibanding GBFS. 
+Weighted A* juga tetap memperhatikan $g(n)$, tetapi karena komponen heuristik diperbesar, hasil cost-nya dapat lebih besar dibanding UCS atau A*.
 
 \section{Analisis Kompleksitas}
 
@@ -333,6 +744,8 @@ Dalam kasus terburuk, satu sliding dapat memeriksa hingga $O(\max(N,M))$ tile.
 	\hline
 	A* & $O(|S| \log |S| \cdot 4 \cdot \max(N,M))$ pada kasus terburuk, tetapi dapat lebih efisien dari UCS jika heuristik informatif. & $O(|S|)$ untuk priority queue dan best cost map. \\
 	\hline
+	Weighted A* & $O(|S| \log |S| \cdot 4 \cdot \max(N,M))$ pada kasus terburuk, tetapi dalam praktik dapat meninjau lebih sedikit state dibanding A* karena heuristik diberi bobot lebih besar. & $O(|S|)$ untuk priority queue dan best cost map. \\
+	\hline
 \end{longtable}
 
 \begin{table}[H]
@@ -355,7 +768,9 @@ Dalam kasus terburuk, satu sliding dapat memeriksa hingga $O(\max(N,M))$ tile.
 		\hline
 		Lava & Mengurangi jalur valid karena state yang melewati lava langsung dibuang. \\
 		\hline
-		Kualitas heuristik & Sangat memengaruhi GBFS dan A*, terutama dalam mengurangi jumlah iterasi. \\
+		Kualitas heuristik & Sangat memengaruhi GBFS, A*, dan Weighted A*, terutama dalam mengurangi jumlah iterasi. \\
+		\hline
+		Bobot heuristik & Khusus pada Weighted A*, semakin besar bobot heuristik, semakin agresif algoritma mengikuti estimasi menuju target. \\
 		\hline
 	\end{tabular}
 \end{table}
@@ -414,10 +829,25 @@ Jika pada kondisi pertama aktor sudah mengumpulkan angka \texttt{0}, sedangkan p
 Hal ini karena langkah valid berikutnya berbeda: state pertama dapat mencari angka \texttt{1}, sedangkan state kedua masih harus mencari angka \texttt{0}.
 \end{tcolorbox}
 
+\begin{tcolorbox}[
+	colback=purple!5,
+	colframe=purple!60!black,
+	title=\textbf{State Space pada Weighted A*},
+	arc=2mm,
+	boxrule=0.8pt
+]
+Weighted A* menggunakan representasi state yang sama dengan A*, yaitu posisi aktor, collected mask, angka terakhir, path, $g(n)$, dan $h(n)$. 
+Perbedaannya tidak terletak pada bentuk state, tetapi pada cara state diprioritaskan di dalam priority queue:
+\[
+	f(n)=g(n)+2h(n)
+\]
+Dengan demikian, state space yang mungkin diproses tetap sama, tetapi urutan eksplorasinya berbeda karena heuristik memiliki pengaruh lebih besar.
+\end{tcolorbox}
+
 \section{Perbandingan Teoritis Algoritma}
 
-Secara teoritis, UCS, GBFS, dan A* memiliki keunggulan pada aspek yang berbeda. 
-UCS unggul dalam jaminan optimalitas, GBFS unggul dalam kecepatan pencarian jika heuristik baik, sedangkan A* mencoba menyeimbangkan keduanya.
+Secara teoritis, UCS, GBFS, A*, dan Weighted A* memiliki keunggulan pada aspek yang berbeda. 
+UCS unggul dalam jaminan optimalitas, GBFS unggul dalam kecepatan pencarian jika heuristik baik, A* mencoba menyeimbangkan cost aktual dan heuristik, sedangkan Weighted A* memperbesar pengaruh heuristik untuk mengejar pencarian yang lebih cepat.
 
 \subsection{UCS vs GBFS}
 
@@ -488,31 +918,58 @@ UCS unggul dalam jaminan optimalitas, GBFS unggul dalam kecepatan pencarian jika
 	\end{tabular}
 \end{table}
 
-\begin{longtable}{|p{4cm}|p{3.2cm}|p{3.2cm}|p{3.2cm}|}
-	\caption{Ringkasan perbandingan teoritis UCS, GBFS, dan A*} \\
+\subsection{A* vs Weighted A*}
+
+\begin{table}[H]
+	\centering
+	\caption{Perbandingan A* dan Weighted A*}
+	\begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
+		\hline
+		\rowcolor{gray!25}
+		\textbf{Aspek} & \textbf{A*} & \textbf{Weighted A*} \\
+		\hline
+		Dasar pemilihan state & $g(n)+h(n)$ & $g(n)+2h(n)$ \\
+		\hline
+		Peran heuristik & Seimbang dengan cost aktual & Lebih dominan karena dikalikan bobot $2$ \\
+		\hline
+		Kecepatan & Bergantung kualitas heuristik & Cenderung lebih cepat karena lebih agresif menuju target \\
+		\hline
+		Optimalitas & Optimal jika heuristik admissible & Tidak selalu optimal \\
+		\hline
+		Risiko & Dapat menjadi mirip UCS jika heuristik kurang informatif & Dapat memilih jalur yang terlihat dekat tetapi cost aktualnya lebih besar \\
+		\hline
+		Tujuan penggunaan & Mencari keseimbangan antara cost dan estimasi & Menguji trade-off antara kecepatan pencarian dan optimalitas solusi \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{longtable}{|p{3.5cm}|p{2.6cm}|p{2.6cm}|p{2.6cm}|p{2.8cm}|}
+	\caption{Ringkasan perbandingan teoritis UCS, GBFS, A*, dan Weighted A*} \\
 	\hline
 	\rowcolor{gray!25}
-	\textbf{Aspek} & \textbf{UCS} & \textbf{GBFS} & \textbf{A*} \\
+	\textbf{Aspek} & \textbf{UCS} & \textbf{GBFS} & \textbf{A*} & \textbf{Weighted A*} \\
 	\hline
 	\endfirsthead
 	
 	\hline
 	\rowcolor{gray!25}
-	\textbf{Aspek} & \textbf{UCS} & \textbf{GBFS} & \textbf{A*} \\
+	\textbf{Aspek} & \textbf{UCS} & \textbf{GBFS} & \textbf{A*} & \textbf{Weighted A*} \\
 	\hline
 	\endhead
 	
-	Optimalitas & Tinggi & Rendah & Tinggi jika heuristik admissible \\
+	Optimalitas & Tinggi & Rendah & Tinggi jika heuristik admissible & Tidak selalu optimal \\
 	\hline
-	Jumlah iterasi & Besar & Kecil jika heuristik baik & Sedang hingga kecil \\
+	Jumlah iterasi & Besar & Kecil jika heuristik baik & Sedang hingga kecil & Cenderung lebih kecil dari A* \\
 	\hline
-	Waktu eksekusi & Cenderung lebih lama & Cenderung lebih cepat & Bergantung heuristik \\
+	Waktu eksekusi & Cenderung lebih lama & Cenderung lebih cepat & Bergantung heuristik & Cenderung lebih cepat dari A* \\
 	\hline
-	Penggunaan memori & Besar & Besar pada kasus buruk & Besar pada kasus buruk \\
+	Penggunaan memori & Besar & Besar pada kasus buruk & Besar pada kasus buruk & Besar pada kasus buruk \\
 	\hline
-	Ketergantungan heuristik & Tidak ada & Sangat tinggi & Tinggi \\
+	Ketergantungan heuristik & Tidak ada & Sangat tinggi & Tinggi & Sangat tinggi \\
 	\hline
-	Cocok untuk cost berbeda & Sangat cocok & Kurang cocok untuk cost minimum & Cocok jika heuristik baik \\
+	Cocok untuk cost berbeda & Sangat cocok & Kurang cocok untuk cost minimum & Cocok jika heuristik baik & Cocok untuk eksperimen kecepatan, tetapi kurang aman untuk cost minimum \\
+	\hline
+	Fungsi evaluasi & $g(n)$ & $h(n)$ & $g(n)+h(n)$ & $g(n)+2h(n)$ \\
 	\hline
 \end{longtable}
 
@@ -527,6 +984,7 @@ UCS unggul dalam jaminan optimalitas, GBFS unggul dalam kecepatan pencarian jika
 	\item Algoritma yang paling aman untuk mencari cost minimum adalah UCS.
 	\item Algoritma yang secara teoritis paling cepat menemukan solusi adalah GBFS, tetapi tidak menjamin cost minimum.
 	\item Algoritma yang paling seimbang untuk Ice Sliding Puzzle adalah A*, karena menggabungkan cost aktual dan heuristik.
+	\item Weighted A* cocok digunakan sebagai algoritma bonus untuk menguji trade-off antara kecepatan pencarian dan kualitas solusi, karena heuristik diperbesar dengan bobot $w=2$.
 \end{itemize}
 \end{tcolorbox}
 
