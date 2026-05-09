@@ -1,0 +1,390 @@
+@startuml
+skinparam handwritten false
+skinparam backgroundColor #FEFEFE
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+skinparam class {
+  BackgroundColor #E3F2FD
+  BorderColor #1565C0
+  ArrowColor #1565C0
+}
+skinparam abstract {
+  BackgroundColor #FFF3E0
+  BorderColor #E65100
+}
+skinparam enum {
+  BackgroundColor #F3E5F5
+  BorderColor #6A1B9A
+}
+
+title Ice Sliding Puzzle Solver - Class Diagram (DIP Refactored)
+
+package "Model" #F5F5F5 {
+  class Position {
+    -int row
+    -int col
+    +Position()
+    +Position(row: int, col: int)
+    +getRow(): int
+    +getCol(): int
+    +setRow(row: int): void
+    +setCol(col: int): void
+    +operator==(other: Position): bool
+    +operator!=(other: Position): bool
+    +operator<(other: Position): bool
+    +hash(): size_t
+  }
+
+  class GameMap {
+    -int rows
+    -int cols
+    -vector~vector~char~~ grid
+    -vector~vector~int~~ costs
+    -Position startPos
+    -Position goalPos
+    +GameMap()
+    +GameMap(rows: int, cols: int)
+    +getRows(): int
+    +getCols(): int
+    +getTile(row: int, col: int): char
+    +getCost(row: int, col: int): int
+    +getStartPosition(): Position
+    +getGoalPosition(): Position
+    +setTile(row: int, col: int, tile: char): void
+    +setCost(row: int, col: int, cost: int): void
+    +setStartPosition(pos: Position): void
+    +setGoalPosition(pos: Position): void
+    +isInsideBounds(row: int, col: int): bool
+    +isObstacle(row: int, col: int): bool
+    +isLava(row: int, col: int): bool
+    +isPassable(row: int, col: int): bool
+    +isNumbered(row: int, col: int): bool
+    +getNumber(row: int, col: int): int
+    +clone(): GameMap
+    +print(): void
+  }
+
+  class State {
+    -Position position
+    -int collectedMask
+    -int lastCollected
+    -string path
+    -int gCost
+    -int hCost
+    -shared_ptr~State~ parent
+    +State(pos: Position, collectedMask: int, lastCollected: int, path: string, gCost: int, hCost: int, parent: shared_ptr~State~)
+    +State(other: State)
+    +operator=(other: State): State
+    +getPosition(): Position
+    +getCollectedMask(): int
+    +getLastCollected(): int
+    +getPath(): string
+    +getGCost(): int
+    +getHCost(): int
+    +getFCost(): int
+    +getParent(): shared_ptr~State~
+    +setHCost(h: int): void
+    +hasCollected(number: int): bool
+    +canCollect(number: int): bool
+    +operator==(other: State): bool
+    +operator<(other: State): bool
+  }
+
+  class MoveResult {
+    -bool valid
+    -Position newPosition
+    -int moveCost
+    -bool gameOver
+    -string gameOverReason
+    -vector~Position~ traversedTiles
+    +MoveResult()
+    +MoveResult(valid: bool, newPos: Position, cost: int, gameOver: bool, reason: string, traversed: vector~Position~)
+    +isValid(): bool
+    +getNewPosition(): Position
+    +getMoveCost(): int
+    +isGameOver(): bool
+    +getGameOverReason(): string
+    +getTraversedTiles(): vector~Position~
+  }
+
+  class SearchResult {
+    -bool solutionFound
+    -string solutionPath
+    -int totalCost
+    -double executionTimeMs
+    -int iterationsCount
+    -string message
+    +SearchResult()
+    +SearchResult(found: bool, path: string, cost: int, timeMs: double, iterations: int, message: string)
+    +isSolutionFound(): bool
+    +getSolutionPath(): string
+    +getTotalCost(): int
+    +getExecutionTimeMs(): double
+    +getIterationsCount(): int
+    +getMessage(): string
+    +setSolutionFound(found: bool): void
+    +setSolutionPath(path: string): void
+    +setTotalCost(cost: int): void
+    +setExecutionTimeMs(timeMs: double): void
+    +setIterationsCount(iterations: int): void
+    +setMessage(message: string): void
+    +printSummary(): void
+  }
+}
+
+package "Heuristic" #F5F5F5 {
+  abstract class IHeuristic {
+    +compute(state: State, map: GameMap): int
+  }
+
+  class Manhattan {
+    +compute(state: State, map: GameMap): int
+  }
+
+  class Custom {
+    +compute(state: State, map: GameMap): int
+  }
+
+  class Advanced {
+    +compute(state: State, map: GameMap): int
+  }
+
+  note bottom of Manhattan
+    H1: Straight-line distance
+    to goal (Manhattan).
+    O(1), weakest.
+  end note
+
+  note bottom of Custom
+    H2: Distance to next required
+    number + goal.
+    O(1), medium.
+  end note
+
+  note bottom of Advanced
+    H3: Relaxed TSP greedy sum.
+    O(N²), strongest.
+  end note
+}
+
+package "Solver" #F5F5F5 {
+  abstract class ISolver {
+    +solve(map: GameMap): SearchResult
+  }
+
+  class AStar {
+    -IHeuristic* heuristic
+    +AStar(heuristic: IHeuristic*)
+    +solve(map: GameMap): SearchResult
+    -getPriority(state: State): int
+  }
+}
+
+package "CLI" #F5F5F5 {
+  class CLI {
+    -bool running
+    -GameMap currentMap
+    -SearchResult lastResult
+    -string currentFilename
+    -string selectedAlgorithm
+    -string selectedHeuristic
+    +CLI()
+    +run(): void
+    -displayWelcome(): void
+    -handleInputFile(): bool
+    -handleAlgorithmSelection(): void
+    -displayResult(): void
+    -handlePlayback(): void
+    -handleSaveSolution(): void
+    -printBoard(map: GameMap, actorPos: Position): void
+    -toUpper(str: string): string$
+    -clearScreen(): void$
+    -waitForEnter(): void$
+  }
+}
+
+package "GUI" #F5F5F5 {
+  class GuiApp {
+    -AssetManager assets
+    -unique_ptr~BoardRenderer~ boardRenderer
+    -Font font
+    -GameMap map
+    -SearchResult result
+    -string filename
+    -string statusMsg
+    -bool statusOk
+    -bool hasResult
+    -bool filenameFocused
+    -string selectedAlgo
+    -string selectedHeuristic
+    -int currentStep
+    -int totalSteps
+    -bool isPlaying
+    -float playTimer
+    -Position playbackActorPos
+    -int playbackCollectedMask
+    -bool running
+    -int screenWidth
+    -int screenHeight
+    +GuiApp()
+    +~GuiApp()
+    +init(): bool
+    +run(): void
+    +shutdown(): void
+    -update(): void
+    -draw(): void
+    -drawLeftPanel(): void
+    -drawRightPanel(): void
+    -drawCenterPanel(): void
+    -drawPlaybackControls(cx: int, cy: int): void
+    -loadFile(): void
+    -solve(): void
+    -saveResult(outPath: string): void
+    -computePlaybackState(): void
+    -radioButton(...): bool
+    -buttonRect(...): bool
+    -imageButton(...): bool
+    -drawPanel(...): void
+    -drawStat(...): void
+  }
+
+  class AssetManager {
+    -unordered_map~string,Texture2D~ textures
+    +AssetManager()
+    +~AssetManager()
+    +loadAll(): void
+    +unloadAll(): void
+    +get(name: string): Texture2D
+    +has(name: string): bool
+  }
+
+  class BoardRenderer {
+    -const AssetManager& assets
+    -Font font
+    +BoardRenderer(am: AssetManager, f: Font)
+    +render(map: GameMap, actorPos: Position, collectedMask: int, x: int, y: int, maxW: int, maxH: int): void
+    -drawTile(tile: char, x: int, y: int, size: int, collectedMask: int): void
+    -drawActor(pos: Position, bx: int, by: int, size: int): void
+  }
+}
+
+package "Parser" #F5F5F5 {
+  class parser {
+    +parseFile(filename: string): void
+    +getGrid(row: int, col: int): string
+    +getPoint(row: int, col: int): int
+    +getRows(): int
+    +getCols(): int
+  }
+}
+
+package "Validator" #F5F5F5 {
+  class InputValidator {
+    +validate(map: GameMap): void$
+    -validateStartGoal(map: GameMap): void$
+    -validateNumbers(map: GameMap): void$
+    -validateSymbols(map: GameMap): void$
+  }
+}
+
+package "Exception" #FFF3E0 {
+  class GameException {
+    -string message
+    +GameException(message: string)
+    +what(): const char*
+  }
+
+  class FileException {
+    +FileException(message: string)
+  }
+
+  class ValidationException {
+    +ValidationException(message: string)
+  }
+
+  class SolverException {
+    +SolverException(message: string)
+  }
+}
+
+GameMap "1" --> "1" Position : startPos
+GameMap "1" --> "1" Position : goalPos
+State "1" --> "1" Position : position
+State "1" --> "0..1" State : parent
+MoveResult "1" --> "1" Position : newPosition
+
+IHeuristic <|.. Custom : implements
+IHeuristic <|.. Advanced : implements
+
+ISolver <|.. AStar : implements
+AStar --> "1" IHeuristic : heuristic
+
+CLI --> "1" GameMap : currentMap
+CLI --> "1" SearchResult : lastResult
+CLI ..> ISolver : uses
+CLI ..> IHeuristic : uses
+CLI ..> GameException : catches
+
+GuiApp --> "1" AssetManager : assets
+GuiApp --> "1" BoardRenderer : boardRenderer
+BoardRenderer --> "1" AssetManager : assets
+GuiApp ..> GameMap : uses
+GuiApp ..> SearchResult : uses
+GuiApp ..> ISolver : uses
+GuiApp ..> IHeuristic : uses
+
+parser ..> GameMap : creates
+parser ..> FileException : throws
+
+InputValidator ..> GameMap : validates
+InputValidator ..> ValidationException : throws
+
+class std_exception as "std::exception"
+std_exception <|-- GameException : extends
+GameException <|-- FileException : extends
+GameException <|-- ValidationException : extends
+GameException <|-- SolverException : extends
+
+note right of ISolver
+  <b>Pure Interface (DIP)</b>
+  Hanya 1 method: solve()
+  Tidak punya atribut,
+  constructor, maupun
+  method implementasi.
+  Tidak bergantung pada
+  IHeuristic atau GameMap.
+end note
+
+note right of AStar
+  <b>Concrete Implementation</b>
+  Owns heuristic pointer.
+  Implements solve() dan
+  getPriority() sendiri.
+end note
+
+note right of IHeuristic
+  <b>Pure Interface (DIP)</b>
+  Hanya 1 method: compute()
+  Tidak punya atribut atau
+  method implementasi.
+end note
+
+note right of CLI
+  <b>High-level Module</b>
+  Bergantung pada abstraksi
+  ISolver dan IHeuristic,
+  bukan concrete class.
+  Catch GameException untuk
+  handle semua error.
+end note
+
+note right of GameException
+  <b>Exception Hierarchy</b>
+  Base class untuk semua
+  custom exception.
+  CLI catch GameException&
+  untuk handle FileException
+  dan ValidationException.
+end note
+
+@enduml

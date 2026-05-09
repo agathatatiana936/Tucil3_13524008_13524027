@@ -1,0 +1,1019 @@
+Bagian ini menjelaskan struktur source program yang digunakan untuk menyelesaikan permasalahan \textit{Ice Sliding Puzzle Solver}. 
+Program dikembangkan menggunakan bahasa C++ dengan pendekatan modular, sehingga komponen pembacaan input, representasi peta, simulasi pergerakan, algoritma pathfinding, heuristik, CLI, dan GUI dipisahkan ke dalam folder dan class yang berbeda.
+
+\begin{tcolorbox}[
+	colback=blue!5,
+	colframe=blue!60!black,
+	title=\textbf{Ringkasan Implementasi Program},
+	arc=2mm,
+	boxrule=0.8pt
+]
+Program membaca konfigurasi papan dari file \texttt{.txt}, memvalidasi isi papan, membangun representasi map dan cost, lalu menjalankan algoritma pathfinding yang dipilih pengguna. 
+Algoritma yang diimplementasikan adalah \textbf{Uniform Cost Search}, \textbf{Greedy Best-First Search}, \textbf{A*}, dan \textbf{Weighted A*}. 
+Hasil akhir program berupa solusi gerakan, total cost, jumlah iterasi, waktu eksekusi, visualisasi langkah solusi, serta opsi penyimpanan solusi ke file.
+\end{tcolorbox}
+
+\section{Informasi Umum Program}
+
+\begin{table}[H]
+	\centering
+	\caption{Informasi umum program}
+	\begin{tabular}{|p{4cm}|p{10cm}|}
+		\hline
+		\rowcolor{blue!15}
+		\textbf{Aspek} & \textbf{Keterangan} \\
+		\hline
+		Bahasa pemrograman & C++ \\
+		\hline
+		Standar bahasa & C++17 \\
+		\hline
+		Alasan pemilihan bahasa & C++ dipilih karena mendukung pemrograman berorientasi objek, memiliki performa baik untuk eksplorasi state space, serta menyediakan struktur data standar seperti \texttt{priority\_queue}, \texttt{map}, \texttt{vector}, dan \texttt{tuple}. \\
+		\hline
+		Compiler & \texttt{g++} dengan standar kompilasi \texttt{-std=c++17}. \\
+		\hline
+		Library standar & \texttt{iostream}, \texttt{fstream}, \texttt{vector}, \texttt{string}, \texttt{queue}, \texttt{map}, \texttt{tuple}, \texttt{chrono}, dan library standar C++ lainnya. \\
+		\hline
+		Library eksternal & Raylib digunakan apabila program dijalankan dengan fitur GUI. Jika Raylib tidak tersedia, program tetap dapat dijalankan melalui CLI. \\
+		\hline
+		Cara menjalankan umum & Program dikompilasi menggunakan \texttt{make}, kemudian dijalankan melalui mode CLI atau GUI sesuai target yang tersedia pada \texttt{Makefile}. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\section{Struktur Folder Repository}
+
+Struktur repository dibuat modular agar setiap bagian program memiliki tanggung jawab yang jelas. 
+Folder \texttt{include/} digunakan untuk menyimpan header file, sedangkan folder \texttt{src/} digunakan untuk menyimpan implementasi setiap modul.
+
+\begin{tcolorbox}[
+	colback=gray!5,
+	colframe=black!60,
+	title=\textbf{Struktur Folder Utama},
+	arc=2mm,
+	boxrule=0.8pt
+]
+\scriptsize
+\begin{verbatim}
+STIMA-TUCIL3/
+|-- assets/
+|-- bin/
+|-- build/
+|-- docs/
+|-- include/
+|   |-- cli/
+|   |-- exception/
+|   |-- gui/
+|   |-- heuristic/
+|   |   |-- Advanced.hpp
+|   |   |-- Custom.hpp
+|   |   |-- IHeuristic.hpp
+|   |   `-- Manhattan.hpp
+|   |-- model/
+|   |   |-- GameMap.hpp
+|   |   |-- MoveResult.hpp
+|   |   |-- Position.hpp
+|   |   |-- SearchResult.hpp
+|   |   `-- State.hpp
+|   |-- solver/
+|   |   |-- AStar.hpp
+|   |   |-- GBFS.hpp
+|   |   |-- ISolver.hpp
+|   |   |-- UCS.hpp
+|   |   `-- WeightedAStar.hpp
+|   `-- utils/
+|-- saves/
+|-- src/
+|   |-- cli/
+|   |-- exception/
+|   |-- gui/
+|   |-- heuristic/
+|   |   |-- Advanced.cpp
+|   |   |-- Custom.cpp
+|   |   `-- Manhattan.cpp
+|   |-- model/
+|   |   |-- GameMap.cpp
+|   |   |-- MoveResult.cpp
+|   |   |-- Position.cpp
+|   |   |-- SearchResult.cpp
+|   |   `-- State.cpp
+|   |-- solver/
+|   |   |-- AStar.cpp
+|   |   |-- GBFS.cpp
+|   |   |-- UCS.cpp
+|   |   `-- WeightedAStar.cpp
+|   |-- utils/
+|   `-- main.cpp
+|-- test/
+|-- .gitignore
+|-- CMakeLists.txt
+`-- README.md
+\end{verbatim}
+\end{tcolorbox}
+
+\begin{longtable}{|p{3.5cm}|p{10.5cm}|}
+	\caption{Peran folder pada repository} \\
+	\hline
+	\rowcolor{gray!20}
+	\textbf{Folder / File} & \textbf{Peran} \\
+	\hline
+	\endfirsthead
+	
+	\hline
+	\rowcolor{gray!20}
+	\textbf{Folder / File} & \textbf{Peran} \\
+	\hline
+	\endhead
+	
+	\texttt{src/} & Berisi implementasi source code utama program, seperti parser, model, solver, heuristic, CLI, GUI, exception, dan utility. \\
+	\hline
+	\texttt{include/} & Berisi deklarasi class dan interface dalam bentuk header file. Struktur foldernya dibuat sejajar dengan \texttt{src/}. \\
+	\hline
+	\texttt{src/solver/} & Berisi implementasi algoritma pathfinding, yaitu \texttt{UCS.cpp}, \texttt{GBFS.cpp}, dan \texttt{AStar.cpp}. \\
+	\hline
+	\texttt{include/solver/} & Berisi interface solver dan header untuk masing-masing algoritma, yaitu \texttt{ISolver.hpp}, \texttt{UCS.hpp}, \texttt{GBFS.hpp}, dan \texttt{AStar.hpp}. \\
+	\hline
+	\texttt{src/model/} dan \texttt{include/model/} & Berisi model data utama, seperti posisi, state, map, hasil gerakan, dan hasil pencarian. \\
+	\hline
+	\texttt{src/heuristic/} dan \texttt{include/heuristic/} & Berisi interface dan implementasi heuristik yang digunakan oleh GBFS dan A*. \\
+	\hline
+	\texttt{src/utils/} dan \texttt{include/utils/} & Berisi komponen pendukung seperti movement engine, pembacaan file, penyimpanan solusi, atau utilitas lain. \\
+	\hline
+	\texttt{src/cli/} dan \texttt{include/cli/} & Berisi implementasi antarmuka command line untuk memilih input file, algoritma, heuristik, playback, dan penyimpanan solusi. \\
+	\hline
+	\texttt{src/gui/} dan \texttt{include/gui/} & Berisi implementasi GUI apabila fitur bonus GUI dijalankan. \\
+	\hline
+	\texttt{docs/} & Berisi dokumen laporan dalam bentuk LaTeX dan hasil PDF. \\
+	\hline
+	\texttt{saves/} & Berisi file hasil penyimpanan solusi atau output pathfinding. \\
+	\hline
+	\texttt{README.md} & Berisi deskripsi program, requirement, cara kompilasi, cara menjalankan, dan identitas pembuat. \\
+	\hline
+	\texttt{Makefile} & Berisi konfigurasi build agar program dapat dikompilasi dan dijalankan dengan perintah sederhana. \\
+	\hline
+\end{longtable}
+
+\section{Struktur Source Code}
+
+Source code dibagi berdasarkan peran modul. 
+Pembagian ini bertujuan agar implementasi algoritma tidak bercampur dengan pembacaan input, validasi, antarmuka pengguna, maupun visualisasi.
+
+\begin{table}[H]
+	\centering
+	\caption{Pembagian modul source code}
+	\begin{tabular}{|p{4cm}|p{10cm}|}
+		\hline
+		\rowcolor{green!15}
+		\textbf{Modul} & \textbf{Tanggung Jawab} \\
+		\hline
+		Model & Menyimpan struktur data utama seperti posisi aktor, state pencarian, peta permainan, hasil sliding, dan hasil pencarian. \\
+		\hline
+		Parser input & Membaca file \texttt{.txt}, mengambil ukuran papan, konfigurasi tile, dan matriks cost. \\
+		\hline
+		Validator input & Memastikan input valid, ukuran papan sesuai, jumlah baris benar, karakter tile valid, posisi awal dan tujuan tersedia, serta cost sesuai dimensi papan. \\
+		\hline
+		Movement engine & Mensimulasikan gerakan sliding ke arah atas, bawah, kiri, dan kanan. \\
+		\hline
+		Solver & Menyediakan interface pathfinding dan implementasi UCS, GBFS, serta A*. \\
+		\hline
+		Heuristic & Menghitung estimasi jarak atau cost menuju target berikutnya untuk GBFS dan A*. \\
+		\hline
+		Output / save & Menampilkan solusi, visualisasi langkah, dan menyimpan solusi ke file. \\
+		\hline
+		CLI & Menyediakan interaksi berbasis terminal. \\
+		\hline
+		GUI & Menyediakan visualisasi grafis apabila bonus GUI dijalankan. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\section{Modul dan Class Utama}
+
+\begingroup
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.25}
+
+\begin{longtable}{
+	|>{\raggedright\arraybackslash}p{3.1cm}
+	|>{\raggedright\arraybackslash}p{4.7cm}
+	|>{\raggedright\arraybackslash}p{5.4cm}|
+}
+	\caption{Class dan modul utama program} \\
+	\hline
+	\rowcolor{green!15}
+	\textbf{Class / Modul} & \textbf{Lokasi Umum} & \textbf{Peran} \\
+	\hline
+	\endfirsthead
+	
+	\hline
+	\rowcolor{green!15}
+	\textbf{Class / Modul} & \textbf{Lokasi Umum} & \textbf{Peran} \\
+	\hline
+	\endhead
+	
+	\texttt{Position} 
+	& \texttt{include/model/} dan \texttt{src/model/} 
+	& Menyimpan koordinat baris dan kolom aktor atau tile tertentu. \\
+	\hline
+	
+	\texttt{State} 
+	& \texttt{include/model/} dan \texttt{src/model/} 
+	& Merepresentasikan state pencarian, termasuk posisi, path, cost, heuristik, angka terakhir, dan collected mask. \\
+	\hline
+	
+	\texttt{GameMap} 
+	& \texttt{include/model/} dan \texttt{src/model/} 
+	& Menyimpan konfigurasi papan, cost tile, posisi awal, posisi goal, dan informasi angka pada papan. \\
+	\hline
+	
+	\texttt{MoveResult} 
+	& \texttt{include/model/} dan \texttt{src/model/} 
+	& Menyimpan hasil simulasi satu gerakan sliding, seperti posisi baru, cost gerakan, status valid, dan status game over. \\
+	\hline
+	
+	\texttt{SearchResult} 
+	& \texttt{include/model/} dan \texttt{src/model/} 
+	& Menyimpan hasil akhir pencarian, seperti solusi ditemukan atau tidak, path solusi, total cost, waktu eksekusi, dan jumlah iterasi. \\
+	\hline
+	
+	\texttt{InputParser} 
+	& \texttt{include/utils/} atau \texttt{include/cli/} 
+	& Membaca file testcase berekstensi \texttt{.txt}. \\
+	\hline
+	
+	\texttt{InputValidator} 
+	& \texttt{include/utils/} 
+	& Memvalidasi konfigurasi papan dan matriks cost. \\
+	\hline
+	
+	\texttt{MovementEngine} 
+	& \texttt{include/utils/} dan \texttt{src/utils/} 
+	& Mensimulasikan mekanisme sliding dan menentukan apakah suatu gerakan valid. \\
+	\hline
+	
+	\texttt{ISolver} 
+	& \texttt{include/solver/}\newline\texttt{ISolver.hpp} 
+	& Interface umum untuk semua algoritma pathfinding. \\
+	\hline
+	
+	\texttt{UCS} 
+	& \texttt{include/solver/}\newline\texttt{UCS.hpp} dan \newline\texttt{src/solver/}\newline\texttt{UCS.cpp} 
+	& Implementasi Uniform Cost Search. \\
+	\hline
+	
+	\texttt{GBFS} 
+	& \texttt{include/solver/}\newline\texttt{GBFS.hpp} dan \newline\texttt{src/solver/}\newline\texttt{GBFS.cpp} 
+	& Implementasi Greedy Best-First Search. \\
+	\hline
+	
+	\texttt{A*} 
+	& \texttt{include/solver/}\newline\texttt{AStar.hpp} dan \newline\texttt{src/solver/}\newline\texttt{AStar.cpp} 
+	& Implementasi A*. \\
+	\hline
+	
+	\texttt{WeightedA*} 
+	& \texttt{include/solver/}\newline\texttt{WeightedAStar.hpp} dan \newline\texttt{src/solver/}\newline\texttt{WeightedAStar.cpp} 
+	& Implementasi Weighted A*. \\
+	\hline
+	
+	\texttt{IHeuristic} 
+	& \texttt{include/heuristic/} 
+	& Interface umum untuk heuristik. \\
+	\hline
+	
+	\texttt{SolutionWriter} 
+	& \texttt{include/utils/} atau \texttt{src/utils/} 
+	& Menyimpan solusi dan visualisasi langkah ke file. \\
+	\hline
+	
+	\texttt{CLI} 
+	& \texttt{include/cli/} dan \texttt{src/cli/} 
+	& Menangani input pengguna melalui terminal. \\
+	\hline
+	
+	\texttt{GUI} 
+	& \texttt{include/gui/} dan \texttt{src/gui/} 
+	& Menangani tampilan grafis dan playback visual. \\
+	\hline
+\end{longtable}
+
+\endgroup
+
+\section{Relasi Antar Modul}
+
+Relasi antar modul dapat digambarkan sebagai alur dari input file sampai output solusi. 
+Parser membaca testcase, validator memastikan testcase valid, kemudian \texttt{GameMap} dibentuk. 
+Setelah itu, solver yang dipilih pengguna akan menjalankan pencarian dengan bantuan \texttt{MovementEngine} dan, untuk GBFS serta A*, bantuan modul \texttt{Heuristic}.
+
+\begin{tcolorbox}[
+	colback=gray!5,
+	colframe=black!60,
+	title=\textbf{Diagram Alur Source Program},
+	arc=2mm,
+	boxrule=0.8pt
+]
+\small
+\begin{center}
+\begin{tabular}{c}
+\fbox{\parbox{0.82\textwidth}{
+\centering
+\textbf{1. Input}\\
+File \texttt{.txt}, parser, validator
+}} \\[0.25cm]
+$\downarrow$ \\[-0.05cm]
+\fbox{\parbox{0.82\textwidth}{
+\centering
+\textbf{2. Model Data}\\
+\texttt{GameMap}, \texttt{State}, \texttt{MoveResult}, \texttt{SearchResult}
+}} \\[0.25cm]
+$\downarrow$ \\[-0.05cm]
+\fbox{\parbox{0.82\textwidth}{
+\centering
+\textbf{3. Proses Pencarian}\\
+\texttt{UCS}, \texttt{GBFS}, \texttt{A*}, \texttt{WeightedA*}, \texttt{MovementEngine}, \texttt{Heuristic}
+}} \\[0.25cm]
+$\downarrow$ \\[-0.05cm]
+\fbox{\parbox{0.82\textwidth}{
+\centering
+\textbf{4. Output}\\
+CLI, GUI, visualisasi langkah, playback, simpan solusi
+}}
+\end{tabular}
+\end{center}
+\end{tcolorbox}
+
+\section{Penjelasan Peran Source Code}
+
+\begin{longtable}{|p{4.5cm}|p{9.5cm}|}
+	\caption{Peran source code terhadap alur program} \\
+	\hline
+	\rowcolor{blue!15}
+	\textbf{Proses} & \textbf{Penjelasan Implementasi} \\
+	\hline
+	\endfirsthead
+	
+	\hline
+	\rowcolor{blue!15}
+	\textbf{Proses} & \textbf{Penjelasan Implementasi} \\
+	\hline
+	\endhead
+	
+	Membaca file input \texttt{.txt} & Program menerima path file dari pengguna, kemudian membaca baris pertama sebagai ukuran papan, $N$ baris berikutnya sebagai konfigurasi map, dan $N$ baris setelahnya sebagai matriks cost. \\
+	\hline
+	Memvalidasi konfigurasi papan & Program memeriksa kesesuaian ukuran, karakter tile, keberadaan posisi awal \texttt{Z}, keberadaan goal \texttt{O}, serta dimensi matriks cost. \\
+	\hline
+	Menyimpan representasi map & Konfigurasi papan dan cost disimpan dalam \texttt{GameMap}, sehingga solver dapat mengakses informasi tile, cost, posisi awal, posisi goal, dan angka. \\
+	\hline
+	Simulasi sliding & \texttt{MovementEngine::slide} menerima map, state saat ini, dan arah gerakan, lalu mengembalikan \texttt{MoveResult}. \\
+	\hline
+	Mendeteksi game over & Gerakan dianggap game over jika aktor melewati lava, keluar papan tanpa tertahan rintangan, atau melewati angka yang belum sesuai urutan. \\
+	\hline
+	Mendeteksi angka berurutan & Ketika sliding melewati tile angka, program memeriksa apakah angka tersebut sama dengan angka terakhir yang sudah dikumpulkan ditambah satu. \\
+	\hline
+	Menjalankan algoritma pilihan user & Solver dipilih berdasarkan input pengguna, lalu fungsi \texttt{solve} dipanggil terhadap \texttt{GameMap}. \\
+	\hline
+	Menghitung total cost & Setiap \texttt{MoveResult} menyimpan cost satu gerakan. Solver menjumlahkannya ke dalam \texttt{gCost}. \\
+	\hline
+	Menghitung jumlah iterasi & Setiap state yang diambil dari priority queue akan menambah counter iterasi. \\
+	\hline
+	Menghitung waktu eksekusi & Program menggunakan \texttt{std::chrono::high\_resolution\_clock} untuk menghitung waktu pencarian dalam milidetik. \\
+	\hline
+	Menampilkan solusi & Jika solusi ditemukan, \texttt{SearchResult} menyimpan path solusi, total cost, waktu eksekusi, dan jumlah iterasi. \\
+	\hline
+	Menyimpan solusi ke file & Jika pengguna memilih untuk menyimpan solusi, program menulis path solusi, cost, iterasi, waktu, dan visualisasi langkah ke folder \texttt{saves/}. \\
+	\hline
+	Playback CLI & Program dapat menampilkan ulang langkah solusi berdasarkan urutan path yang ditemukan. \\
+	\hline
+	GUI & Jika mode GUI dijalankan, program memvisualisasikan papan, aktor, obstacle, lava, angka, goal, dan playback solusi secara grafis. \\
+	\hline
+\end{longtable}
+
+\section{Interface Solver}
+
+Seluruh algoritma pathfinding menggunakan interface yang sama, yaitu \texttt{ISolver}. 
+Interface ini membuat setiap algoritma memiliki fungsi \texttt{solve} dengan bentuk pemanggilan yang seragam. 
+Dengan demikian, program utama dapat mengganti algoritma tanpa perlu mengubah alur besar pencarian.
+
+\begin{tcolorbox}[
+	colback=green!5,
+	colframe=green!50!black,
+	title=\textbf{Potongan Source Code Asli: \texttt{ISolver.hpp}},
+	arc=2mm,
+	boxrule=0.8pt
+]
+\small
+\begin{verbatim}
+#pragma once
+
+#include "model/SearchResult.hpp"
+
+class GameMap;
+
+class ISolver {
+public:
+    virtual ~ISolver() = default;
+    virtual SearchResult solve(const GameMap& map) const = 0;
+};
+\end{verbatim}
+\end{tcolorbox}
+
+\section{Implementasi Uniform Cost Search}
+
+Class \texttt{UCS} mengimplementasikan algoritma Uniform Cost Search. 
+Algoritma ini menggunakan \texttt{priority\_queue} dengan prioritas utama pada nilai \texttt{gCost}. 
+Jika terdapat dua state dengan cost sama, panjang path digunakan sebagai pembanding tambahan.
+
+\begin{tcolorbox}[
+	colback=green!5,
+	colframe=green!50!black,
+	title=\textbf{Potongan Source Code Asli: Deklarasi \texttt{UCS.hpp}},
+	arc=2mm,
+	boxrule=0.8pt
+]
+\small
+\begin{verbatim}
+#pragma once
+
+#include "solver/ISolver.hpp"
+
+class GameMap;
+
+class UCS : public ISolver {
+public:
+    UCS() = default;
+    SearchResult solve(const GameMap& map) const override;
+};
+\end{verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[
+	colback=green!5,
+	colframe=green!50!black,
+	title=\textbf{Potongan Source Code Asli: Prioritas dan Struktur Data UCS},
+	arc=2mm,
+	boxrule=0.8pt
+]
+\small
+\begin{verbatim}
+auto cmp = [](const State& a, const State& b) {
+    if (a.getGCost() != b.getGCost()) return a.getGCost() > b.getGCost();
+    return a.getPath().length() > b.getPath().length();
+};
+std::priority_queue<State, std::vector<State>, decltype(cmp)> openSet(cmp);
+std::map<std::tuple<int, int, int>, int> bestCost;
+\end{verbatim}
+\end{tcolorbox}
+
+\begin{table}[H]
+	\centering
+	\caption{Penjelasan implementasi UCS}
+	\begin{tabular}{|p{4cm}|p{10cm}|}
+		\hline
+		\rowcolor{green!15}
+		\textbf{Bagian Implementasi} & \textbf{Penjelasan} \\
+		\hline
+		\texttt{openSet} & Menyimpan state yang akan diproses, diurutkan berdasarkan cost aktual terkecil. \\
+		\hline
+		\texttt{bestCost} & Menyimpan cost terbaik untuk kombinasi posisi baris, posisi kolom, dan collected mask. \\
+		\hline
+		\texttt{iterations} & Menghitung banyaknya state yang diambil dari priority queue. \\
+		\hline
+		\texttt{MovementEngine::slide} & Membentuk successor state dengan simulasi sliding. \\
+		\hline
+		\texttt{SearchResult} & Mengembalikan informasi solusi, total cost, waktu eksekusi, dan jumlah iterasi. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\section{Implementasi Greedy Best-First Search}
+
+Class \texttt{GBFS} menerima pointer ke \texttt{IHeuristic}. 
+Heuristik digunakan untuk menentukan prioritas state. 
+State dengan nilai heuristik lebih kecil akan diproses lebih dahulu. 
+Jika nilai heuristik sama, program menggunakan \texttt{gCost} sebagai pembanding tambahan.
+
+\begin{tcolorbox}[
+	colback=orange!5,
+	colframe=orange!70!black,
+	title=\textbf{Potongan Source Code Asli: Deklarasi \texttt{GBFS.hpp}},
+	arc=2mm,
+	boxrule=0.8pt
+]
+\small
+\begin{verbatim}
+#pragma once
+
+#include "solver/ISolver.hpp"
+
+class IHeuristic;
+class GameMap;
+
+class GBFS : public ISolver {
+public:
+    explicit GBFS(const IHeuristic* heuristic);
+    SearchResult solve(const GameMap& map) const override;
+
+private:
+    const IHeuristic* heuristic;
+};
+\end{verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[
+	colback=orange!5,
+	colframe=orange!70!black,
+	title=\textbf{Potongan Source Code Asli: Prioritas GBFS},
+	arc=2mm,
+	boxrule=0.8pt
+]
+\small
+\begin{verbatim}
+auto cmp = [](const State& a, const State& b) {
+    if (a.getHCost() != b.getHCost()) return a.getHCost() > b.getHCost();
+    return a.getGCost() > b.getGCost();
+};
+std::priority_queue<State, std::vector<State>, decltype(cmp)> openSet(cmp);
+std::map<std::tuple<int, int, int>, int> bestCost;
+\end{verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[
+	colback=orange!5,
+	colframe=orange!70!black,
+	title=\textbf{Potongan Source Code Asli: Perhitungan Heuristik pada GBFS},
+	arc=2mm,
+	boxrule=0.8pt
+]
+\small
+\begin{verbatim}
+State nextState(move.getNewPosition(),
+                move.getNewCollectedMask(),
+                move.getNewLastCollected(),
+                current.getPath() + dir,
+                newGCost,
+                0,
+                nullptr);
+nextState.setHCost(heuristic->compute(nextState, map));
+\end{verbatim}
+\end{tcolorbox}
+
+\begin{table}[H]
+	\centering
+	\caption{Penjelasan implementasi GBFS}
+	\begin{tabular}{|p{4cm}|p{10cm}|}
+		\hline
+		\rowcolor{orange!20}
+		\textbf{Bagian Implementasi} & \textbf{Penjelasan} \\
+		\hline
+		\texttt{heuristic} & Digunakan untuk menghitung estimasi kedekatan state terhadap target berikutnya. \\
+		\hline
+		\texttt{openSet} & Mengurutkan state berdasarkan nilai \texttt{hCost} terkecil. \\
+		\hline
+		\texttt{gCost} & Tetap disimpan untuk menghitung total cost solusi, tetapi bukan prioritas utama. \\
+		\hline
+		\texttt{bestCost} & Menghindari pemrosesan ulang state yang sudah dicapai dengan cost lebih kecil atau sama. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\section{Implementasi A*}
+
+Class \texttt{AStar} juga menerima pointer ke \texttt{IHeuristic}. 
+Perbedaan utamanya dengan GBFS adalah A* menggunakan nilai \texttt{fCost}, yaitu gabungan antara \texttt{gCost} dan \texttt{hCost}. 
+Dengan demikian, A* mempertimbangkan cost aktual sekaligus estimasi menuju target.
+
+\begin{tcolorbox}[
+	colback=red!5,
+	colframe=red!60!black,
+	title=\textbf{Potongan Source Code Asli: Deklarasi \texttt{AStar.hpp}},
+	arc=2mm,
+	boxrule=0.8pt
+]
+\small
+\begin{verbatim}
+#pragma once
+
+#include "solver/ISolver.hpp"
+
+class IHeuristic;
+class State;
+class GameMap;
+
+class AStar : public ISolver {
+public:
+    explicit AStar(const IHeuristic* heuristic);
+    SearchResult solve(const GameMap& map) const override;
+
+private:
+    const IHeuristic* heuristic;
+};
+\end{verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[
+	colback=red!5,
+	colframe=red!60!black,
+	title=\textbf{Potongan Source Code Asli: Prioritas A*},
+	arc=2mm,
+	boxrule=0.8pt
+]
+\small
+\begin{verbatim}
+auto cmp = [](const State& a, const State& b) {
+    return a.getFCost() > b.getFCost();
+};
+std::priority_queue<State, std::vector<State>, decltype(cmp)> openSet(cmp);
+
+std::map<std::tuple<int, int, int>, int> bestCost;
+\end{verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[
+	colback=red!5,
+	colframe=red!60!black,
+	title=\textbf{Potongan Source Code Asli: Ekspansi State pada A*},
+	arc=2mm,
+	boxrule=0.8pt
+]
+\small
+\begin{verbatim}
+MoveResult move = MovementEngine::slide(map, current, directions[i]);
+if (!move.isValid() || move.isGameOver()) {
+    continue;
+}
+
+std::string newPath = current.getPath() + directions[i];
+int newGCost = current.getGCost() + move.getMoveCost();
+
+State nextState(move.getNewPosition(),
+               move.getNewCollectedMask(),
+               move.getNewLastCollected(),
+               newPath,
+               newGCost,
+               0,
+               nullptr);
+nextState.setHCost(heuristic->compute(nextState, map));
+\end{verbatim}
+\end{tcolorbox}
+
+\begin{table}[H]
+	\centering
+	\caption{Penjelasan implementasi A*}
+	\begin{tabular}{|p{4cm}|p{10cm}|}
+		\hline
+		\rowcolor{red!15}
+		\textbf{Bagian Implementasi} & \textbf{Penjelasan} \\
+		\hline
+		\texttt{getFCost()} & Menghasilkan nilai prioritas A*, yaitu gabungan cost aktual dan heuristik. \\
+		\hline
+		\texttt{getGCost()} & Menyimpan total cost aktual dari start sampai state saat ini. \\
+		\hline
+		\texttt{setHCost()} & Mengatur nilai heuristik untuk state baru. \\
+		\hline
+		\texttt{bestCost} & Menyimpan cost terbaik untuk menghindari eksplorasi state yang tidak lebih baik. \\
+		\hline
+		\texttt{MovementEngine::slide} & Menentukan successor yang valid berdasarkan aturan sliding puzzle. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\section{Implementasi Weighted A*}
+
+Class \texttt{WeightedAStar} merupakan implementasi algoritma tambahan sebagai spesifikasi bonus. 
+Algoritma ini merupakan pengembangan dari A* dengan memberikan bobot lebih besar pada nilai heuristik. 
+Pada implementasi program, Weighted A* menggunakan konstanta \texttt{WEIGHT = 2}, sehingga fungsi evaluasi yang digunakan adalah $g(n) + 2h(n)$. 
+Dengan strategi ini, pencarian menjadi lebih agresif mengikuti arah target yang diperkirakan oleh heuristik.
+
+\begin{tcolorbox}[
+	colback=purple!5,
+	colframe=purple!60!black,
+	title=\textbf{Potongan Source Code Asli: Deklarasi \texttt{WeightedAStar.hpp}},
+	arc=2mm,
+	boxrule=0.8pt
+]
+\small
+\begin{verbatim}
+#pragma once
+
+#include "solver/ISolver.hpp"
+
+class IHeuristic;
+class State;
+class GameMap;
+
+class WeightedAStar : public ISolver {
+public:
+    explicit WeightedAStar(const IHeuristic* heuristic);
+    SearchResult solve(const GameMap& map) const override;
+
+private:
+    const IHeuristic* heuristic;
+};
+\end{verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[
+	colback=purple!5,
+	colframe=purple!60!black,
+	title=\textbf{Potongan Source Code Asli: Bobot dan Prioritas Weighted A*},
+	arc=2mm,
+	boxrule=0.8pt
+]
+\small
+\begin{verbatim}
+constexpr int WEIGHT = 2;
+auto cmp = [WEIGHT](const State& a, const State& b) {
+    int fA = a.getGCost() + WEIGHT * a.getHCost();
+    int fB = b.getGCost() + WEIGHT * b.getHCost();
+    return fA > fB;
+};
+std::priority_queue<State, std::vector<State>, decltype(cmp)> openSet(cmp);
+
+std::map<std::tuple<int, int, int>, int> bestCost;
+\end{verbatim}
+\end{tcolorbox}
+
+Pada bagian tersebut, \texttt{priority\_queue} berfungsi sebagai \textit{open set}. 
+State dengan nilai evaluasi paling kecil akan diproses lebih dahulu. 
+Berbeda dengan A* biasa yang menggunakan $g(n)+h(n)$, Weighted A* menggunakan $g(n)+2h(n)$ sehingga nilai heuristik memiliki pengaruh lebih besar dalam pemilihan state.
+
+\begin{table}[H]
+	\centering
+	\caption{Penjelasan struktur data Weighted A*}
+	\begin{tabular}{|p{4cm}|p{10cm}|}
+		\hline
+		\rowcolor{purple!15}
+		\textbf{Bagian Implementasi} & \textbf{Penjelasan} \\
+		\hline
+		\texttt{WEIGHT} & Konstanta bobot heuristik. Pada program digunakan nilai $2$. \\
+		\hline
+		\texttt{openSet} & Priority queue yang menyimpan state yang akan diproses berdasarkan nilai $g(n)+2h(n)$ terkecil. \\
+		\hline
+		\texttt{bestCost} & Map untuk menyimpan cost terbaik dari setiap kombinasi posisi aktor dan collected mask. \\
+		\hline
+		\texttt{heuristic} & Digunakan untuk menghitung nilai estimasi $h(n)$ pada state awal maupun state hasil ekspansi. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{tcolorbox}[
+	colback=purple!5,
+	colframe=purple!60!black,
+	title=\textbf{Potongan Source Code Asli: Inisialisasi State Awal Weighted A*},
+	arc=2mm,
+	boxrule=0.8pt
+]
+\small
+\begin{verbatim}
+Position startPos = map.getStartPosition();
+State startState(startPos, 0, -1, "", 0, 0, nullptr);
+startState.setHCost(heuristic->compute(startState, map));
+openSet.push(startState);
+
+int iterations = 0;
+\end{verbatim}
+\end{tcolorbox}
+
+State awal dibentuk dari posisi awal aktor. 
+Nilai \texttt{collectedMask} diatur menjadi $0$ karena belum ada angka yang dikumpulkan, nilai angka terakhir diatur menjadi $-1$, path masih kosong, dan cost awal bernilai $0$. 
+Setelah itu, program menghitung nilai heuristik state awal dan memasukkannya ke dalam \texttt{openSet}.
+
+\begin{tcolorbox}[
+	colback=purple!5,
+	colframe=purple!60!black,
+	title=\textbf{Potongan Source Code Asli: Ekspansi State pada Weighted A*},
+	arc=2mm,
+	boxrule=0.8pt
+]
+\small
+\begin{verbatim}
+const char directions[4] = {'U', 'D', 'L', 'R'};
+for (int i = 0; i < 4; ++i) {
+    MoveResult move = MovementEngine::slide(map, current, directions[i]);
+    if (!move.isValid() || move.isGameOver()) {
+        continue;
+    }
+
+    std::string newPath = current.getPath() + directions[i];
+    int newGCost = current.getGCost() + move.getMoveCost();
+
+    State nextState(move.getNewPosition(),
+                   move.getNewCollectedMask(),
+                   move.getNewLastCollected(),
+                   newPath,
+                   newGCost,
+                   0,
+                   nullptr);
+    nextState.setHCost(heuristic->compute(nextState, map));
+\end{verbatim}
+\end{tcolorbox}
+
+Weighted A* mengekspansi state ke empat arah, yaitu \texttt{U}, \texttt{D}, \texttt{L}, dan \texttt{R}. 
+Setiap arah tidak langsung dianggap valid, melainkan disimulasikan terlebih dahulu menggunakan \texttt{MovementEngine::slide}. 
+Jika hasil gerakan tidak valid atau menyebabkan \textit{game over}, state tersebut langsung diabaikan. 
+Jika gerakan valid, program membentuk path baru, menghitung \texttt{newGCost}, membuat state baru, lalu menghitung ulang nilai heuristiknya.
+
+\begin{tcolorbox}[
+	colback=purple!5,
+	colframe=purple!60!black,
+	title=\textbf{Potongan Source Code Asli: Pruning State Weighted A*},
+	arc=2mm,
+	boxrule=0.8pt
+]
+\small
+\begin{verbatim}
+auto nextKey = std::make_tuple(nextState.getPosition().getRow(),
+                               nextState.getPosition().getCol(),
+                               nextState.getCollectedMask());
+auto nextIt = bestCost.find(nextKey);
+if (nextIt != bestCost.end() && nextIt->second <= newGCost) {
+    continue;
+}
+
+bestCost[nextKey] = newGCost;
+openSet.push(nextState);
+\end{verbatim}
+\end{tcolorbox}
+
+Bagian tersebut digunakan untuk menghindari eksplorasi state yang tidak lebih baik. 
+Jika sudah ada state dengan posisi dan \texttt{collectedMask} yang sama serta cost lebih kecil atau sama, maka state baru tidak dimasukkan ke \texttt{openSet}. 
+Sebaliknya, jika state baru memiliki cost yang lebih baik, \texttt{bestCost} diperbarui dan state tersebut dimasukkan ke priority queue.
+
+\begin{table}[H]
+	\centering
+	\caption{Penjelasan implementasi Weighted A*}
+	\begin{tabular}{|p{4cm}|p{10cm}|}
+		\hline
+		\rowcolor{purple!15}
+		\textbf{Bagian Implementasi} & \textbf{Penjelasan} \\
+		\hline
+		\texttt{WEIGHT = 2} & Membuat heuristik memiliki pengaruh dua kali lebih besar dibanding A* biasa. \\
+		\hline
+		\texttt{getGCost()} & Menyimpan total cost aktual dari start sampai state saat ini. \\
+		\hline
+		\texttt{getHCost()} & Menyimpan nilai estimasi dari state saat ini menuju target berikutnya. \\
+		\hline
+		\texttt{gCost + WEIGHT * hCost} & Nilai evaluasi yang digunakan untuk mengurutkan state di priority queue. \\
+		\hline
+		\texttt{MovementEngine::slide} & Mensimulasikan gerakan sliding dan menghasilkan \texttt{MoveResult}. \\
+		\hline
+		\texttt{bestCost} & Menyimpan cost terbaik untuk menghindari pemrosesan ulang state yang lebih buruk. \\
+		\hline
+		\texttt{SearchResult} & Mengembalikan hasil pencarian, seperti status solusi, path solusi, total cost, waktu eksekusi, dan jumlah iterasi. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{tcolorbox}[
+	colback=purple!5,
+	colframe=purple!60!black,
+	title=\textbf{Karakteristik Implementasi Weighted A*},
+	arc=2mm,
+	boxrule=0.8pt
+]
+Weighted A* pada program ini memiliki struktur implementasi yang mirip dengan A*, tetapi berbeda pada fungsi evaluasi yang digunakan di priority queue. 
+Dengan nilai $f(n)=g(n)+2h(n)$, algoritma menjadi lebih fokus terhadap estimasi menuju target. 
+Hal ini dapat membuat pencarian lebih cepat dan jumlah iterasi lebih sedikit, tetapi solusi yang ditemukan tidak selalu memiliki total cost paling minimum.
+\end{tcolorbox}
+
+\section{Mekanisme Goal dan Hasil Pencarian}
+
+Ketiga solver menggunakan kondisi goal yang sama. 
+State dianggap sebagai solusi apabila posisi aktor sama dengan posisi goal dan seluruh angka telah dikumpulkan secara berurutan.
+
+\begin{tcolorbox}[
+	colback=blue!5,
+	colframe=blue!60!black,
+	title=\textbf{Potongan Source Code Asli: Pemeriksaan Goal dan SearchResult},
+	arc=2mm,
+	boxrule=0.8pt
+]
+\small
+\begin{verbatim}
+bool isGoal = current.getPosition() == map.getGoalPosition();
+bool allNumbersCollected = (maxNumber == -1) || 
+                            (current.getLastCollected() == maxNumber);
+
+if (isGoal && allNumbersCollected) {
+    auto endTime = std::chrono::high_resolution_clock::now();
+    double elapsed = std::chrono::duration<double, std::milli>
+                     (endTime - startTime).count();
+
+    SearchResult result;
+    result.setSolutionFound(true);
+    result.setSolutionPath(current.getPath());
+    result.setTotalCost(current.getGCost());
+    result.setExecutionTimeMs(elapsed);
+    result.setIterationsCount(iterations);
+    return result;
+}
+\end{verbatim}
+\end{tcolorbox}
+
+\begin{table}[H]
+	\centering
+	\caption{Informasi yang disimpan pada hasil pencarian}
+	\begin{tabular}{|p{4cm}|p{10cm}|}
+		\hline
+		\rowcolor{blue!15}
+		\textbf{Data} & \textbf{Keterangan} \\
+		\hline
+		\texttt{solutionFound} & Menandakan apakah solusi berhasil ditemukan. \\
+		\hline
+		\texttt{solutionPath} & Menyimpan urutan gerakan solusi, misalnya \texttt{RULUDR}. \\
+		\hline
+		\texttt{totalCost} & Menyimpan total cost dari solusi. \\
+		\hline
+		\texttt{executionTimeMs} & Menyimpan waktu eksekusi algoritma dalam milidetik. \\
+		\hline
+		\texttt{iterationsCount} & Menyimpan banyaknya iterasi atau state yang ditinjau. \\
+		\hline
+		\texttt{message} & Menyimpan pesan jika solusi tidak ditemukan. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\section{Bukti Program Dapat Dijalankan}
+
+Bagian ini menjelaskan perintah dasar untuk mengompilasi dan menjalankan program. 
+Perintah dapat disesuaikan dengan target yang tersedia pada \texttt{Makefile}.
+
+\begin{table}[H]
+	\centering
+	\caption{Perintah kompilasi dan eksekusi program}
+	\begin{tabular}{|p{4cm}|p{10cm}|}
+		\hline
+		\rowcolor{purple!15}
+		\textbf{Kebutuhan} & \textbf{Perintah} \\
+		\hline
+		Kompilasi program & \texttt{make} atau \texttt{make build} \\
+		\hline
+		Menjalankan CLI & \texttt{make run} atau \texttt{./build/ice\_solver} \\
+		\hline
+		Menjalankan GUI & \texttt{make gui}, jika Raylib tersedia dan target GUI diaktifkan. \\
+		\hline
+		Membersihkan hasil build & \texttt{make clean} \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsection{Contoh Input File}
+
+\begin{tcolorbox}[
+	colback=gray!5,
+	colframe=black!60,
+	title=\textbf{Contoh File Input \texttt{.txt}},
+	arc=2mm,
+	boxrule=0.8pt
+]
+\small
+\begin{verbatim}
+7 7
+XXXXXXX
+X0****X
+X**X**X
+X****OX
+X***1LX
+XZ**X*X
+XXXXXXX
+999 999 999 999 999 999 999
+999 3 5 2 8 1 999
+999 7 4 999 6 9 999
+999 2 8 3 5 4 999
+999 6 1 7 2 999 999
+999 9 3 4 999 8 999
+999 999 999 999 999 999 999
+\end{verbatim}
+\end{tcolorbox}
+
+\subsection{Contoh Output Singkat}
+
+\begin{tcolorbox}[
+	colback=gray!5,
+	colframe=black!60,
+	title=\textbf{Contoh Output Program},
+	arc=2mm,
+	boxrule=0.8pt
+]
+\small
+\begin{verbatim}
+>> Masukan file input:
+test/input1.txt
+
+>> Algoritma apa yang anda pilih? (UCS/GBFS/A*)
+A*
+
+>> Heuristic apa yang anda pilih? (H1/H2/H3)
+H2
+
+Solusi Yang Ditemukan : RULUDRUR
+Cost dari Solusi : 87
+Waktu eksekusi: 10 ms
+Banyak iterasi yang dilakukan: 9999 iterasi
+
+>> Apakah Anda ingin menyimpan solusi? (Ya/Tidak):
+Ya
+
+Solusi disimpan pada saves/solusi.txt
+\end{verbatim}
+\end{tcolorbox}

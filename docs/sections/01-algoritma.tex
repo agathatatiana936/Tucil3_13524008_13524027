@@ -1,0 +1,673 @@
+Permasalahan \textit{Ice Sliding Puzzle Solver} pada tugas ini diselesaikan sebagai persoalan pencarian jalur pada ruang state. 
+Berbeda dengan pathfinding biasa yang umumnya bergerak satu petak setiap langkah, pada puzzle ini aktor bergerak secara \textit{sliding}, yaitu terus berjalan pada satu arah sampai tepat sebelum menabrak rintangan. 
+Oleh karena itu, satu aksi gerakan dapat melewati beberapa tile sekaligus dan cost gerakannya dihitung dari seluruh tile yang dilalui.
+
+\begin{tcolorbox}[
+	colback=blue!5,
+	colframe=blue!60!black,
+	title=\textbf{Inti Permasalahan Pathfinding},
+	arc=2mm,
+	boxrule=0.8pt
+]
+Algoritma harus mencari urutan gerakan dari posisi awal \texttt{Z} menuju titik tujuan \texttt{O}, dengan syarat aktor harus melewati angka secara berurutan dari \texttt{0} sampai angka terbesar yang ada pada papan. 
+Solusi hanya dianggap valid apabila aktor berhenti tepat di \texttt{O} dan seluruh angka yang diperlukan sudah dilewati sesuai urutan.
+\end{tcolorbox}
+
+\section{Representasi State}
+
+Setiap konfigurasi pencarian direpresentasikan sebagai sebuah state. 
+State tidak cukup hanya menyimpan posisi aktor, karena permainan juga memiliki constraint angka berurutan. 
+Oleh karena itu, state juga menyimpan informasi angka yang sudah dikumpulkan, angka terakhir yang valid, path gerakan, serta cost yang sudah dikeluarkan.
+
+\begin{table}[H]
+	\centering
+	\caption{Representasi state pada algoritma pathfinding}
+	\begin{tabular}{|p{4cm}|p{10cm}|}
+		\hline
+		\rowcolor{blue!15}
+		\textbf{Komponen State} & \textbf{Keterangan} \\
+		\hline
+		Posisi aktor & Menyimpan koordinat baris dan kolom aktor pada papan. \\
+		\hline
+		\textit{Collected mask} & Menyimpan himpunan angka yang sudah dikumpulkan dalam bentuk bitmask. \\
+		\hline
+		Angka terakhir & Menyimpan angka terakhir yang berhasil dilewati secara valid. Nilai awalnya adalah $-1$. \\
+		\hline
+		Path gerakan & Menyimpan urutan gerakan yang sudah dilakukan, misalnya \texttt{RULDR}. \\
+		\hline
+		Total cost & Menyimpan akumulasi cost dari seluruh gerakan sliding yang sudah dilakukan. \\
+		\hline
+		Nilai heuristik & Digunakan oleh GBFS dan A* untuk memperkirakan kedekatan state terhadap target berikutnya. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+Secara umum, identitas sebuah state ditentukan oleh kombinasi posisi aktor dan progres angka yang sudah dikumpulkan. 
+Dua state dengan posisi aktor sama belum tentu setara apabila angka yang sudah dikumpulkan berbeda. 
+Sebagai contoh, aktor yang berada pada posisi yang sama tetapi sudah mengumpulkan angka \texttt{0} memiliki kondisi pencarian yang berbeda dengan aktor yang belum mengumpulkan angka tersebut.
+
+\section{Mekanisme Ekspansi State}
+
+Pada setiap state, algoritma mencoba empat arah gerakan, yaitu atas, bawah, kiri, dan kanan. 
+Arah tersebut direpresentasikan dengan karakter \texttt{U}, \texttt{D}, \texttt{L}, dan \texttt{R}. 
+Setiap gerakan diproses menggunakan mekanisme sliding sampai aktor berhenti, keluar papan, melewati lava, atau melanggar aturan angka.
+
+\begin{table}[H]
+	\centering
+	\caption{Aturan ekspansi gerakan}
+	\begin{tabular}{|p{3.5cm}|p{10.5cm}|}
+		\hline
+		\rowcolor{gray!20}
+		\textbf{Kondisi} & \textbf{Penanganan} \\
+		\hline
+		Menabrak \texttt{X} & Aktor berhenti tepat sebelum rintangan. Tile \texttt{X} tidak dilewati dan cost-nya tidak dihitung. \\
+		\hline
+		Melewati \texttt{L} & Gerakan dianggap menyebabkan \textit{game over}, sehingga state hasil tidak diproses. \\
+		\hline
+		Keluar papan & Jika aktor bergerak keluar batas papan tanpa tertahan rintangan, gerakan dianggap tidak valid. \\
+		\hline
+		Melewati angka benar & Angka diterima jika nilainya sama dengan angka terakhir yang dikumpulkan ditambah satu. \\
+		\hline
+		Melewati angka salah & Gerakan dianggap tidak valid karena melanggar constraint urutan angka. \\
+		\hline
+		Berhenti di \texttt{O} & State menjadi goal hanya jika seluruh angka sudah dikumpulkan sesuai urutan. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{tcolorbox}[
+	colback=gray!5,
+	colframe=black!60,
+	title=\textbf{Skema Umum Ekspansi State},
+	arc=2mm,
+	boxrule=0.8pt
+]
+\begin{center}
+\begin{forest}
+for tree={
+	draw,
+	rounded corners,
+	align=center,
+	parent anchor=south,
+	child anchor=north,
+	l sep=8mm,
+	s sep=8mm,
+	font=\small
+}
+[State saat ini
+	[Coba \texttt{U}]
+	[Coba \texttt{D}]
+	[Coba \texttt{L}]
+	[Coba \texttt{R}]
+]
+\end{forest}
+\end{center}
+
+Setiap arah tidak langsung menghasilkan perpindahan satu petak, melainkan disimulasikan sebagai gerakan sliding sampai kondisi berhenti atau kondisi tidak valid ditemukan.
+\end{tcolorbox}
+
+\section{Uniform Cost Search}
+
+Uniform Cost Search atau UCS adalah algoritma pencarian yang memilih state berdasarkan total cost aktual paling kecil. 
+Pada permasalahan ini, UCS digunakan untuk mencari solusi dengan cost minimum, karena setiap tile memiliki nilai cost yang berbeda-beda. 
+Dengan demikian, jalur yang memiliki jumlah gerakan lebih sedikit belum tentu merupakan jalur terbaik apabila melewati tile dengan cost besar.
+
+\begin{tcolorbox}[
+	colback=green!5,
+	colframe=green!50!black,
+	title=\textbf{Prinsip UCS},
+	arc=2mm,
+	boxrule=0.8pt
+]
+UCS selalu memilih state dengan nilai $g(n)$ terkecil.
+\[
+	g(n) = \text{total cost dari start sampai state } n
+\]
+Dengan strategi ini, UCS memprioritaskan jalur yang benar-benar paling murah berdasarkan cost yang sudah dikeluarkan.
+\end{tcolorbox}
+
+\subsection{Langkah Kerja UCS}
+
+\begin{longtable}{|p{1.2cm}|p{12.8cm}|}
+	\caption{Langkah kerja Uniform Cost Search} \\
+	\hline
+	\rowcolor{green!15}
+	\textbf{No.} & \textbf{Langkah} \\
+	\hline
+	\endfirsthead
+	
+	\hline
+	\rowcolor{green!15}
+	\textbf{No.} & \textbf{Langkah} \\
+	\hline
+	\endhead
+	
+	1 & Membuat initial state dari posisi awal aktor dengan cost awal $0$, angka terakhir $-1$, dan path kosong. \\
+	\hline
+	2 & Memasukkan initial state ke dalam priority queue. \\
+	\hline
+	3 & Mengambil state dengan nilai $g(n)$ terkecil dari priority queue. \\
+	\hline
+	4 & Memeriksa apakah state tersebut sudah memenuhi kondisi goal. \\
+	\hline
+	5 & Jika belum goal, algoritma mengekspansi state ke empat arah: \texttt{U}, \texttt{D}, \texttt{L}, dan \texttt{R}. \\
+	\hline
+	6 & Untuk setiap arah, dilakukan simulasi sliding sampai aktor berhenti atau gerakan menjadi tidak valid. \\
+	\hline
+	7 & Jika gerakan valid, cost baru dihitung dengan menambahkan cost sliding ke cost state saat ini. \\
+	\hline
+	8 & State baru dimasukkan ke priority queue apabila belum pernah dicapai sebelumnya dengan cost yang lebih kecil atau sama. \\
+	\hline
+	9 & Proses diulang sampai solusi ditemukan atau priority queue kosong. \\
+	\hline
+\end{longtable}
+
+\subsection{Struktur Data UCS}
+
+\begin{table}[H]
+	\centering
+	\caption{Struktur data yang digunakan pada UCS}
+	\begin{tabular}{|p{4cm}|p{10cm}|}
+		\hline
+		\rowcolor{green!15}
+		\textbf{Struktur Data} & \textbf{Fungsi} \\
+		\hline
+		Priority queue & Menyimpan state yang akan diproses, dengan prioritas berdasarkan nilai $g(n)$ terkecil. \\
+		\hline
+		Map best cost & Menyimpan cost terbaik untuk setiap kombinasi posisi dan collected mask. \\
+		\hline
+		State & Menyimpan posisi aktor, path, cost, collected mask, dan angka terakhir. \\
+		\hline
+		MoveResult & Menyimpan hasil simulasi sliding, seperti posisi baru, cost gerakan, tile yang dilewati, dan status validitas gerakan. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsection{Kelebihan dan Kekurangan UCS}
+
+\begin{table}[H]
+	\centering
+	\caption{Kelebihan dan kekurangan UCS}
+	\begin{tabular}{|p{3cm}|p{11cm}|}
+		\hline
+		\rowcolor{green!15}
+		\textbf{Aspek} & \textbf{Penjelasan} \\
+		\hline
+		Kelebihan & UCS dapat menghasilkan solusi optimal terhadap total cost selama semua cost bernilai positif. Hal ini cocok untuk puzzle yang memiliki variasi cost pada setiap tile. \\
+		\hline
+		Kekurangan & UCS dapat meninjau banyak konfigurasi karena tidak memiliki informasi estimasi arah menuju target. Pada papan besar atau konfigurasi kompleks, jumlah state yang dieksplorasi dapat menjadi sangat besar. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\section{Greedy Best-First Search}
+
+Greedy Best-First Search atau GBFS adalah algoritma pathfinding yang memilih state berdasarkan nilai heuristik terkecil. 
+Berbeda dengan UCS yang memperhatikan total cost aktual, GBFS lebih fokus pada state yang terlihat paling dekat dengan target berikutnya. 
+Target berikutnya dapat berupa angka yang harus dikumpulkan selanjutnya atau titik tujuan \texttt{O} apabila seluruh angka sudah terkumpul.
+
+\begin{tcolorbox}[
+	colback=orange!5,
+	colframe=orange!70!black,
+	title=\textbf{Prinsip GBFS},
+	arc=2mm,
+	boxrule=0.8pt
+]
+GBFS selalu memilih state dengan nilai $h(n)$ terkecil.
+\[
+	h(n) = \text{estimasi jarak dari state } n \text{ menuju target berikutnya}
+\]
+Algoritma ini bersifat rakus karena hanya mempertimbangkan estimasi terdekat, bukan total cost aktual dari start.
+\end{tcolorbox}
+
+\subsection{Langkah Kerja GBFS}
+
+\begin{longtable}{|p{1.2cm}|p{12.8cm}|}
+	\caption{Langkah kerja Greedy Best-First Search} \\
+	\hline
+	\rowcolor{orange!20}
+	\textbf{No.} & \textbf{Langkah} \\
+	\hline
+	\endfirsthead
+	
+	\hline
+	\rowcolor{orange!20}
+	\textbf{No.} & \textbf{Langkah} \\
+	\hline
+	\endhead
+	
+	1 & Membuat initial state dari posisi awal aktor. \\
+	\hline
+	2 & Menghitung nilai heuristik initial state terhadap target berikutnya. \\
+	\hline
+	3 & Memasukkan initial state ke priority queue dengan prioritas berdasarkan $h(n)$. \\
+	\hline
+	4 & Mengambil state dengan nilai heuristik terkecil. \\
+	\hline
+	5 & Memeriksa apakah state sudah memenuhi kondisi goal. \\
+	\hline
+	6 & Jika belum goal, state diekspansi ke empat arah gerakan. \\
+	\hline
+	7 & Untuk setiap arah, dilakukan simulasi sliding dengan tetap memperhatikan rintangan, lava, batas papan, dan urutan angka. \\
+	\hline
+	8 & Jika gerakan valid, state baru dihitung nilai heuristiknya. \\
+	\hline
+	9 & State baru dimasukkan ke priority queue apabila layak untuk diproses. \\
+	\hline
+	10 & Proses berlanjut sampai solusi ditemukan atau tidak ada state tersisa. \\
+	\hline
+\end{longtable}
+
+\subsection{Heuristik pada GBFS}
+
+Heuristik digunakan untuk memperkirakan kedekatan aktor terhadap target yang sedang dikejar. 
+Jika masih ada angka yang belum dikumpulkan, maka target heuristik adalah angka berikutnya. 
+Jika seluruh angka sudah dikumpulkan, maka target heuristik adalah titik tujuan \texttt{O}.
+
+\begin{table}[H]
+	\centering
+	\caption{Peran heuristik pada GBFS}
+	\begin{tabular}{|p{4cm}|p{10cm}|}
+		\hline
+		\rowcolor{orange!20}
+		\textbf{Aspek} & \textbf{Penjelasan} \\
+		\hline
+		Target heuristik & Angka berikutnya yang harus dikumpulkan, atau \texttt{O} jika semua angka sudah terkumpul. \\
+		\hline
+		Dasar prioritas & State dengan nilai heuristik lebih kecil akan diproses lebih dahulu. \\
+		\hline
+		Hubungan dengan cost & Cost aktual tetap dihitung untuk total solusi, tetapi tidak menjadi prioritas utama dalam pemilihan state. \\
+		\hline
+		Hubungan dengan sliding & Heuristik hanya mengarahkan pencarian, sedangkan validitas gerakan tetap ditentukan oleh hasil simulasi sliding. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{tcolorbox}[
+	colback=orange!5,
+	colframe=orange!70!black,
+	title=\textbf{Ilustrasi Keputusan GBFS},
+	arc=2mm,
+	boxrule=0.8pt
+]
+\begin{center}
+\begin{tabular}{c c c}
+\textbf{State A} & \textbf{State B} & \textbf{State C} \\
+$h(n)=8$ & $h(n)=3$ & $h(n)=5$ \\
+\end{tabular}
+\end{center}
+
+GBFS akan memilih \textbf{State B} terlebih dahulu karena memiliki nilai heuristik paling kecil, meskipun cost aktual dari start menuju State B belum tentu paling kecil.
+\end{tcolorbox}
+
+\subsection{Kelebihan dan Kekurangan GBFS}
+
+\begin{table}[H]
+	\centering
+	\caption{Kelebihan dan kekurangan GBFS}
+	\begin{tabular}{|p{3cm}|p{11cm}|}
+		\hline
+		\rowcolor{orange!20}
+		\textbf{Aspek} & \textbf{Penjelasan} \\
+		\hline
+		Kelebihan & GBFS cenderung lebih cepat menemukan solusi karena pencariannya diarahkan oleh heuristik menuju target berikutnya. \\
+		\hline
+		Kekurangan & GBFS tidak selalu menghasilkan solusi optimal karena tidak memprioritaskan total cost aktual. State yang tampak dekat ke target bisa saja melalui jalur dengan cost besar. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\section{A*}
+
+A* adalah algoritma pathfinding yang menggabungkan prinsip UCS dan GBFS. 
+Algoritma ini tidak hanya memperhatikan cost aktual dari start menuju state saat ini, tetapi juga memperhitungkan estimasi cost menuju target berikutnya. 
+Dengan demikian, A* berusaha menyeimbangkan pencarian yang murah secara cost dan pencarian yang terarah menuju goal.
+
+\begin{tcolorbox}[
+	colback=red!5,
+	colframe=red!60!black,
+	title=\textbf{Prinsip A*},
+	arc=2mm,
+	boxrule=0.8pt
+]
+A* memilih state berdasarkan nilai $f(n)$ terkecil.
+\[
+	f(n) = g(n) + h(n)
+\]
+dengan:
+\[
+	g(n) = \text{cost aktual dari start ke state } n
+\]
+\[
+	h(n) = \text{estimasi cost dari state } n \text{ ke target berikutnya}
+\]
+\end{tcolorbox}
+
+\subsection{Langkah Kerja A*}
+
+\begin{longtable}{|p{1.2cm}|p{12.8cm}|}
+	\caption{Langkah kerja A*} \\
+	\hline
+	\rowcolor{red!15}
+	\textbf{No.} & \textbf{Langkah} \\
+	\hline
+	\endfirsthead
+	
+	\hline
+	\rowcolor{red!15}
+	\textbf{No.} & \textbf{Langkah} \\
+	\hline
+	\endhead
+	
+	1 & Membuat initial state dengan $g(n)=0$ dan path kosong. \\
+	\hline
+	2 & Menghitung nilai heuristik $h(n)$ untuk initial state. \\
+	\hline
+	3 & Menghitung nilai $f(n)=g(n)+h(n)$ dan memasukkan state ke priority queue. \\
+	\hline
+	4 & Mengambil state dengan nilai $f(n)$ terkecil dari priority queue. \\
+	\hline
+	5 & Memeriksa apakah state sudah memenuhi kondisi goal. \\
+	\hline
+	6 & Jika belum goal, state diekspansi ke empat arah gerakan. \\
+	\hline
+	7 & Untuk setiap gerakan valid, algoritma menghitung cost sliding dan memperbarui nilai $g(n)$. \\
+	\hline
+	8 & Algoritma menghitung nilai $h(n)$ untuk state baru berdasarkan target berikutnya. \\
+	\hline
+	9 & Nilai $f(n)$ state baru dihitung dari $g(n)+h(n)$. \\
+	\hline
+	10 & State baru diproses hanya jika cost-nya lebih baik daripada kunjungan sebelumnya pada posisi dan collected mask yang sama. \\
+	\hline
+	11 & Proses diulang sampai solusi ditemukan atau seluruh kemungkinan state habis. \\
+	\hline
+\end{longtable}
+
+\subsection{Peran $g(n)$, $h(n)$, dan $f(n)$}
+
+\begin{table}[H]
+	\centering
+	\caption{Definisi fungsi biaya pada A*}
+	\begin{tabular}{|p{3cm}|p{11cm}|}
+		\hline
+		\rowcolor{red!15}
+		\textbf{Fungsi} & \textbf{Makna} \\
+		\hline
+		$g(n)$ & Total cost aktual dari initial state menuju state $n$. Nilainya bertambah berdasarkan cost seluruh tile yang dilewati selama sliding. \\
+		\hline
+		$h(n)$ & Estimasi cost dari state $n$ menuju target berikutnya. Target dapat berupa angka berikutnya atau titik tujuan \texttt{O}. \\
+		\hline
+		$f(n)$ & Nilai prioritas state pada A*, yaitu gabungan antara cost aktual dan estimasi menuju target. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsection{Struktur Data A*}
+
+\begin{table}[H]
+	\centering
+	\caption{Struktur data yang digunakan pada A*}
+	\begin{tabular}{|p{4cm}|p{10cm}|}
+		\hline
+		\rowcolor{red!15}
+		\textbf{Struktur Data} & \textbf{Fungsi} \\
+		\hline
+		Priority queue & Menyimpan state yang akan diproses dengan prioritas berdasarkan nilai $f(n)$ terkecil. \\
+		\hline
+		Map best cost & Menyimpan cost terbaik untuk setiap kombinasi posisi aktor dan collected mask. \\
+		\hline
+		State & Menyimpan posisi, path, $g(n)$, $h(n)$, collected mask, dan angka terakhir. \\
+		\hline
+		Heuristic & Menghitung estimasi jarak atau cost menuju target berikutnya. \\
+		\hline
+		Movement engine & Mensimulasikan gerakan sliding dan menentukan validitas hasil gerakan. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsection{Kelebihan dan Kekurangan A*}
+
+\begin{table}[H]
+	\centering
+	\caption{Kelebihan dan kekurangan A*}
+	\begin{tabular}{|p{3cm}|p{11cm}|}
+		\hline
+		\rowcolor{red!15}
+		\textbf{Aspek} & \textbf{Penjelasan} \\
+		\hline
+		Kelebihan & A* lebih terarah dibanding UCS karena menggunakan heuristik, tetapi tetap mempertimbangkan cost aktual. Jika heuristik yang digunakan admissible, A* dapat menghasilkan solusi optimal. \\
+		\hline
+		Kekurangan & Performa A* sangat bergantung pada kualitas heuristik. Jika heuristik kurang informatif, A* dapat berperilaku mirip UCS dan tetap mengeksplorasi banyak state. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\section{Weighted A*}
+
+Weighted A* merupakan algoritma pathfinding tambahan yang diimplementasikan sebagai bagian dari spesifikasi bonus. 
+Algoritma ini dikembangkan dari A* biasa, tetapi memberikan bobot lebih besar pada komponen heuristik. 
+Tujuan penambahan Weighted A* adalah untuk menguji \textit{trade-off} antara kecepatan pencarian dan optimalitas solusi pada kasus \textit{Ice Sliding Puzzle}.
+
+\begin{tcolorbox}[
+	colback=purple!5,
+	colframe=purple!60!black,
+	title=\textbf{Prinsip Weighted A*},
+	arc=2mm,
+	boxrule=0.8pt
+]
+Weighted A* menggunakan fungsi evaluasi:
+\[
+	f(n) = g(n) + w \cdot h(n)
+\]
+dengan:
+\[
+	g(n) = \text{total cost aktual dari start ke state } n
+\]
+\[
+	h(n) = \text{estimasi jarak atau cost dari state } n \text{ ke target berikutnya}
+\]
+\[
+	w = \text{bobot heuristik}
+\]
+
+Pada implementasi program ini, nilai bobot yang digunakan adalah:
+\[
+	w = 2
+\]
+\end{tcolorbox}
+
+\subsection{Perbedaan Weighted A* dengan A* Biasa}
+
+Weighted A* memiliki struktur dasar yang mirip dengan A*, tetapi nilai heuristiknya diperbesar dengan bobot tertentu. 
+Pada A* biasa, fungsi evaluasi adalah $f(n)=g(n)+h(n)$, sedangkan pada Weighted A* fungsi evaluasinya menjadi $f(n)=g(n)+w \cdot h(n)$. 
+Karena nilai heuristik diperbesar, algoritma menjadi lebih agresif dalam memilih state yang terlihat dekat dengan target.
+
+\begin{table}[H]
+	\centering
+	\caption{Perbedaan A* dan Weighted A*}
+	\begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
+		\hline
+		\rowcolor{purple!15}
+		\textbf{Aspek} & \textbf{A*} & \textbf{Weighted A*} \\
+		\hline
+		Fungsi evaluasi & $f(n)=g(n)+h(n)$ & $f(n)=g(n)+w \cdot h(n)$ \\
+		\hline
+		Bobot heuristik & $w=1$ & $w=2$ pada implementasi program \\
+		\hline
+		Peran heuristik & Menyeimbangkan cost aktual dan estimasi & Lebih dominan dalam pemilihan state \\
+		\hline
+		Karakter pencarian & Lebih seimbang & Lebih agresif menuju target \\
+		\hline
+		Optimalitas & Optimal jika heuristik admissible & Tidak selalu menjamin optimalitas \\
+		\hline
+		Tujuan utama & Menjaga keseimbangan antara cost dan arah pencarian & Mengurangi jumlah iterasi dan mempercepat pencarian \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsection{Struktur Data Utama}
+
+Weighted A* menggunakan dua struktur data utama, yaitu \textit{priority queue} sebagai \textit{open set} dan \textit{map} sebagai penyimpan cost terbaik untuk setiap state. 
+Priority queue mengurutkan state berdasarkan nilai evaluasi $g(n)+2h(n)$.
+
+\begin{table}[H]
+	\centering
+	\caption{Struktur data utama Weighted A*}
+	\begin{tabular}{|p{4cm}|p{10cm}|}
+		\hline
+		\rowcolor{purple!15}
+		\textbf{Struktur Data} & \textbf{Peran} \\
+		\hline
+		\texttt{priority\_queue} & Menyimpan state yang akan diproses, dengan prioritas berdasarkan nilai $g(n)+WEIGHT \cdot h(n)$. \\
+		\hline
+		\texttt{map} \texttt{bestCost} & Menyimpan cost terbaik untuk kombinasi posisi aktor dan collected mask. \\
+		\hline
+		\texttt{tuple<int,int,int>} & Digunakan sebagai key state, terdiri dari baris, kolom, dan collected mask. \\
+		\hline
+		\texttt{SearchResult} & Menyimpan hasil akhir pencarian, seperti path solusi, total cost, waktu eksekusi, dan jumlah iterasi. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsection{Alur Kerja Weighted A*}
+
+Alur kerja Weighted A* dimulai dari pembentukan state awal, kemudian menghitung angka maksimum pada papan, menghitung heuristik state awal, dan memasukkan state tersebut ke priority queue. 
+Selama priority queue belum kosong, algoritma mengambil state dengan nilai evaluasi terkecil, memeriksa apakah state tersebut sudah mencapai goal, lalu mengekspansi state ke empat arah gerakan.
+
+\begin{longtable}{|p{1.2cm}|p{12.8cm}|}
+	\caption{Langkah kerja Weighted A*} \\
+	\hline
+	\rowcolor{purple!15}
+	\textbf{No.} & \textbf{Langkah} \\
+	\hline
+	\endfirsthead
+	
+	\hline
+	\rowcolor{purple!15}
+	\textbf{No.} & \textbf{Langkah} \\
+	\hline
+	\endhead
+	
+	1 & Mencatat waktu mulai eksekusi menggunakan \texttt{std::chrono}. \\
+	\hline
+	2 & Menghitung angka maksimum pada papan untuk menentukan kapan seluruh angka telah dikumpulkan. \\
+	\hline
+	3 & Menetapkan nilai \texttt{WEIGHT = 2}. \\
+	\hline
+	4 & Membuat priority queue dengan pembanding berdasarkan nilai $gCost + WEIGHT \cdot hCost$. \\
+	\hline
+	5 & Membuat \texttt{bestCost} untuk menyimpan cost terbaik setiap state. \\
+	\hline
+	6 & Membentuk state awal dari posisi awal aktor, collected mask bernilai $0$, angka terakhir $-1$, path kosong, dan cost awal $0$. \\
+	\hline
+	7 & Menghitung heuristik untuk state awal menggunakan fungsi \texttt{heuristic->compute}. \\
+	\hline
+	8 & Memasukkan state awal ke dalam priority queue. \\
+	\hline
+	9 & Mengambil state dengan nilai evaluasi terkecil dari priority queue. \\
+	\hline
+	10 & Memeriksa apakah state sudah pernah dicapai dengan cost yang lebih baik. Jika ya, state diabaikan. \\
+	\hline
+	11 & Memeriksa kondisi goal, yaitu aktor berada di \texttt{O} dan semua angka sudah dikumpulkan sesuai urutan. \\
+	\hline
+	12 & Jika belum goal, state diekspansi ke empat arah: \texttt{U}, \texttt{D}, \texttt{L}, dan \texttt{R}. \\
+	\hline
+	13 & Untuk setiap arah, program memanggil \texttt{MovementEngine::slide} untuk mensimulasikan gerakan sliding. \\
+	\hline
+	14 & Jika gerakan tidak valid atau menghasilkan game over, state hasil tidak diproses. \\
+	\hline
+	15 & Jika gerakan valid, program menghitung \texttt{newGCost} dari cost saat ini ditambah cost gerakan sliding. \\
+	\hline
+	16 & Program membentuk path baru dengan menambahkan karakter arah ke path sebelumnya. \\
+	\hline
+	17 & Program membentuk state baru menggunakan posisi hasil sliding, collected mask baru, angka terakhir baru, path baru, dan \texttt{newGCost}. \\
+	\hline
+	18 & Program menghitung ulang nilai heuristik untuk state baru. \\
+	\hline
+	19 & Jika state baru sudah pernah dicapai dengan cost lebih kecil atau sama, state baru diabaikan. \\
+	\hline
+	20 & Jika state baru lebih baik, \texttt{bestCost} diperbarui dan state baru dimasukkan ke priority queue. \\
+	\hline
+	21 & Jika solusi ditemukan, program mengembalikan \texttt{SearchResult} berisi status solusi, path, total cost, waktu eksekusi, dan jumlah iterasi. \\
+	\hline
+	22 & Jika priority queue kosong dan solusi tidak ditemukan, program mengembalikan \texttt{SearchResult} dengan pesan bahwa solusi tidak ditemukan. \\
+	\hline
+\end{longtable}
+
+\subsection{Kelebihan dan Kekurangan Weighted A*}
+
+\begin{table}[H]
+	\centering
+	\caption{Kelebihan dan kekurangan Weighted A*}
+	\begin{tabular}{|p{3.5cm}|p{10.5cm}|}
+		\hline
+		\rowcolor{purple!15}
+		\textbf{Aspek} & \textbf{Penjelasan} \\
+		\hline
+		Kelebihan & Weighted A* cenderung lebih cepat daripada A* biasa karena lebih fokus mengikuti arah heuristik. Dengan bobot heuristik yang lebih besar, jumlah iterasi yang ditinjau dapat berkurang. \\
+		\hline
+		Kekurangan & Weighted A* tidak selalu menjamin solusi optimal. Cost solusi yang dihasilkan dapat lebih besar daripada UCS atau A* dengan heuristik admissible. Performa algoritma juga sangat bergantung pada kualitas heuristik. \\
+		\hline
+		Peran eksperimen & Weighted A* digunakan sebagai pembanding terhadap UCS, GBFS, dan A* untuk melihat trade-off antara kecepatan pencarian dan optimalitas solusi. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{tcolorbox}[
+	colback=purple!5,
+	colframe=purple!60!black,
+	title=\textbf{Alasan Weighted A* Cocok sebagai Algoritma Bonus},
+	arc=2mm,
+	boxrule=0.8pt
+]
+Weighted A* cocok dijadikan algoritma bonus karena masih berada dalam keluarga A*, tetapi memiliki karakteristik pencarian yang berbeda. 
+Dengan memperbesar pengaruh heuristik, algoritma ini dapat menunjukkan bagaimana perubahan fungsi evaluasi memengaruhi jumlah iterasi, waktu eksekusi, dan kualitas cost solusi. 
+Oleh karena itu, Weighted A* berguna untuk menganalisis trade-off antara pencarian yang cepat dan pencarian yang optimal.
+\end{tcolorbox}
+
+\section{Perbandingan UCS, GBFS, A*, dan Weighted A*}
+
+Keempat algoritma memiliki strategi pemilihan state yang berbeda. 
+UCS berfokus pada cost aktual, GBFS berfokus pada estimasi ke target, A* menggabungkan cost aktual dan heuristik secara seimbang, sedangkan Weighted A* memperbesar pengaruh heuristik dengan bobot tertentu. 
+Perbandingan ini penting karena karakteristik puzzle dipengaruhi oleh dua hal utama, yaitu cost tile yang bervariasi dan posisi target yang harus dicapai secara berurutan.
+
+\begin{table}[H]
+	\centering
+	\caption{Perbandingan algoritma pathfinding}
+	\small
+	\begin{tabular}{|p{2.8cm}|p{2.6cm}|p{2.6cm}|p{2.8cm}|p{3cm}|}
+		\hline
+		\rowcolor{gray!25}
+		\textbf{Aspek} & \textbf{UCS} & \textbf{GBFS} & \textbf{A*} & \textbf{Weighted A*} \\
+		\hline
+		Dasar prioritas & $g(n)$ & $h(n)$ & $g(n)+h(n)$ & $g(n)+2h(n)$ \\
+		\hline
+		Memperhatikan cost aktual & Ya & Tidak sebagai prioritas utama & Ya & Ya, tetapi pengaruh heuristik lebih besar \\
+		\hline
+		Menggunakan heuristik & Tidak & Ya & Ya & Ya, dengan bobot $w=2$ \\
+		\hline
+		Kecepatan pencarian & Cenderung lebih lambat & Cenderung lebih cepat & Bergantung kualitas heuristik & Cenderung lebih cepat dari A* \\
+		\hline
+		Optimalitas solusi & Optimal untuk cost positif & Tidak selalu optimal & Optimal jika heuristik admissible & Tidak selalu optimal \\
+		\hline
+		Kelemahan utama & Eksplorasi state besar & Dapat memilih jalur mahal & Bergantung pada heuristik & Cost solusi dapat lebih besar karena terlalu mengikuti heuristik \\
+		\hline
+		Cocok digunakan untuk & Mencari cost minimum & Mencari solusi cepat & Keseimbangan cost dan kecepatan & Eksperimen trade-off kecepatan dan optimalitas \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{tcolorbox}[
+	colback=purple!5,
+	colframe=purple!60!black,
+	title=\textbf{Ringkasan Pemilihan Algoritma},
+	arc=2mm,
+	boxrule=0.8pt
+]
+\begin{itemize}
+	\item UCS cocok digunakan ketika prioritas utama adalah mendapatkan solusi dengan total cost minimum.
+	\item GBFS cocok digunakan ketika pencarian ingin diarahkan secepat mungkin menuju target, meskipun tidak menjamin solusi optimal.
+	\item A* menjadi pendekatan yang lebih seimbang karena mempertimbangkan cost aktual dan estimasi menuju target.
+	\item Weighted A* cocok digunakan untuk menguji pengaruh pembesaran heuristik terhadap kecepatan pencarian dan kualitas cost solusi.
+\end{itemize}
+\end{tcolorbox}
