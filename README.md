@@ -1,4 +1,4 @@
-# NIMONSPOLY — Ice Sliding Puzzle Solver
+# Ice Sliding Puzzle Solver
 
 Program C++ untuk menyelesaikan permainan *ice sliding puzzle* dengan berbagai algoritma pencarian (A*, Weighted A*, UCS, GBFS). Program mendukung dua mode:
 - **GUI** — visualisasi interaktif berbasis raylib (dengan pemutar solusi langkah demi langkah)
