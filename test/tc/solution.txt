@@ -1,0 +1,65 @@
+Initial State:
+XXXXXXXXXXXX
+XZ*********X
+X*XXXXXXXX*X
+X*X******X*X
+X*X*XXXX*X*X
+X*X*X**X*X*X
+X*X*X**X*X*X
+X*X*XXXX*X*X
+X*X******X*X
+X*XXXXXXXX*X
+X*********OX
+XXXXXXXXXXXX
+
+Algoritma: A*
+Heuristic: H1
+
+Solusi Yang Ditemukan : DR
+Cost dari Solusi : 810
+Waktu eksekusi : 0.129 ms
+Banyak iterasi : 5 iterasi
+
+Langkah-langkah:
+Step 0 (Initial):
+XXXXXXXXXXXX
+XZ*********X
+X*XXXXXXXX*X
+X*X******X*X
+X*X*XXXX*X*X
+X*X*X**X*X*X
+X*X*X**X*X*X
+X*X*XXXX*X*X
+X*X******X*X
+X*XXXXXXXX*X
+X*********OX
+XXXXXXXXXXXX
+
+Step 1 : D
+XXXXXXXXXXXX
+X**********X
+X*XXXXXXXX*X
+X*X******X*X
+X*X*XXXX*X*X
+X*X*X**X*X*X
+X*X*X**X*X*X
+X*X*XXXX*X*X
+X*X******X*X
+X*XXXXXXXX*X
+XZ********OX
+XXXXXXXXXXXX
+
+Step 2 : R
+XXXXXXXXXXXX
+X**********X
+X*XXXXXXXX*X
+X*X******X*X
+X*X*XXXX*X*X
+X*X*X**X*X*X
+X*X*X**X*X*X
+X*X*XXXX*X*X
+X*X******X*X
+X*XXXXXXXX*X
+X*********ZX
+XXXXXXXXXXXX
+
